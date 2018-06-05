@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <!-- name和namespace以mobile开头 -->
+    <package name="MobileLogin" extends="mobile-default" namespace="/mobile/login">       
+        <action name="updatePassInput" class="com.biencloud.smarthome.web.login.action.LoginAction" method="updatePassInput">
+            <param name="menuCode">M000000</param>
+            <param name="operationCode">18</param>
+            <result>/WEB-INF/views/mobile/user/update_password_input.jsp</result>
+        </action>
+        
+        <action name="updatePass" class="com.biencloud.smarthome.web.login.action.LoginAction" method="updatePass">
+            <param name="menuCode">M000000</param>
+            <param name="operationCode">19</param>
+            <result name="error">/WEB-INF/views/mobile/user/update_password_input.jsp</result>
+            <result>/WEB-INF/views/mobile/user/update_password_input.jsp</result>
+        </action>
+        
+        <action name="index" class="com.biencloud.smarthome.web.mobile.action.login.LoginAction" method="index">
+            <param name="ignoreLog">true</param>
+            <result name="owner">/WEB-INF/views/mobile/index_owner.jsp</result>
+        </action>
+        
+        <action name="go" class="com.biencloud.smarthome.web.mobile.action.login.LoginAction" method="login">
+            <param name="menuCode">M000000</param>
+            <param name="operationCode">13</param>
+            <result name='error'>/mobile/login.jsp</result>
+            <result type="redirectAction">
+                <param name="actionName">index</param>
+            </result>
+        </action>
+        
+        <action name="logout" class="com.biencloud.smarthome.web.login.action.LoginAction" method="exit">
+            <param name="menuCode">M000000</param>
+            <param name="operationCode">15</param>
+            <result>/mobile/login.jsp</result>            
+        </action>
+    </package>
+    
+    <package name="mobileAlarm" extends="default" namespace="/mobile/alarm">
+        <action name="alarmList" class="com.biencloud.smarthome.web.mobile.action.alarm.AlarmAction" method="queryList">
+        	<param name="menuCode">M003008</param>
+            <param name="operationCode">1</param>
+            <result name="list" >/WEB-INF/views/mobile/alarm/alarm_list.jsp</result>
+		</action>
+    </package>
+    
+    <package name="MobileCharge" extends="mobile-default" namespace="/mobile/charge">       
+        <action name="queryChargeList" class="com.biencloud.smarthome.web.mobile.action.charge.ChargeDetailAction" method="queryList">
+            <param name="menuCode">M003504</param>
+            <param name="operationCode">1</param>
+            <result name="list">/WEB-INF/views/mobile/charge/charge_list.jsp</result>
+        </action>
+        <action name="findById" class="com.biencloud.smarthome.web.mobile.action.charge.ChargeDetailAction" method="findById">
+            <param name="menuCode">M003504</param>
+            <param name="operationCode">1</param>
+            <result name="detail">/WEB-INF/views/mobile/charge/detail_charge.jsp</result>
+        </action>
+    </package>
+    <package name="MobileInfo" extends="mobile-default" namespace="/mobile/info">       
+        <action name="queryInfoSendList" class="com.biencloud.smarthome.web.mobile.action.info.InfoSendAction" method="queryList">
+            <param name="menuCode">M003506</param>
+            <param name="operationCode">1</param>
+            <result name="list">/WEB-INF/views/mobile/info/info_send_list.jsp</result>
+        </action>
+        <action name="findInfoSend" class="com.biencloud.smarthome.web.mobile.action.info.InfoSendAction" method="findById">
+            <param name="menuCode">M003506</param>
+            <param name="operationCode">1</param>
+            <result name="detail">/WEB-INF/views/mobile/info/detail_send.jsp</result>
+        </action>
+        <action name="gotoInputInfoSend" class="com.biencloud.smarthome.web.mobile.action.info.InfoSendAction" method="gotoInput">
+            <param name="menuCode">M003506</param>
+            <param name="operationCode">1</param>
+            <result>/WEB-INF/views/mobile/info/infoSend_add.jsp</result>
+        </action>
+        <action name="saveInfoSend" class="com.biencloud.smarthome.web.mobile.action.info.InfoSendAction" method="save">
+            <param name="menuCode">M003506</param>
+            <param name="operationCode">3</param>
+            <result type="redirectAction">
+                <param name="actionName">queryInfoSendList</param>
+            </result>
+        </action>
+        <action name="sendInfo" class="com.biencloud.smarthome.web.mobile.action.info.InfoSendAction" method="sendInfo">
+            <param name="menuCode">M003506</param>
+            <param name="operationCode">4</param>
+            <result type="redirectAction">
+                <param name="actionName">queryInfoSendList</param>
+            </result>
+        </action>
+        <action name="queryInfoReceiverList" class="com.biencloud.smarthome.web.mobile.action.info.InfoReceiverAction" method="queryList">
+            <param name="menuCode">M003506</param>
+            <param name="operationCode">1</param>
+            <result name="list">/WEB-INF/views/mobile/info/info_receiver_list.jsp</result>
+        </action>
+        <action name="findInfoReceiver" class="com.biencloud.smarthome.web.mobile.action.info.InfoReceiverAction" method="findById">
+            <param name="menuCode">M003506</param>
+            <param name="operationCode">1</param>
+            <result name="detail">/WEB-INF/views/mobile/info/detail_receiver.jsp</result>
+        </action>
+    </package>
+        
+    <package name="mobileMonitor" extends="default" namespace="/mobile/monitor">
+    	<action name="remoteIndex" class="com.biencloud.smarthome.web.mobile.action.monitor.MonitorAction" method="remoteIndex">
+        	<param name="menuCode">M003003</param>
+            <param name="operationCode">1</param>
+            <result name="remote_index" >/WEB-INF/views/mobile/monitor/remote_index.jsp</result>
+		</action>
+        <action name="remoteUnlockInput" class="com.biencloud.smarthome.web.mobile.action.monitor.MonitorAction" method="remoteUnlockInput">
+        	<param name="menuCode">M003003</param>
+            <param name="operationCode">14</param>
+            <result name="remote_unlock_input" >/WEB-INF/views/mobile/monitor/remote_unlock.jsp</result>
+		</action>
+		<action name="remoteUnlock" class="com.biencloud.smarthome.web.mobile.action.monitor.MonitorAction" method="remoteUnlock">
+        	<param name="menuCode">M003003</param>
+            <param name="operationCode">8</param>
+            <result name="remote_unlock_input" >/WEB-INF/views/mobile/monitor/remote_unlock.jsp</result>
+		</action>
+		<action name="remoteSceneControl" class="com.biencloud.smarthome.web.mobile.action.monitor.MonitorAction" method="remoteSceneControl">
+        	<param name="menuCode">M003003</param>
+            <param name="operationCode">8</param>
+            <result name="remote_scene_control" >/WEB-INF/views/mobile/monitor/deployment.jsp</result>
+		</action>
+        <action name="remoteApplianceControl" class="com.biencloud.smarthome.web.mobile.action.monitor.MonitorAction"
+                method="remoteApplianceControl">
+            <param name="menuCode">M003003</param>
+            <param name="operationCode">8</param>
+            <result name="remote_appliance_control">/WEB-INF/views/mobile/monitor/remote_appliance_control.jsp</result>
+        </action>
+        <action name="remoteApplianceSceneControl" class="com.biencloud.smarthome.web.mobile.action.monitor.MonitorAction"
+                method="remoteApplianceSceneControl">
+            <param name="menuCode">M003003</param>
+            <param name="operationCode">8</param>
+            <result name="remote_appliance_scene_control">/WEB-INF/views/mobile/monitor/remote_appliance_scene_control.jsp</result>
+        </action>
+    </package>
+
+    <package name="MobileLeaveWord" extends="mobile-default" namespace="/mobile/leaveWord"> 
+      <action name="wordList" class="com.biencloud.smarthome.web.mobile.action.leaveword.LeaveWordsAction" method="messageList">
+        	<param name="menuCode">M002011</param>
+            <param name="operationCode">1</param>
+            <result name="list">/WEB-INF/views/mobile/leaveword/words_list.jsp</result>
+        </action>
+        <action name="viewDetail" class="com.biencloud.smarthome.web.mobile.action.leaveword.LeaveWordsAction" method="viewDetail">
+        	<param name="menuCode">M002011</param>
+            <param name="operationCode">1</param>
+            <result name="detail">/WEB-INF/views/mobile/leaveword/words_detail.jsp</result>
+        </action>
+        <action name="viewImage" class="com.biencloud.smarthome.web.mobile.action.leaveword.LeaveWordsAction" method="viewImage">
+        	<param name="menuCode">M002011</param>
+            <param name="operationCode">1</param>
+            <result name="image">/WEB-INF/views/mobile/leaveword/image_detail.jsp</result>
+        </action>
+        
+    </package>
+</struts>    

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" default-autowire="byName"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:aop="http://www.springframework.org/schema/aop"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:tx="http://www.springframework.org/schema/tx"
+        xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">    
+    
+
+    
+    <!-- app获取门禁数据 -->
+    <bean id="gatePermissionsService" class="com.biencloud.smarthome.web.appdata.service.impl.GatePermissionsServiceImpl"/>
+    <!-- app获取物业公司信息 -->
+    <bean id="companyInfoService" class="com.biencloud.smarthome.web.appdata.service.impl.CompanyInfoServiceImpl"/>
+    <!-- app获取房产信息 -->
+    <bean id="houseInfoService" class="com.biencloud.smarthome.web.appdata.service.impl.HouseInfoServiceImpl"/> 
+     
+     <!-- 地址薄Service -->
+    <bean id="addressBookService" class="com.biencloud.smarthome.web.appdata.service.impl.AddressBookServiceImpl"></bean>
+    
+    <!-- 获取户户通房号列表Service -->
+    <bean id="roomService" class="com.biencloud.smarthome.web.appdata.service.impl.RoomServiceImpl"></bean>
+    
+    <!-- 获取监控列表Service -->
+    <bean id="monitorDeviceService" class="com.biencloud.smarthome.web.appdata.service.impl.MonitorDeviceServiceImpl"></bean>
+    
+    <!-- 获取收费数据Service -->
+    <bean id="chargeService" class="com.biencloud.smarthome.web.appdata.service.impl.ChargeServiceImpl"></bean>
+    
+    <!-- 保存设备开锁密码Service -->
+    <bean id="devicePasswordService" class="com.biencloud.smarthome.web.appdata.service.impl.DevicePasswordServiceImpl"></bean>
+</beans>
+

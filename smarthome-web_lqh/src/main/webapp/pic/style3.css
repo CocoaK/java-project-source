@@ -1,0 +1,74 @@
+.MultiEditBox
+{
+    width:354;
+    background: #f8f8f8;
+    border-bottom: #B7B7B7 1px solid;
+    border-left: #B7B7B7 1px solid;
+    border-right: #B7B7B7 1px solid;
+    border-top: #B7B7B7 1px solid;
+    color: #000000;
+    cursor: text;
+    font-family: "Arial";
+    font-size: 9pt;
+    padding: 1px;
+}
+
+.NoneInput
+{
+    text-align:left;
+    width:354;
+    border-top-style: none;
+    border-right-style: none
+    border-left-style: none;
+    background-color: #f6f6f6;
+    border-bottom-style: #000000 1px solid;
+}
+
+.Input1 { 
+        width:354;
+        border-left: #666666 1px solid; 
+	border-right: #cccccc 1px solid; 
+	border-top: #666666 1px solid; 
+	border-bottom: #cccccc 1px solid; 
+	background-color: #FFFFFF; 
+	font-family: "MS Shell Dlg", "Tahoma", "宋体"; 
+	font-size: 12px; 
+	height: 19px; 
+	padding-top: 2px;
+}
+.Input2 { 
+        width:354;
+        border-left: #B7B7B7 1px solid; 
+	border-right: #B7B7B7 1px solid; 
+	border-top: #B7B7B7 1px solid; 
+	border-bottom: #B7B7B7 1px solid; 
+	background-color: #FFFFFF; 
+	font-family: "MS Shell Dlg", "Tahoma", "宋体"; 
+	font-size: 12px; 
+	height: 19px; 
+	padding-top: 2px;
+}
+.Input3 { 
+        width:177;
+        border-left: #B7B7B7 1px solid; 
+	border-right: #B7B7B7 1px solid; 
+	border-top: #B7B7B7 1px solid; 
+	border-bottom: #B7B7B7 1px solid; 
+	background-color: #FFFFFF; 
+	font-family: "MS Shell Dlg", "Tahoma", "宋体"; 
+	font-size: 12px; 
+	height: 19px; 
+	padding-top: 2px;
+}
+.Input33 { 
+        width:177;
+        border-left: #666666 1px solid; 
+	border-right: #cccccc 1px solid; 
+	border-top: #666666 1px solid; 
+	border-bottom: #cccccc 1px solid; 
+	background-color: #FFFFFF; 
+	font-family: "MS Shell Dlg", "Tahoma", "宋体"; 
+	font-size: 12px; 
+	height: 19px; 
+	padding-top: 2px;
+}

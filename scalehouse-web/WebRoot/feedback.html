@@ -1,0 +1,512 @@
+<meta http-equiv="content-type" content="text/html;charset=UTF-8">
+<!-- <link rel="stylesheet" type="text/css" href="fontawesome-4.2.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="css/wangEditor-1.1.0-min.css"> -->
+<link rel="stylesheet" type="text/css" href="css/wangEditor.min.css">
+<!--引入 wangEditor.js-->
+<!-- <script type="text/javascript" src='js/wangEditor-1.1.0-min.js'></script> -->
+<div class="easyui-layout" data-options="fit:true">
+    <div data-options="region:'center',border:false">
+        <div style="width:100%;line-height:50px" id="toolbarf">
+			<label>地区选择：</label><!-- <input id="area" class="easyui-combobox" data-options="editable:false,panelHeight:'auto'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+			<select id="area_feedback" style="width:115px">
+				
+			</select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		    <label>产品选择：</label><!-- <input id="product" class="easyui-combobox" data-options="valueField: 'deviceType',textField: 'deviceName',editable:false,panelHeight:'auto'"> -->
+		    <select id="product_feedback" style="width:115px">   
+			   
+			</select>
+			<div style="display:inline-block;width:200px;float:right"><button onclick="removeFee()">删除</button>
+			<select id="feedback_status" style="width:115px;margin-top:17px;margin-right:20px;display:inline-block;float:right">   
+			   <option value="" selected>全部反馈</option>
+			   <option value='1'>已处理</option>
+			   <option value='0'>未处理</option>
+			</select>
+			</div>
+		</div>
+        <!-- End of toolbar -->
+        <table id="datagridFeedback" toolbar="#toolbarf"></table>
+    </div>
+</div>
+<div id="fade" class="black_overlay"></div>
+<div id="frame">
+	<span id="icon"></span>
+	<p id="feedbackId" style="display:none"></p>
+	<table style="margin-top:20px;">
+        <tr>
+            <td>收件人:</td>
+            <td><input type="text" style="width:100%;height:20px;" id="touser"></td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td style="letter-spacing:0.3px;">主&nbsp;&nbsp;&nbsp;题:</td>
+            <td><input type="text" style="width:100%;height:20px;" id="emailtheme"></td>
+        </tr>
+    </table>
+    <textarea id="content"  placeholder="这里是内容"></textarea>
+    <!-- <div id='txtDiv' style='border:1px solid #cccccc;margin-top:10px;'>
+        
+    </div> -->
+    <div style="margin-top:10px">
+    	<button id="sendemail">发送</button>
+    	<button id="cancel">取消</button>
+    </div>
+</div>
+<!-- <div id="person_email">
+	<span id="icon_email"></span>
+	<table style="margin-top:20px;">
+        <tr>
+            <td>账户:</td>
+            <td><input type="text" style="width:100%;height:20px;" id="person_account"></td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td>昵称:</td>
+            <td><input type="text" style="width:100%;height:20px;" id="person_username"></td>
+        </tr>
+    </table>
+	<table>
+        <tr>
+            <td>主题:</td>
+            <td><input type="text" style="width:100%;height:20px;" id="person_theme"></td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td>内容:</td>
+            <td><textarea rows="10" cols="" id="person_content">
+		    	
+		    </textarea></td>
+        </tr>
+    </table>
+</div> -->
+<div id="person_email">
+	<span id="icon_email"></span>
+    <p>反馈内容:</p>
+    <p id="person_content" style="text-indent:2em;"></p>
+</div>
+<div id="view_feedback">
+	<span id="icon_view_feedback"></span>
+	<p>回复内容:</p>
+	<p id="view_feedback_content" style="text-indent:2em;"></p>
+	<!-- <table>
+		<tr>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+		</tr>
+	</table> -->
+</div>
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript">
+	//var url="http://192.156.1.230:8088/";
+	var storage = window.sessionStorage;
+
+	/**
+	* Name 删除记录
+	*/
+	function removeFee(){
+		var items = $('#datagridFeedback').datagrid('getSelections');
+		if(items==null || items.length==0){
+			//alert("请先选择要删除的内容");
+			$.messager.alert('信息提示','请先选择要删除的内容！','info');
+		}else{
+			$.messager.confirm('信息提示','确定要删除该记录？', function(result){
+				if(result){
+					var items = $('#datagridFeedback').datagrid('getSelections');
+					var ids = [];
+					$(items).each(function(){
+						ids.push(this.id);	
+					});
+					//console.log(ids);
+					deleteFeedback(ids);
+					deleteReply(ids);
+				}	
+			});
+		}
+	}
+	
+	/**
+	* Name 载入数据
+	*/
+	$(function(){
+		datagridFee();
+		//var $editor = $('#txtDiv').wangEditor();
+		var editor = new wangEditor('content');
+    	editor.create();
+		//$(".textarea").height($("#txtDiv").height()-$(".btn-container").height());
+		$("#icon").click(function(){
+			/* $("#frame").css("display","none");
+			$(".black_overlay").css("display","none"); */
+			$("#frame").slideUp();
+			$(".black_overlay").slideUp();
+			$("#datagridFeedback").datagrid('unselectAll');
+		});
+		$("#icon_email").click(function(){
+			/* $("#person_email").css("display","none");
+			$(".black_overlay").css("display","none"); */
+			$("#person_email").slideUp();
+			$(".black_overlay").slideUp();
+			$("#datagridFeedback").datagrid('unselectAll');
+		});
+		$("#icon_view_feedback").click(function(){
+			/* $("#person_email").css("display","none");
+			$(".black_overlay").css("display","none"); */
+			$("#view_feedback").slideUp();
+			$(".black_overlay").slideUp();
+			$("#datagridFeedback").datagrid('unselectAll');
+		});
+		$("#cancel").click(function(){
+			/* $("#frame").css("display","none");
+			$(".black_overlay").css("display","none"); */
+			$("#frame").slideUp();
+			$(".black_overlay").slideUp();
+			$("#datagridFeedback").datagrid('unselectAll');
+		});
+		$("#sendemail").click(function(){
+			var user=$("#touser").val();
+			var theme=$("#emailtheme").val();
+			var content=$("#content").val();
+			var feedbackId=$("#feedbackId").text();
+			replyEmail(feedbackId,user, theme, content);
+		});
+		loadCombobox('area_feedback','product_feedback');
+		$("#area_feedback").change(function(){
+			var area=$("#area_feedback option:selected");
+			var product=$("#product_feedback option:selected");
+			var status=$("#feedback_status option:selected");
+			var options=$("#datagridFeedback").datagrid("options");
+			var pageStart=(options.pageNumber-1)*parseInt(options.pageSize);
+			fSelectAreaOrProduct(area.val(),product.val(),status.val(),pageStart,options.pageSize);
+		});
+		$("#product_feedback").change(function(){
+			var area=$("#area_feedback option:selected");
+			var product=$("#product_feedback option:selected");
+			var status=$("#feedback_status option:selected");
+			var options=$("#datagridFeedback").datagrid("options");
+			var pageStart=(options.pageNumber-1)*parseInt(options.pageSize);
+			fSelectAreaOrProduct(area.val(),product.val(),status.val(),pageStart,options.pageSize);
+		});
+		$("#feedback_status").change(function(){
+			var area=$("#area_feedback option:selected");
+			var product=$("#product_feedback option:selected");
+			var status=$("#feedback_status option:selected");
+			var options=$("#datagridFeedback").datagrid("options");
+			var pageStart=(options.pageNumber-1)*parseInt(options.pageSize);
+			fSelectAreaOrProduct(area.val(),product.val(),status.val(),pageStart,options.pageSize);
+		});
+		
+		var p = $('#datagridFeedback').datagrid('getPager');
+		if(p){
+			$(p).pagination({
+				onSelectPage:function(pageNumber, pageSize){
+					var gridOpts = $('#datagridFeedback').datagrid('options');
+					var area=$("#area_feedback option:selected");
+					var status=$("#feedback_status option:selected");
+					var product=$("#product_feedback option:selected");
+					var pageStart=(pageNumber-1)*parseInt(pageSize);
+					gridOpts.pageNumber = pageNumber;
+					gridOpts.pageSize = pageSize;
+					fgetAll(pageStart, pageSize,status.val(),area.val(),product.val());
+					/* var rowNumbers = $('.datagrid-cell-rownumber');
+					$(rowNumbers).each(function(index){
+						var row = parseInt($(rowNumbers[index]).html()) + parseInt((pageNumber-1)*parseInt(pageSize));
+						$(rowNumbers[index]).html("");
+						$(rowNumbers[index]).html(row);
+					}); */
+				}
+			});
+		}
+	});
+	function datagridFee(){
+		$('#datagridFeedback').datagrid({
+			//loadFilter:pagerFilter,
+			rownumbers:true,
+			singleSelect:false,
+			pageSize:20,
+			pagination:true,
+			multiSort:true,
+			fitColumns:true,
+			fit:true,
+			columns:[[
+				{ checkbox:true},
+				{ title:'id',field:'id',sortable:true,align:'center'},
+				{ title:'账户',field:'account',sortable:true,width:50,align:'center'},
+				{ title:'昵称',field:'username',sortable:true,width:40,align:'center'},
+				{ title:'主题',field:'title',width:50,align:'center'},
+				{ title:'反馈内容',field:'content',width:50,align:'center',
+					formatter: function(value, row, index) {
+                        return "<a href='#'  style='display:inline-block;color:blue'>"+row.content+"</a>";
+                    }
+				},
+				/* { title:'反馈详情',field: 'detail', width: 15, align: 'center',
+					formatter: function(value, rec) {
+                        return '<span><a href="#" style="text-decoration:underline;display:inline-block;color:blue">详情</a></span>';
+                    }
+                }, */
+				{ title:'反馈状态',field:'status',width:20,align:'center',
+					formatter: function(value, row, index) {
+						if(row.status=='1'){
+	                        return "已处理";
+						}else{
+							return "未处理";
+						}
+                    }
+                },
+				{ title:'反馈时间',field:'createTime',width:30,align:'center',
+					formatter: function(value, row, index) {
+						/* Date.prototype.toLocaleString = function() {
+					          return this.getFullYear() + "-" + (this.getMonth() + 1) + "-" + this.getDate() + " " + this.getHours() + ":" + this.getMinutes() + ":" + this.getSeconds();
+					    }; */
+						var unixTimestamp = new Date(row.createTime) ;
+						//commonTime = unixTimestamp.toLocaleString();
+						//alert(commonTime);
+						return unixTimestamp.Format("yyyy-MM-dd HH:mm:ss");
+                    }
+                },
+				{ title: '操作',field: 'opt', width: 20, align: 'center',
+					formatter: function(value, row, index) {
+						if(row.status=='1'){
+	                        return "<span><a href='#' style='text-decoration:underline;display:inline-block;color:blue'>"+'查看回复'+"</a></span>";
+						}else{
+							return "<span><a href='#' style='text-decoration:underline;display:inline-block;color:blue'>"+'回复'+"</a></span>";
+						}
+                    }
+                }
+			]],
+			onClickCell:function(rowIndex, field, value){
+				var rows = $('#datagridFeedback').datagrid('getRows');
+		        var row = rows[rowIndex];
+		        if(field == 'opt' && row.status=='0'){
+		            /* var rows = $('#datagridFeedback').datagrid('getRows');
+		            var row = rows[rowIndex];
+		            alert(row.id); */
+		            //var selected = $('#datagridFeedback').datagrid('getSelection');
+		            /* $(".black_overlay").css("display","block");
+		            $("#frame").css("display","block"); */
+		            $(".wangEditor-txt").html("");
+		            $(".black_overlay").slideDown();
+		            $("#frame").slideDown();
+		            //var rows = $('#datagridFeedback').datagrid('getRows');
+		            //var row = rows[rowIndex];
+		            $("#feedbackId").html(row.id);
+		            $("#touser").val(row.account);
+		            $("#emailtheme").val("reply:"+row.title);
+		            $("#frame td input").attr("disabled","disabled");
+		            $("#frame td input").css("cursor","not-allowed");
+		        }else if(field == 'opt' && row.status=='1'){
+		        	$(".black_overlay").slideDown();
+		        	$("#view_feedback").slideDown();
+		        	viewfeedback(row.id);
+		        }
+		        /* if(field == 'detail'){
+		        	//$(".black_overlay").css("display","block");
+		        	//$("#person_email").css("display","block");
+		        	$(".black_overlay").slideDown();
+		        	$("#person_email").slideDown();
+		        	var rows = $('#datagridFeedback').datagrid('getRows');
+		            var row = rows[rowIndex];
+		        	feedbackdetail(row.id);
+		        } */
+		        if(field == 'content'){
+		        	//$(".black_overlay").css("display","block");
+		        	//$("#person_email").css("display","block");
+		        	$(".black_overlay").slideDown();
+		        	$("#person_email").slideDown();
+		        	//var rows = $('#datagridFeedback').datagrid('getRows');
+		            //var row = rows[rowIndex];
+		        	feedbackdetail(row.id);
+		        }
+		    },
+		    onLoadSuccess : function () {
+		        $(this).datagrid("fixRownumber");
+		    }
+		});
+		var options=$("#datagridFeedback").datagrid("options");
+		var pageStart=(options.pageNumber-1)*parseInt(options.pageSize);
+		fgetAll(pageStart,options.pageSize);
+	}
+	function fgetAll(pageNumber,pageSize,status,countryCode,type){
+		$.ajax({
+			url:service_url+'scalehouse/feedback/getList',
+			type:'post',
+			dataType:'json',
+			data:{
+				'pageNumber':pageNumber,
+				'pageSize':pageSize,
+				'status':status,
+				'countryCode':countryCode,
+				'type':type
+			},
+			cache:false,
+			success:function(json){
+				$('#datagridFeedback').datagrid('loadData', json);
+				$('#datagridFeedback').datagrid('hideColumn', 'id');
+				//$('#datagridFeedback').datagrid('hideColumn', 'createTime');
+			},
+			error:function(){
+				//alert("error");
+				$.messager.alert('信息提示','error!','info');
+			}
+		});
+	}
+	function replyEmail(feedbackId,user,theme,content){
+		$.ajax({
+			url:service_url+'scalehouse/person/replyEmail',
+			type:'post',
+			dataType:'json',
+			data:{
+				'feedbackId':feedbackId,
+				'user':user,
+				'theme':theme,
+				'content':content
+			},
+			cache:false,
+			success:function(json){
+				if(json.code==1){
+					var feedbackId=$("#feedbackId").text();
+					var status="1";
+					updateStatus(feedbackId,status);
+				}else{
+					$.messager.alert('信息提示','网络太差，稍后再试!','info');
+				}
+			},
+			error:function(){
+				$.messager.alert('信息提示','网络太差，稍后再试!','info');
+			}
+		});
+	}
+	function updateStatus(feedbackId,status){
+		$.ajax({
+			url:service_url+'scalehouse/feedback/updateByFeedbackId',
+			type:'post',
+			dataType:'json',
+			data:{
+				'feedbackId':feedbackId,
+				'status':status
+			},
+			cache:false,
+			success:function(json){
+				if(json.code==1){
+					$.messager.alert('信息提示','回复反馈成功!','info');
+					$("#frame").css("display","none");
+					$(".black_overlay").css("display","none");
+					$("#datagridFeedback").datagrid('unselectAll');
+					datagridFee();
+				}else{
+					$.messager.alert('信息提示','网络太差，稍后再试!','info');
+				}
+			},
+			error:function(){
+				$.messager.alert('信息提示','网络太差，稍后再试!','info');
+			}
+		});
+	}
+	function feedbackdetail(id){
+		$.ajax({
+			url:service_url+'scalehouse/feedback/getOne',
+			type:'post',
+			dataType:'json',
+			data:{
+				'id':id
+			},
+			cache:false,
+			success:function(json){
+				if(json.code==1){
+					$("#person_account").val(json.data[0].account);
+					$("#person_username").val(json.data[0].username);
+					$("#person_theme").val(json.data[0].title);
+					$("#person_content").html(json.data[0].content);
+					$("#person_account").attr("readonly","readonly");
+					$("#person_username").attr("readonly","readonly");
+					$("#person_theme").attr("readonly","readonly");
+					$("#person_content").attr("readonly","readonly");
+				}else{
+					$.messager.alert('信息提示','网络太差，稍后再试!','info');
+				}
+			},
+			error:function(){
+				$.messager.alert('信息提示','网络太差，稍后再试!','info');
+			}
+		});
+	}
+	function viewfeedback(id){
+		$.ajax({
+			url:service_url+'scalehouse/reply/getOne',
+			type:'post',
+			dataType:'json',
+			data:{
+				'feedbackId':id
+			},
+			cache:false,
+			success:function(json){
+				if(json.code==1){
+					$("#view_feedback_content").html(json.data.content);
+				}else{
+					$.messager.alert('信息提示','网络太差，稍后再试!','info');
+				}
+			},
+			error:function(){
+				$.messager.alert('信息提示','网络太差，稍后再试!','info');
+			}
+		});
+	}
+	function deleteFeedback(feedbackIds){
+		$.ajax({
+			url:service_url+'scalehouse/feedback/deleteGroup',
+			type:'post',
+			dataType:'json',
+			traditional: true,
+			data:{
+				"ids":feedbackIds
+			},
+			cache:false,
+			success:function(json){
+				if(json.code==1){
+					$.messager.alert('信息提示','删除反馈成功！','info');
+					datagridFee();
+				}else{
+					$.messager.alert('信息提示','删除反馈失败！','info');
+				}
+			},
+			error:function(){
+				$.messager.alert('信息提示','网络错误,删除反馈失败！','info');
+			}
+		});
+	}
+	function deleteReply(feedbackIds){
+		$.ajax({
+			url:service_url+'scalehouse/reply/deleteGroup',
+			type:'post',
+			dataType:'json',
+			traditional: true,
+			data:{
+				"feedbackIds":feedbackIds
+			},
+			cache:false,
+			success:function(json){
+				if(json.code==1){
+					$.messager.alert('信息提示','删除回复成功！','info');
+					datagridFee();
+				}else{
+					$.messager.alert('信息提示','删除回复失败！','info');
+				}
+			},
+			error:function(){
+				$.messager.alert('信息提示','网络错误,删除回复失败！','info');
+			}
+		});
+	}
+</script>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.biencloud.smarthome.service.rest.mapper.UserMapper" >
+  <resultMap id="baseResult" type="com.biencloud.smarthome.service.rest.model.User" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="sipid" property="sipid" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="baseColumns" >
+    id, username, password, type, status, mobile, sipid, email, create_time, update_time, remark
+  </sql>
+  <select id="getForList" resultMap="baseResult" >
+    select 
+    	<include refid="baseColumns" />
+    from t_user
+    where 1=1
+      <if test="username != null" >
+        and binary username = #{username,jdbcType=VARCHAR}
+      </if>
+      <if test="password != null" >
+        and password = #{password,jdbcType=VARCHAR}
+      </if>
+      <if test="type != null" >
+        and type = #{type,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null" >
+        and status = #{status,jdbcType=INTEGER}
+      </if>
+      <if test="mobile != null" >
+        and mobile = #{mobile,jdbcType=VARCHAR}
+      </if>
+      <if test="sipid != null" >
+        and mobile = #{sipid,jdbcType=VARCHAR}
+      </if>
+      <if test="email != null" >
+        and email = #{email,jdbcType=VARCHAR}
+      </if>
+  </select>
+  <select id="getForPage" resultMap="baseResult">
+    select 
+    	<include refid="baseColumns" />
+    from t_user
+	where 1=1
+      <if test="po.username != null" >
+        and username = #{po.username,jdbcType=VARCHAR}
+      </if>
+      <if test="po.password != null" >
+        and password = #{po.password,jdbcType=VARCHAR}
+      </if>
+      <if test="po.type != null" >
+        and type = #{po.type,jdbcType=VARCHAR}
+      </if>
+      <if test="po.status != null" >
+        and status = #{po.status,jdbcType=INTEGER}
+      </if>
+      <if test="po.mobile != null" >
+        and mobile = #{po.mobile,jdbcType=VARCHAR}
+      </if>
+      <if test="po.sipid != null" >
+        and sipid = #{po.sipid,jdbcType=VARCHAR}
+      </if>
+      <if test="po.email != null" >
+        and email = #{po.email,jdbcType=VARCHAR}
+      </if>
+
+  </select>
+  <select id="getForOne" resultMap="baseResult" parameterType="java.lang.Long" >
+    select 
+    <include refid="baseColumns" />
+    from t_user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="delete" parameterType="java.lang.Long" >
+    delete from t_user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.biencloud.smarthome.service.rest.model.User" >
+    insert into t_user (id, username, password, 
+      type, status, mobile, sipid, 
+      email, create_time, update_time, remark
+      )
+    values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{mobile,jdbcType=VARCHAR},  #{sipid,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateOnActive" parameterType="com.biencloud.smarthome.service.rest.model.User" >
+    update t_user
+    <set >
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="sipid != null" >
+        sipid = #{sipid,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="update" parameterType="com.biencloud.smarthome.service.rest.model.User" >
+    update t_user
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      sipid = #{sipid,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <insert id="insertGetId" useGeneratedKeys="true" parameterType="com.biencloud.smarthome.service.rest.model.User" keyProperty="id">
+  insert into t_user (id, username, password, 
+      type, status, mobile, sipid,
+      email, create_time, update_time, remark
+      )
+    values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{mobile,jdbcType=VARCHAR}, #{sipid,jdbcType=VARCHAR},
+      #{email,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+</mapper>

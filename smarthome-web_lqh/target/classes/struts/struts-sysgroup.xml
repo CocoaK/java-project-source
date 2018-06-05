@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="sysgroup" namespace="/sysgroup" extends="default">		
+		<!-- ChargeMonetaryUnit -->	
+		<action name="querySystemGroupList" class="com.biencloud.smarthome.web.systemgroup.action.SystemGroupAction" method="queryList">
+		    <param name="menuCode">M001008</param>
+            <param name="operationCode">1</param>
+            <result name="list" >/WEB-INF/views/sysgroup/query_list.jsp</result>	
+        </action>
+        <action name="querySystemGroupComList" class="com.biencloud.smarthome.web.systemgroup.action.SystemGroupAction" method="queryComList">
+            <param name="menuCode">M001008</param>
+            <param name="operationCode">1</param>
+            <result name="list" >/WEB-INF/views/sysgroup/query_list.jsp</result>	
+        </action>
+        <action name="editSystemGroupData" class="com.biencloud.smarthome.web.systemgroup.action.SystemGroupAction" method="editData">
+            <param name="menuCode">M001008</param>
+            <param name="operationCode">5</param>
+            <result name="list" >/WEB-INF/views/sysgroup/query_list.jsp</result>	
+        </action>
+        <action name="DelSystemGroupData" class="com.biencloud.smarthome.web.systemgroup.action.SystemGroupAction" method="DelData">
+            <param name="menuCode">M001008</param>
+            <param name="operationCode">7</param>
+            <result name="list" >/WEB-INF/views/sysgroup/query_list.jsp</result>	
+        </action>
+        
+        <action name="validateIsGenratorRegion" class="com.biencloud.smarthome.web.systemgroup.action.SystemGroupAction" method="validateIsGenratorRegion">
+            <param name="menuCode">M001008</param>
+            <param name="operationCode">1</param>
+        </action>
+	</package>
+	<package name="SystemGroupJson" extends="json" namespace="/json/systemGroup">
+        <action name="querySystemGroup" class="com.biencloud.smarthome.web.systemgroup.action.SystemGroupAction" method="queryListForJson">
+            <param name="ignoreLog">true</param>
+            <result type="json">
+                <param name="includeProperties">
+                    ^sysgroups\[\d+\]\.groupNo,
+                    ^sysgroups\[\d+\]\.groupName
+                </param>
+            </result>
+        </action>
+    </package>
+</struts>    

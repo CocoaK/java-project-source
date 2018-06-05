@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.biencloud.smarthome.service.rest.mapper.CallRecordMapper" >
+  <resultMap id="baseResult" type="com.biencloud.smarthome.service.rest.model.CallRecord" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="call_id" property="callId" jdbcType="VARCHAR" />
+    <result column="device_id" property="deviceId" jdbcType="BIGINT" />
+    <result column="device_code" property="deviceCode" jdbcType="VARCHAR" />
+    <result column="call_type" property="callType" jdbcType="CHAR" />
+    <result column="caller" property="caller" jdbcType="VARCHAR" />
+    <result column="call_time" property="callTime" jdbcType="TIMESTAMP" />
+    <result column="talk_time" property="talkTime" jdbcType="BIGINT" />
+    <result column="video_local_path" property="videoLocalPath" jdbcType="VARCHAR" />
+    <result column="video_net_path" property="videoNetPath" jdbcType="VARCHAR" />
+    <result column="audio_local_path" property="audioLocalPath" jdbcType="VARCHAR" />
+    <result column="audio_net_path" property="audioNetPath" jdbcType="VARCHAR" />
+    <result column="picture_local_path" property="pictureLocalPath" jdbcType="VARCHAR" />
+    <result column="picture_net_path" property="pictureNetPath" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="baseColumns" >
+    id, call_id, device_id, device_code, call_type, caller, call_time, talk_time, video_local_path, 
+    video_net_path, audio_local_path, audio_net_path, picture_local_path, picture_net_path
+  </sql>
+  <select id="getForList" resultMap="baseResult" >
+    select id, call_id, device_id, device_code, call_type, caller, call_time, talk_time, 
+    video_local_path, video_net_path, audio_local_path, audio_net_path, picture_local_path, 
+    picture_net_path
+    from t_call_record
+  </select>
+  <select id="getForOne" resultMap="baseResult" parameterType="java.lang.Long" >
+    select 
+    <include refid="baseColumns" />
+    from t_call_record
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="delete" parameterType="java.lang.Long" >
+    delete from t_call_record
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.biencloud.smarthome.service.rest.model.CallRecord" >
+    insert into t_call_record (id, call_id, device_id, 
+      device_code, call_type, caller, 
+      call_time, talk_time, video_local_path, 
+      video_net_path, audio_local_path, audio_net_path, 
+      picture_local_path, picture_net_path)
+    values (#{id,jdbcType=BIGINT}, #{callId,jdbcType=VARCHAR}, #{deviceId,jdbcType=BIGINT}, 
+      #{deviceCode,jdbcType=VARCHAR}, #{callType,jdbcType=CHAR}, #{caller,jdbcType=VARCHAR}, 
+      #{callTime,jdbcType=TIMESTAMP}, #{talkTime,jdbcType=BIGINT}, #{videoLocalPath,jdbcType=VARCHAR}, 
+      #{videoNetPath,jdbcType=VARCHAR}, #{audioLocalPath,jdbcType=VARCHAR}, #{audioNetPath,jdbcType=VARCHAR}, 
+      #{pictureLocalPath,jdbcType=VARCHAR}, #{pictureNetPath,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateOnActive" parameterType="com.biencloud.smarthome.service.rest.model.CallRecord" >
+    update t_call_record
+    <set >
+      <if test="callId != null" >
+        call_id = #{callId,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceId != null" >
+        device_id = #{deviceId,jdbcType=BIGINT},
+      </if>
+      <if test="deviceCode != null" >
+        device_code = #{deviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="callType != null" >
+        call_type = #{callType,jdbcType=CHAR},
+      </if>
+      <if test="caller != null" >
+        caller = #{caller,jdbcType=VARCHAR},
+      </if>
+      <if test="callTime != null" >
+        call_time = #{callTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="talkTime != null" >
+        talk_time = #{talkTime,jdbcType=BIGINT},
+      </if>
+      <if test="videoLocalPath != null" >
+        video_local_path = #{videoLocalPath,jdbcType=VARCHAR},
+      </if>
+      <if test="videoNetPath != null" >
+        video_net_path = #{videoNetPath,jdbcType=VARCHAR},
+      </if>
+      <if test="audioLocalPath != null" >
+        audio_local_path = #{audioLocalPath,jdbcType=VARCHAR},
+      </if>
+      <if test="audioNetPath != null" >
+        audio_net_path = #{audioNetPath,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureLocalPath != null" >
+        picture_local_path = #{pictureLocalPath,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureNetPath != null" >
+        picture_net_path = #{pictureNetPath,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="update" parameterType="com.biencloud.smarthome.service.rest.model.CallRecord" >
+    update t_call_record
+    set call_id = #{callId,jdbcType=VARCHAR},
+      device_id = #{deviceId,jdbcType=BIGINT},
+      device_code = #{deviceCode,jdbcType=VARCHAR},
+      call_type = #{callType,jdbcType=CHAR},
+      caller = #{caller,jdbcType=VARCHAR},
+      call_time = #{callTime,jdbcType=TIMESTAMP},
+      talk_time = #{talkTime,jdbcType=BIGINT},
+      video_local_path = #{videoLocalPath,jdbcType=VARCHAR},
+      video_net_path = #{videoNetPath,jdbcType=VARCHAR},
+      audio_local_path = #{audioLocalPath,jdbcType=VARCHAR},
+      audio_net_path = #{audioNetPath,jdbcType=VARCHAR},
+      picture_local_path = #{pictureLocalPath,jdbcType=VARCHAR},
+      picture_net_path = #{pictureNetPath,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

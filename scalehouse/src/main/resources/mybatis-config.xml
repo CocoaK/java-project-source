@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE configuration  
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"  
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- value="mssql58|mssql12|oracle|mysql|db2" -->
+	<properties>
+		<property name="dialect" value="mysql" />
+	</properties>
+	
+	<settings>
+      <setting name="callSettersOnNulls" value="true"/>
+  	</settings>
+  	
+  	<plugins>
+		<plugin interceptor="com.quhwa.scalehouse.common.page.ResultSetInterceptor" />
+		<plugin interceptor="com.quhwa.scalehouse.common.page.PageInterceptor">
+			<property name="dialect" value="mysql" />
+			<!-- 在mapper中SQL语句的id必须包含Page才能被拦截。否则将不会做拦截分页处理（正则匹配） -->
+			<property name="pageSqlId" value=".*PageList.*" />
+		</plugin>
+	</plugins>
+</configuration>

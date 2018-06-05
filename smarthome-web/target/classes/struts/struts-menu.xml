@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="Menu" extends="default" namespace="/menu">
+        <action name="viewDetail" class="com.biencloud.smarthome.web.menu.action.MenuAction" method="viewDetail">
+            <param name="menuCode">M001009</param>
+            <param name="operationCode">2</param>
+            <result>/WEB-INF/views/menu/view_detail.jsp</result>
+        </action>
+
+        <action name="queryList" class="com.biencloud.smarthome.web.menu.action.MenuAction" method="queryList">
+            <param name="menuCode">M001009</param>
+            <param name="operationCode">1</param>
+            <result>/WEB-INF/views/menu/query_list.jsp</result>
+        </action>
+
+        <action name="updateInput" class="com.biencloud.smarthome.web.menu.action.MenuAction" method="updateInput">
+            <param name="menuCode">M001009</param>
+            <param name="operationCode">5</param>
+            <result>/WEB-INF/views/menu/update_input.jsp</result>
+        </action>
+
+        <action name="update" class="com.biencloud.smarthome.web.menu.action.MenuAction" method="update">
+            <param name="menuCode">M001009</param>
+            <param name="operationCode">6</param>
+            <result>/WEB-INF/views/menu/update_input.jsp</result>
+        </action>
+        
+        <action name="hideOrDisplay" class="com.biencloud.smarthome.web.menu.action.MenuAction" method="hideOrDisplay">
+            <param name="menuCode">M001009</param>
+            <param name="operationCode">20</param>
+            <result>/WEB-INF/views/menu/query_list.jsp</result>
+        </action>
+    </package>
+</struts>

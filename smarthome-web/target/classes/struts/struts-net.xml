@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="net" extends="json" namespace="/net">
+        <action name="netAction_toPing" class="com.biencloud.smarthome.web.net.action.NetAction" method="toPing">    	    					
+			<result name="toPing" >/WEB-INF/views/net/ping.jsp</result>			
+		</action>
+		<action name="netAction_ping" class="com.biencloud.smarthome.web.net.action.NetAction" method="ping">    	    					
+			<result name="ping" type="json">
+			    <param name="ignoreHierarchy">false</param>
+                <param name="root">net</param>
+            </result>			
+		</action>
+		
+    </package>
+</struts>
+

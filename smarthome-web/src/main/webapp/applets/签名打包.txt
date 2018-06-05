@@ -1,0 +1,31 @@
+(1)将java小程序打包
+在CardReaderApplet目录下：
+  jar cvf CardReaderApplet.jar *
+
+(2)生成名为CardReaderApplet.store的密钥库,别名为CardReaderApplet
+
+  keytool -genkey -keystore CardReaderApplet.store -alias CardReaderApplet
+
+  密码：123456 (根据需要自己输入)
+
+  以下根据需要输入，最后确认：y
+
+(3)导出CardReaderApplet.cer数字证书
+
+  keytool -export -keystore CardReaderApplet.store -alias CardReaderApplet -file CardReaderApplet.cer
+
+  密码：123456 (根据需要自己输入)
+
+(4)对CardReaderApplet.jar文件进行签名
+
+  jarsigner -keystore CardReaderApplet.store  CardReaderApplet.jar CardReaderApplet
+
+  密码：123456 (根据需要自己输入)
+  
+(5)将rxtxSerial.dll拷贝到C:/windows/system32目录下(32位系统，64位系统需拷贝到C:\Windows\SysWOW64下)
+
+(6)在IE浏览器中输入java.com，安装java
+
+(7)打开控制面板->程序->java，点击安全，添加例外站点
+
+(8)当打开添加门卡页面弹出提示是否勾选允许运行时，勾选运行。

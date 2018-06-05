@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="rss" extends="default" namespace="/rss">
+        <action name="queryList" class="com.biencloud.smarthome.web.rss.action.RssServerAction" method="queryList">
+        	<param name="menuCode">M001015</param>
+            <param name="operationCode">1</param>
+            <result name="query_list">/WEB-INF/views/rss/rss_list.jsp</result>
+        </action>
+        <action name="queryDetail" class="com.biencloud.smarthome.web.rss.action.RssServerAction" method="queryDetail">
+        	<param name="menuCode">M001015</param>
+            <param name="operationCode">2</param>
+            <result name="query_detail">/WEB-INF/views/rss/rss_detail.jsp</result>
+        </action>
+        <action name="rssUpdate" class="com.biencloud.smarthome.web.rss.action.RssServerAction" method="rssUpdate">
+        	<param name="menuCode">M001015</param>
+            <param name="operationCode">1</param>
+            <result name="rss_update">/WEB-INF/views/rss/rss_update.jsp</result>
+        </action>
+        <action name="updateDetail" class="com.biencloud.smarthome.web.rss.action.RssServerAction" method="updateDetail">
+        	<param name="menuCode">M001015</param>
+            <param name="operationCode">5</param>
+            <result name="update_detail">/WEB-INF/views/rss/rss_update.jsp</result>
+        </action>
+        <action name="rssRemove" class="com.biencloud.smarthome.web.rss.action.RssServerAction" method="rssRemove">
+        	<param name="menuCode">M001015</param>
+            <param name="operationCode">7</param>
+            <result name="rss_remove">/WEB-INF/views/rss/rss_list.jsp</result>
+        </action>
+    </package>
+    <package name="rss/weather" extends="default" namespace="/rss/weather">
+        <action name="queryList" class="com.biencloud.smarthome.web.rss.action.WeatherAction" method="queryList">
+        	<param name="menuCode">M001015</param>
+            <param name="operationCode">1</param>
+            <result name="query_list">/WEB-INF/views/weather/weather_list.jsp</result>
+        </action>
+        <action name="weatherUpdate" class="com.biencloud.smarthome.web.rss.action.WeatherAction" method="weatherUpdate">
+        	<param name="menuCode">M001015</param>
+            <param name="operationCode">2</param>
+            <result name="weather_update">/WEB-INF/views/weather/weather_update.jsp</result>
+        </action>
+        <action name="updateDetail" class="com.biencloud.smarthome.web.rss.action.WeatherAction" method="updateDetail">
+        	<param name="menuCode">M001015</param>
+            <param name="operationCode">5</param>
+            <result name="update_detail">/WEB-INF/views/weather/weather_update.jsp</result>
+        </action>
+    </package>
+</struts>
+

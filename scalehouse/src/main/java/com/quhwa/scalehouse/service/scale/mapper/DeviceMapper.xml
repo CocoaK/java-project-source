@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.quhwa.scalehouse.service.scale.mapper.DeviceMapper">
+  <resultMap id="BaseResultMap" type="com.quhwa.scalehouse.service.scale.model.Device">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="model" jdbcType="VARCHAR" property="model" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="mac" jdbcType="VARCHAR" property="mac" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="person_id" jdbcType="VARCHAR" property="personId" />
+  </resultMap>
+  <resultMap id="ProductResultMap" type="com.quhwa.scalehouse.service.scale.model.Product">
+    <result column="device_type" jdbcType="VARCHAR" property="deviceType" />
+    <result column="device_name" jdbcType="VARCHAR" property="deviceName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, type, status, mac, remark, create_time, model, person_id
+  </sql>
+  <sql id="Base_List">
+    id, name,a.device_name type, status, mac, remark, create_time, model,a.device_type deviceType, person_id
+  </sql>
+  <select id="getTotal" resultType="java.lang.Long">
+	select
+	count(*)
+	from t_device
+	where 1=1
+	  <if test="type != null">
+        and type = #{type,jdbcType=VARCHAR}
+      </if>
+  </select>
+  <select id="getNewTotal" parameterType="java.lang.String" resultType="java.lang.Long">
+	select
+	count(*)
+	from
+	(select
+	count(*)
+	from t_device d
+	left join t_person p on d.person_id = p.id
+	left join t_country c on p.country_code = c.country_code
+	where 1=1
+	  <if test="type != null and type != ''">
+        and type = #{type,jdbcType=VARCHAR}
+      </if>
+      <if test="countryCode != null and countryCode != ''">
+        and p.country_code = #{countryCode}
+      </if>
+    group by mac)
+    t_person
+  </select>
+  <select id="getSum" resultType="java.lang.Long">
+  	select
+  	count(*)
+  	from
+	(select
+	count(*)
+	from t_device d
+	left join t_person p on d.person_id = p.id
+	left join t_country c on p.country_code = c.country_code
+	where 1=1 and record_time like CONCAT(CONCAT('%',DATE_FORMAT(#{time}, '%Y-%m-%d')), '%')
+	  <if test="countryCode != null and countryCode != ''">
+        and p.country_code = #{countryCode}
+      </if>
+      <if test="type != null and type != ''">
+        and d.type = #{type}
+      </if>
+    group by d.id)
+    t_device
+  </select>
+  <select id="getDevices" resultType="java.lang.Long">
+  	select
+  	count(*)
+  	from
+	(select
+	count(*)
+	from t_device d
+	left join t_person p on d.person_id = p.id
+	left join t_country c on p.country_code = c.country_code
+	where 1=1 and record_time <![CDATA[ <= ]]> #{time}
+	   <if test="countryCode != null and countryCode != ''">
+	   		and p.country_code = #{countryCode}
+	   </if>
+	   <if test="type != null and type != ''">
+	   		and d.type = #{type}
+	   </if>
+	group by d.id)
+	t_device
+  </select>
+  <select id="todayActiveDevN" parameterType="java.lang.String" resultType="java.lang.Long">
+	select
+	count(*)
+	from
+	(select
+	count(*)
+	from t_device d
+	left join t_person p on d.person_id = p.id
+	left join t_login l on l.person_id=p.id
+	left join t_country c on p.country_code = c.country_code
+	where 1=1 and l.person_id is not null and date(l.login_time) = curdate()
+	  <if test="type != null and type != ''">
+        and type = #{type,jdbcType=VARCHAR}
+      </if>
+      <if test="countryCode != null and countryCode != ''">
+        and p.country_code = #{countryCode}
+      </if>
+    group by mac)
+    t_person
+  </select>
+  <select id="getAll" parameterType="java.lang.String" resultMap="BaseResultMap">
+	select
+		d.id, name, type, a.device_name deviceType, status, mac, model, person_id, area,c.country_code countryCode,c.country_name countryName
+	from t_device d
+	left join t_person p on d.person_id = p.id
+	left join t_country c on p.country_code = c.country_code
+	left join t_device_type a on d.type = a.device_type
+	where 1=1
+	  <if test="type != null and type != ''">
+        and type = #{type,jdbcType=VARCHAR}
+      </if>
+      <if test="countryCode != null and countryCode != ''">
+        and p.country_code = #{countryCode}
+      </if>
+    group by mac
+    order by d.id
+  </select>
+  <select id="getProduct" resultMap="ProductResultMap">
+	select
+		dm.device_type deviceType,dm.device_name deviceName
+	from t_device_type dm
+  </select>
+  <select id="getOne" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_device
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="queryByMac" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_device
+    where mac = #{mac,jdbcType=INTEGER}
+  </select>
+  <select id="queryForList" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_device
+    where 1=1
+      <if test="id != null">
+        and id = #{id,jdbcType=INTEGER}
+      </if>
+      <if test="name != null">
+        and name = #{name,jdbcType=VARCHAR}
+      </if>
+      <if test="type != null">
+        and type = #{type,jdbcType=VARCHAR}
+      </if>
+      <if test="model != null">
+        and model = #{model,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null">
+        and status = #{status,jdbcType=TIMESTAMP}
+      </if>
+      <if test="mac != null">
+        and mac = #{mac,jdbcType=VARCHAR}
+      </if>
+      <if test="remark != null">
+        and remark = #{remark,jdbcType=VARCHAR}
+      </if>
+      <if test="personId != null">
+        and person_id = #{personId,jdbcType=INTEGER}
+      </if>
+  </select>
+  <delete id="delete" parameterType="java.lang.Integer">
+    delete from t_device
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.quhwa.scalehouse.service.scale.model.Device">
+    insert into t_device (id, name, type, model 
+      status, mac, remark, 
+      create_time, person_id)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{model,jdbcType=VARCHAR}
+      #{status,jdbcType=VARCHAR}, #{mac,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{personId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertActive" parameterType="com.quhwa.scalehouse.service.scale.model.Device" useGeneratedKeys="true" keyProperty="id">
+    insert into t_device
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="model != null">
+        model,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="mac != null">
+        mac,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="personId != null">
+        person_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="model != null">
+        #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="mac != null">
+        #{mac,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="personId != null">
+        #{personId,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateActive" parameterType="com.quhwa.scalehouse.service.scale.model.Device">
+    update t_device
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="model != null">
+        model = #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="mac != null">
+        mac = #{mac,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="update" parameterType="com.quhwa.scalehouse.service.scale.model.Device">
+    update t_device
+    set name = #{name,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      model = #{model,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      mac = #{mac,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

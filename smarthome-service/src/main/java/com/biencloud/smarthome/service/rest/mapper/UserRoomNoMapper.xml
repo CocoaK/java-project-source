@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.biencloud.smarthome.service.rest.mapper.UserRoomNoMapper">
+	<resultMap id="baseResult"
+		type="com.biencloud.smarthome.service.rest.model.UserRoomNo">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="room_no" jdbcType="VARCHAR" property="roomNo" />
+		<result column="house_id" jdbcType="BIGINT" property="houseId"/>
+		<result column="sipid" jdbcType="VARCHAR" property="sipid" />
+		<result column="device_no" jdbcType="VARCHAR" property="deviceNo" />
+		<result column="status" jdbcType="VARCHAR" property="status" />
+		<result column="district_id" jdbcType="VARCHAR" property="districtId" />
+		<result column="unit_id" jdbcType="VARCHAR" property="unitId" />
+	</resultMap>
+	
+	<resultMap id="mapResult" type="com.biencloud.smarthome.service.rest.model.UserRoomNoVo">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="room_no" jdbcType="VARCHAR" property="roomNo" />
+		<result column="house_id" jdbcType="BIGINT" property="houseId"/>
+		<result column="sipid" jdbcType="VARCHAR" property="sipid" />
+		<result column="device_no" jdbcType="VARCHAR" property="deviceNo" />
+		<result column="device_sipid" jdbcType="VARCHAR" property="deviceSipid" />
+		<result column="device_name" jdbcType="VARCHAR" property="deviceName" />
+		<result column="device_alias" jdbcType="VARCHAR" property="deviceAlias" />
+		<result column="device_type" jdbcType="VARCHAR" property="deviceType" />
+		<result column="status" jdbcType="VARCHAR" property="status" />
+		<result column="device_id" jdbcType="VARCHAR" property="deviceId" />
+	</resultMap>
+	
+	<sql id="baseColumns">
+		id, house_id, room_no, sipid, device_no,status,district_id,unit_id
+	</sql>
+	<select id="getForList" resultMap="baseResult">
+		select
+		<include refid="baseColumns" />
+		from t_user_room_no
+	</select>
+	<select id="showBoundSip" parameterType="java.lang.String" resultMap="baseResult">
+		select
+		<include refid="baseColumns"/>
+		from t_user_room_no
+		where room_no=#{roomNo,jdbcType=VARCHAR}
+	</select>
+	<select id="showBoundSipByHouseId" parameterType="java.lang.Long" resultMap="baseResult">
+		select
+		<include refid="baseColumns"/>
+		from t_user_room_no
+		where house_id=#{houseId,jdbcType=BIGINT}
+	</select>
+	
+	<select id="getForOne" parameterType="java.lang.Long" resultMap="baseResult">
+		select
+		<include refid="baseColumns" />
+		from t_user_room_no
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	
+	<select id="queryBySipid" parameterType="java.lang.String" resultMap="baseResult">
+		select
+		<include refid="baseColumns"/>
+		from t_user_room_no
+		where 1=1 and sipid = #{sipid,jdbcType=VARCHAR} and room_no = #{roomNo,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="queryByHouseId" parameterType="java.lang.String" resultMap="baseResult">
+		select
+		<include refid="baseColumns"/>
+		from t_user_room_no
+		where 1=1 and house_id=#{houseId,jdbcType=BIGINT}
+	</select>
+	
+	<select id="queryByHouseIdAndSipId" parameterType="java.lang.String" resultMap="baseResult">
+		SELECT
+			a.*
+		FROM
+			t_user_room_no a,
+			t_device b,
+			t_hm_cell_household_info c
+		WHERE 1=1
+		and	c.id = b.room_id
+		and c.cell_id = b.unit_id
+		and a.device_no = b.device_code
+		and a.sipid = #{sipid,jdbcType=VARCHAR} 
+		and house_id = #{houseId,jdbcType=VARCHAR}
+	</select>
+	
+	<delete id="delete" parameterType="java.lang.Long">
+		delete from t_user_room_no
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert"
+		parameterType="com.biencloud.smarthome.service.rest.model.UserRoomNo">
+		insert into t_user_room_no (id, room_no, house_id, sipid,
+		device_no,status,district_id,unit_id)
+		values (#{id,jdbcType=BIGINT}, #{roomNo,jdbcType=VARCHAR},#{houseId,jdbcType=BIGINT}, 
+		#{sipid,jdbcType=VARCHAR},#{deviceNo,jdbcType=VARCHAR},
+		#{status,jdbcType=VARCHAR},#{districtId,jdbcType=VARCHAR},#{unitId,jdbcType=VARCHAR})
+	</insert>
+	<update id="updateOnActive"
+		parameterType="com.biencloud.smarthome.service.rest.model.UserRoomNo">
+		update t_user_room_no
+		<set>
+			<if test="roomNo != null">
+				room_no = #{roomNo,jdbcType=VARCHAR},
+			</if>
+			<if test="houseId != null">
+				house_id = #{houseId,jdbcType=BIGINT},
+			</if>
+			<if test="sipid != null">
+				sipid = #{sipid,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceNo != null">
+				device_no = #{deviceNo,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=VARCHAR},
+			</if>
+			<if test="districtId != null">
+				district_id = #{districtId,jdbcType=VARCHAR},
+			</if>
+			<if test="unitId != null">
+				unit_id = #{unitId,jdbcType=VARCHAR}
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="update"
+		parameterType="com.biencloud.smarthome.service.rest.model.UserRoomNo">
+		update t_user_room_no
+		set room_no =
+		#{roomNo,jdbcType=VARCHAR},
+		house_id = #{houseId,jdbcType=BIGINT},
+		sipid = #{sipid,jdbcType=VARCHAR},
+		status = #{status,jdbcType=VARCHAR},
+		device_no = #{deviceNo,jdbcType=VARCHAR},
+		district_id = #{districtId,jdbcType=VARCHAR},
+		unit_id = #{unitId,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<delete id="remove"
+		parameterType="com.biencloud.smarthome.service.rest.model.UserRoomNo">
+		delete from t_user_room_no
+		where 1=1
+		<if test="id != null">
+			and id = #{userId,jdbcType=BIGINT}
+		</if>
+		<if test="sipid != null">
+			and sipid = #{sipid,jdbcType=VARCHAR}
+		</if>
+		<if test="houseId != null">
+			and house_id = #{houseId,jdbcType=BIGINT},
+		</if>
+		<if test="deviceNo != null">
+			and device_no = #{deviceNo,jdbcType=VARCHAR}
+		</if>
+		<if test="roomNo != null">
+			and room_no = #{roomNo,jdbcType=VARCHAR}
+		</if>
+		<if test="status != null">
+			and status = #{status,jdbcType=VARCHAR}
+		</if>
+	</delete>
+
+	<select id="getListMap"
+		parameterType="com.biencloud.smarthome.service.rest.model.UserRoomNo"
+		resultMap="mapResult">
+		select
+		id, room_no, house_id, a.sipid, a.device_no,b.device_name,b.sipid device_sipid,b.device_alias
+		from t_user_room_no a left join t_device b on a.device_no=b.device_code
+		where 1=1
+		<if test="sipid != null">
+			and a.sipid = #{sipid,jdbcType=VARCHAR}
+		</if>
+		<if test="deviceNo != null">
+			and a.device_no = #{deviceNo,jdbcType=VARCHAR}
+		</if>
+		<if test="roomNo != null">
+			and room_no = #{roomNo,jdbcType=VARCHAR}
+		</if>
+		<if test="houseId != null">
+			and house_id = #{houseId,jdbcType=BIGINT},
+		</if>
+		<if test="status != null">
+			and status = #{status,jdbcType=VARCHAR}
+		</if>
+	</select>
+	
+	<select id="getList"
+		parameterType="com.biencloud.smarthome.service.rest.model.UserRoomNo"
+		resultMap="baseResult">
+		select
+		<include refid="baseColumns" />
+		from t_user_room_no
+		where 1=1
+		<if test="sipid != null">
+			and sipid = #{sipid,jdbcType=VARCHAR}
+		</if>
+		<if test="deviceNo != null">
+			and device_no = #{deviceNo,jdbcType=VARCHAR}
+		</if>
+		<if test="roomNo != null">
+			and room_no = #{roomNo,jdbcType=VARCHAR}
+		</if>
+		<if test="houseId != null">
+			and house_id = #{houseId,jdbcType=VARCHAR}
+		</if>
+		<if test="status != null">
+			and status = #{status,jdbcType=VARCHAR}
+		</if>
+		<if test="districtId != null">
+			and district_id = #{districtId,jdbcType=VARCHAR}
+		</if>
+		<if test="unitId != null">
+			and unit_id = #{unitId,jdbcType=VARCHAR}
+		</if>
+	</select>
+	
+	<update id="updateStatusBySipid"
+		parameterType="com.biencloud.smarthome.service.rest.model.UserRoomNo">
+		update t_user_room_no
+		<set>
+			<if test="status != null">
+				status = #{status,jdbcType=VARCHAR}
+			</if>
+		</set>
+		where sipid = #{sipid,jdbcType=VARCHAR}
+	</update>
+	
+	<select id="getListMapByEntity"
+		parameterType="com.biencloud.smarthome.service.rest.model.UserRoomNo"
+		resultMap="mapResult">
+		SELECT
+			a.id,
+			a.room_no,
+			a.house_id,
+			a.sipid,
+			a.status,
+			b.device_code device_no,
+			b.device_name,
+			b.sipid device_sipid,
+			b.device_alias,
+			b.device_type,
+			b.device_id
+		FROM
+			(select * from t_user_room_no where sipid=#{sipid,jdbcType=VARCHAR}) a,
+			t_device b
+		WHERE 1=1
+		and (b.unit_id = #{unitId,jdbcType=VARCHAR} and b.device_type = '02')
+		or (b.district_id = #{districtId,jdbcType=VARCHAR} and b.device_type = '06')
+		GROUP BY b.device_code
+	</select>
+</mapper>

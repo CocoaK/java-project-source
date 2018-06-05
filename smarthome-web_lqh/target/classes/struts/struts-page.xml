@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="Page" extends="default" namespace="/page">
+        <action name="viewDetail" class="com.biencloud.smarthome.web.page.action.PageAction" method="viewDetail">
+            <result>/WEB-INF/views/page/view_page_detail.jsp</result>
+        </action>
+
+        <action name="queryList" class="com.biencloud.smarthome.web.page.action.PageAction" method="queryList">
+            <result>/WEB-INF/views/page/query_page_list.jsp</result>
+        </action>
+        <action name="delete" class="com.biencloud.smarthome.web.page.action.PageAction" method="delete">
+            <result>/WEB-INF/views/page/query_page_list.jsp</result>
+        </action>
+        <action name="update" class="com.biencloud.smarthome.web.page.action.PageAction" method="update">
+            <result>/WEB-INF/views/page/page_update_input.jsp</result>
+        </action>
+        <action name="updateInput" class="com.biencloud.smarthome.web.page.action.PageAction" method="updateInput">
+            <result>/WEB-INF/views/page/page_update_input.jsp</result>
+        </action>
+        <action name="add" class="com.biencloud.smarthome.web.page.action.PageAction" method="add">
+            <result>/WEB-INF/views/page/page_add_input.jsp</result>
+        </action>
+        <action name="addInput" class="com.biencloud.smarthome.web.page.action.PageAction" method="addInput">
+            <result>/WEB-INF/views/page/page_add_input.jsp</result>
+        </action>
+    </package>
+    
+    <package name="Component" extends="default" namespace="/component">
+        <action name="queryList" class="com.biencloud.smarthome.web.page.action.ComponentAction" method="queryList">
+            <result>/WEB-INF/views/page/query_component_list.jsp</result>
+        </action>
+        <action name="delete" class="com.biencloud.smarthome.web.page.action.ComponentAction" method="delete">
+            <result>/WEB-INF/views/page/query_component_list.jsp</result>
+        </action>
+        <action name="update" class="com.biencloud.smarthome.web.page.action.ComponentAction" method="update">
+            <result>/WEB-INF/views/page/component_update_input.jsp</result>
+        </action>
+        <action name="updateInput" class="com.biencloud.smarthome.web.page.action.ComponentAction" method="updateInput">
+            <result>/WEB-INF/views/page/component_update_input.jsp</result>
+        </action>
+        <action name="add" class="com.biencloud.smarthome.web.page.action.ComponentAction" method="add">
+            <result>/WEB-INF/views/page/query_component_list.jsp</result>
+        </action>
+        <action name="addInput" class="com.biencloud.smarthome.web.page.action.ComponentAction" method="addInput">
+            <result>/WEB-INF/views/page/component_add_input.jsp</result>
+        </action>
+        <action name="actionAddInput" class="com.biencloud.smarthome.web.page.action.ComponentAction" method="actionAddInput">
+            <result>/WEB-INF/views/page/component_action_add_input.jsp</result>
+        </action>
+        <action name="linkAddInput" class="com.biencloud.smarthome.web.page.action.ComponentAction" method="linkAddInput">
+            <result>/WEB-INF/views/page/component_link_add_input.jsp</result>
+        </action>
+        <action name="textAddInput" class="com.biencloud.smarthome.web.page.action.ComponentAction" method="textAddInput">
+            <result>/WEB-INF/views/page/component_text_add_input.jsp</result>
+        </action>
+        <action name="appAddInput" class="com.biencloud.smarthome.web.page.action.ComponentAction" method="appAddInput">
+            <result>/WEB-INF/views/page/component_app_add_input.jsp</result>
+        </action>
+    </package>
+</struts>
+

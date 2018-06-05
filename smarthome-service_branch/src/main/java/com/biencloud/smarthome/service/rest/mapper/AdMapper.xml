@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.biencloud.smarthome.service.rest.mapper.AdMapper" >
+  <resultMap id="baseResult" type="com.biencloud.smarthome.service.rest.model.Ad" >
+    <id column="ad_id" property="adId" jdbcType="INTEGER" />
+    <result column="ad_name" property="adName" jdbcType="VARCHAR" />
+    <result column="ad_desc" property="adDesc" jdbcType="VARCHAR" />
+    <result column="ad_pic_url" property="adPicUrl" jdbcType="VARCHAR" />
+    <result column="ad_link_url" property="adLinkUrl" jdbcType="VARCHAR" />
+    <result column="ad_detail_pic_url" property="adDetailPicUrl" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="mapResult" type="map">
+    <id column="ad_id" property="adId" jdbcType="INTEGER" />
+    <result column="ad_name" property="adName" jdbcType="VARCHAR" />
+    <result column="ad_desc" property="adDesc" jdbcType="VARCHAR" />
+    <result column="ad_pic_url" property="adPicUrl" jdbcType="VARCHAR" />
+    <result column="ad_link_url" property="adLinkUrl" jdbcType="VARCHAR" />
+    <result column="ad_detail_pic_url" property="adDetailPicUrl" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="baseColumns" >
+    ad_id, ad_name, ad_desc, ad_pic_url, ad_link_url, ad_detail_pic_url
+  </sql>
+
+  <select id="getForList" resultMap="baseResult" >
+    select 
+    <include refid="baseColumns" />
+    from t_advertisement
+  </select>
+  <select id="getForOne" resultMap="baseResult" parameterType="java.lang.Integer" >
+    select 
+    <include refid="baseColumns" />
+    from t_advertisement
+    where ad_id = #{adId,jdbcType=INTEGER}
+  </select>
+  <delete id="delete" parameterType="java.lang.Integer" >
+    delete from t_advertisement
+    where ad_id = #{adId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.biencloud.smarthome.service.rest.model.Ad" >
+    insert into t_advertisement (ad_id, ad_name, ad_desc, 
+      ad_pic_url, ad_link_url, ad_detail_pic_url, 
+      type_code, status, applyed_user, 
+      applyed_time, published_user, published_time, 
+      ad_begin_time, ad_end_time, location_code, 
+      ad_size)
+    values (#{adId,jdbcType=INTEGER}, #{adName,jdbcType=VARCHAR}, #{adDesc,jdbcType=VARCHAR}, 
+      #{adPicUrl,jdbcType=VARCHAR}, #{adLinkUrl,jdbcType=VARCHAR}, #{adDetailPicUrl,jdbcType=VARCHAR}, 
+      #{typeCode,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{applyedUser,jdbcType=VARCHAR}, 
+      #{applyedTime,jdbcType=TIMESTAMP}, #{publishedUser,jdbcType=VARCHAR}, #{publishedTime,jdbcType=TIMESTAMP}, 
+      #{adBeginTime,jdbcType=TIMESTAMP}, #{adEndTime,jdbcType=TIMESTAMP}, #{locationCode,jdbcType=VARCHAR}, 
+      #{adSize,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateOnActive" parameterType="com.biencloud.smarthome.service.rest.model.Ad" >
+    update t_advertisement
+    <set >
+      <if test="adName != null" >
+        ad_name = #{adName,jdbcType=VARCHAR},
+      </if>
+      <if test="adDesc != null" >
+        ad_desc = #{adDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="adPicUrl != null" >
+        ad_pic_url = #{adPicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="adLinkUrl != null" >
+        ad_link_url = #{adLinkUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="adDetailPicUrl != null" >
+        ad_detail_pic_url = #{adDetailPicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="typeCode != null" >
+        type_code = #{typeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=CHAR},
+      </if>
+      <if test="applyedUser != null" >
+        applyed_user = #{applyedUser,jdbcType=VARCHAR},
+      </if>
+      <if test="applyedTime != null" >
+        applyed_time = #{applyedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="publishedUser != null" >
+        published_user = #{publishedUser,jdbcType=VARCHAR},
+      </if>
+      <if test="publishedTime != null" >
+        published_time = #{publishedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adBeginTime != null" >
+        ad_begin_time = #{adBeginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adEndTime != null" >
+        ad_end_time = #{adEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="locationCode != null" >
+        location_code = #{locationCode,jdbcType=VARCHAR},
+      </if>
+      <if test="adSize != null" >
+        ad_size = #{adSize,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ad_id = #{adId,jdbcType=INTEGER}
+  </update>
+  <update id="update" parameterType="com.biencloud.smarthome.service.rest.model.Ad" >
+    update t_advertisement
+    set ad_name = #{adName,jdbcType=VARCHAR},
+      ad_desc = #{adDesc,jdbcType=VARCHAR},
+      ad_pic_url = #{adPicUrl,jdbcType=VARCHAR},
+      ad_link_url = #{adLinkUrl,jdbcType=VARCHAR},
+      ad_detail_pic_url = #{adDetailPicUrl,jdbcType=VARCHAR},
+      type_code = #{typeCode,jdbcType=VARCHAR},
+      status = #{status,jdbcType=CHAR},
+      applyed_user = #{applyedUser,jdbcType=VARCHAR},
+      applyed_time = #{applyedTime,jdbcType=TIMESTAMP},
+      published_user = #{publishedUser,jdbcType=VARCHAR},
+      published_time = #{publishedTime,jdbcType=TIMESTAMP},
+      ad_begin_time = #{adBeginTime,jdbcType=TIMESTAMP},
+      ad_end_time = #{adEndTime,jdbcType=TIMESTAMP},
+      location_code = #{locationCode,jdbcType=VARCHAR},
+      ad_size = #{adSize,jdbcType=VARCHAR}
+    where ad_id = #{adId,jdbcType=INTEGER}
+  </update>
+  
+  <select id="getListByEntity" resultMap="mapResult" parameterType="com.biencloud.smarthome.service.rest.model.Ad">
+    select 
+    a.ad_id, a.ad_name, a.ad_desc,
+    CONCAT(b.param_value,a.ad_pic_url) ad_pic_url,
+    CONCAT(b.param_value,a.ad_detail_pic_url) ad_detail_pic_url
+    from t_advertisement a
+    LEFT JOIN t_system_param b ON b.param_code = 'fileServerIP'
+    where 1=1
+    <if test="typeCode != null" >
+    	and type_code = #{typeCode,jdbcType=VARCHAR}
+    </if>
+    <if test="status != null" >
+        and a.status = #{status,jdbcType=CHAR}
+    </if>
+  </select>
+</mapper>

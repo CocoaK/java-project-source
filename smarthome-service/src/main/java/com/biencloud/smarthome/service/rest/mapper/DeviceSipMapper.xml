@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.biencloud.smarthome.service.rest.mapper.DeviceSipMapper" >
+  <resultMap id="baseResult" type="com.biencloud.smarthome.service.rest.model.DeviceSip" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="device_id" property="deviceId" jdbcType="VARCHAR" />
+    <result column="sipid" property="sipid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="baseColumns" >
+    id, device_id, sipid
+  </sql>
+  <select id="getForList" resultMap="baseResult" >
+    select id, device_id, sipid
+    from t_device_sip
+  </select>
+  <select id="getForOne" resultMap="baseResult" parameterType="java.lang.Long" >
+    select 
+    <include refid="baseColumns" />
+    from t_device_sip
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="delete" parameterType="java.lang.Long" >
+    delete from t_device_sip
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.biencloud.smarthome.service.rest.model.DeviceSip" >
+    insert into t_device_sip (id, device_id, sipid
+      )
+    values (#{id,jdbcType=BIGINT}, #{deviceId,jdbcType=VARCHAR}, #{sipid,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateOnActive" parameterType="com.biencloud.smarthome.service.rest.model.DeviceSip" >
+    update t_device_sip
+    <set >
+      <if test="deviceId != null" >
+        device_id = #{deviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="sipid != null" >
+        sipid = #{sipid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="update" parameterType="com.biencloud.smarthome.service.rest.model.DeviceSip" >
+    update t_device_sip
+    set device_id = #{deviceId,jdbcType=VARCHAR},
+      sipid = #{sipid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="getList" resultMap="baseResult" parameterType="com.biencloud.smarthome.service.rest.model.DeviceSip" >
+    select id, device_id, sipid
+    from t_device_sip where 1=1
+      <if test="deviceId != null" >
+        and device_id = #{deviceId,jdbcType=VARCHAR}
+      </if>
+      <if test="sipid != null" >
+        and sipid = #{sipid,jdbcType=VARCHAR}
+      </if>
+  </select>
+  <delete id="deleteByDeviceId" parameterType="java.lang.String" >
+    delete from t_device_sip
+    where device_id = #{deviceId,jdbcType=VARCHAR}
+  </delete>
+</mapper>

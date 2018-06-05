@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" default-autowire="byName"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:aop="http://www.springframework.org/schema/aop"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:tx="http://www.springframework.org/schema/tx"
+        xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">    
+    <bean id="smartHomeService" class="com.biencloud.smarthome.web.wsclient.stub.SmartHomePubService" 
+      factory-bean="wsClientFactory" factory-method="create"/> 
+ 
+    <bean id="wsClientFactory" class="org.apache.cxf.jaxws.JaxWsProxyFactoryBean"> 
+        <property name="serviceClass" value="com.biencloud.smarthome.web.wsclient.stub.SmartHomePubService"/> 
+        <property name="address" value="${service.url}"/> 
+    </bean>
+    
+    <!-- 登录管理服务代理 -->
+    <bean id="loginService" class="com.biencloud.smarthome.web.login.service.impl.LoginServiceImpl">
+        <property name="validCodeOpenFlag" value="${validation.code.open}"/>
+        <property name="multiIpLoginFlag" value="${multi.ip.sync.login}"/>
+    </bean>
+    <!-- 系统用户管理服务代理 -->
+    <bean id="saUserService" class="com.biencloud.smarthome.web.user.service.impl.SaUserServiceImpl"/>    
+    <!-- 物业用户管理服务代理 -->
+    <bean id="paUserService" class="com.biencloud.smarthome.web.user.service.impl.PaUserServiceImpl"/>    
+    <!-- 住户用户管理服务代理 -->
+    <bean id="ownerUserService" class="com.biencloud.smarthome.web.user.service.impl.OwnerUserServiceImpl"/>
+    <!-- 系统参数模块服务代理 -->
+    <bean id="sysParamService" class="com.biencloud.smarthome.web.sysparam.service.impl.SysParamServiceImpl"/>
+    <!-- 菜单模块服务代理 -->
+    <bean id="menuService" class="com.biencloud.smarthome.web.menu.service.impl.MenuServiceImpl"/>   
+    <!-- 权限模块服务代理 -->
+    <bean id="permissionsService" class="com.biencloud.smarthome.web.permissions.service.impl.PermissionsServiceImpl"/>
+    <!-- 房产管理 小区管理 -->
+    <bean id="housingDistrictInfoService" class="com.biencloud.smarthome.web.housemgr.service.impl.HousingDistrictInfoServiceImpl"/>
+    <!-- 房产管理 小区区域管理 -->
+    <bean id="housingDistrictRegionInfoService" class="com.biencloud.smarthome.web.housemgr.service.impl.HousingDistrictRegionInfoServiceImpl"/>
+    <!-- 房产管理 楼宇管理 -->
+    <bean id="regionBuildingInfoService" class="com.biencloud.smarthome.web.housemgr.service.impl.RegionBuildingInfoServiceImpl"/>
+    <!-- 房产管理 单元信息管理 -->
+    <bean id="buildingCellInfoService" class="com.biencloud.smarthome.web.housemgr.service.impl.BuildingCellInfoServiceImpl"/>
+    <!-- 房产管理 户型信息管理 -->
+    <bean id="cellSizeInfoService" class="com.biencloud.smarthome.web.housemgr.service.impl.CellSizeInfoServiceImpl"/>
+    <!-- 房产管理 房号信息管理 -->
+    <bean id="cellHouseholdInfoService" class="com.biencloud.smarthome.web.housemgr.service.impl.CellHouseholdInfoServiceImpl"/>
+    <!-- 房产管理 物业公司管理 -->
+    <bean id="propertyCompanyInfoService" class="com.biencloud.smarthome.web.housemgr.service.impl.PropertyCompanyInfoServiceImpl"/>
+     <!-- 数据推送管理 -->
+     <bean id="pushService" class="com.biencloud.smarthome.web.push.service.impl.PushServiceImpl">
+     
+    </bean>
+    <!-- 数据推送完成管理 -->
+    <bean id="pushFinishService" class="com.biencloud.smarthome.web.push.service.impl.PushFinishServiceImpl">
+    </bean>
+    
+    <!-- 系统日志管理模块服务代理 -->
+    <bean id="systemLogService" class="com.biencloud.smarthome.web.log.service.impl.SystemLogServiceImpl">
+    </bean>
+   <!-- 操作日志管理模块服务代理 -->
+    <bean id="operationLogService" class="com.biencloud.smarthome.web.log.service.impl.OperationLogServiceImpl">
+    </bean>
+    <!-- 设备类型服务代理 -->
+    <bean id="deviceTypeService" class="com.biencloud.smarthome.web.devicetype.service.impl.DeviceTypeServiceImpl"/>
+    <!-- 设备管理服务代理 -->
+    <bean id="deviceService" class="com.biencloud.smarthome.web.device.service.impl.DeviceServiceImpl">
+    </bean>
+    <!-- 设备IP查询服务代理 -->
+    <bean id="deviceIpService" class="com.biencloud.smarthome.web.device.service.impl.DeviceIpServiceImpl">
+    </bean>
+    <!-- 设备留言模块服务代理 -->
+    <bean id="callRecordService" class="com.biencloud.smarthome.web.device.service.impl.CallRecordServiceImpl">
+    </bean>
+    <!-- 门卡管理服务代理 -->
+    <bean id="gateCardService" class="com.biencloud.smarthome.web.gate.service.impl.GateCardServiceImpl"/>
+    <!-- 门卡刷卡 -->
+    <bean id="gateCardVisitService" class="com.biencloud.smarthome.web.gate.service.impl.GateCardVisitServiceImpl"/>    
+    <!-- 身份证刷卡记录 -->
+    <bean id="idCardVisitService" class="com.biencloud.smarthome.web.gate.service.impl.IdCardVisitServiceImpl"/>
+    <!-- 组织Service -->
+    <bean id="systemGroupService" class="com.biencloud.smarthome.web.systemgroup.service.impl.SystemGroupServiceImpl">
+    </bean>
+    <!-- 设备编号Service -->
+    <bean id="deviceNoService" class="com.biencloud.smarthome.web.deviceno.service.impl.DeviceNoServiceImpl"></bean>
+    <!-- Service -->
+    <bean id="chargeCalUnitService" class="com.biencloud.smarthome.web.charge.service.impl.ChargeCalUnitServiceImpl"></bean>
+    <!-- Service -->
+    <bean id="chargeCalModeService" class="com.biencloud.smarthome.web.charge.service.impl.ChargeCalModeServiceImpl"></bean>
+    <!-- Service -->
+    <bean id="chargeDataService" class="com.biencloud.smarthome.web.charge.service.impl.ChargeDataServiceImpl"></bean>
+    <!-- Service -->
+    <bean id="chargeDetailService" class="com.biencloud.smarthome.web.charge.service.impl.ChargeDetailServiceImpl"></bean>
+    <!-- Service -->
+    <bean id="chargeMonetaryUnitService" class="com.biencloud.smarthome.web.charge.service.impl.ChargeMonetaryUnitServiceImpl"></bean>
+    <!-- Service -->
+    <bean id="chargeTypeService" class="com.biencloud.smarthome.web.charge.service.impl.ChargeTypeServiceImpl"></bean>
+     <!-- Service -->
+    <bean id="infoReceiverService" class="com.biencloud.smarthome.web.info.service.impl.InfoReceiverServiceImpl"></bean>
+     <!-- Service -->
+    <bean id="infoSendService" class="com.biencloud.smarthome.web.info.service.impl.InfoSendServiceImpl"></bean>
+    <!-- Service -->
+    <bean id="chargeTypeResultService" class="com.biencloud.smarthome.web.charge.service.impl.ChargeTypeResultServiceImpl"></bean>
+    
+    <!-- 客服投诉Service -->
+    <bean id="complaintService" class="com.biencloud.smarthome.web.customercomplaint.service.impl.ComplaintServiceImpl"></bean>
+    <!-- app报警信息 -->
+    <bean id="alarmService" class="com.biencloud.smarthome.web.alarm.service.impl.AlarmServiceImpl"/> 
+    <!-- app报警类型-->
+    <bean id="alarmTypeService" class="com.biencloud.smarthome.web.alarm.service.impl.AlarmTypeServiceImpl"/>
+    <!-- Rss服务管理-->
+    <bean id="rssServerService" class="com.biencloud.smarthome.web.rss.service.impl.RssServerServiceImpl"/>
+    <!-- Rss天气预报服务管理-->
+    <bean id="weatherService" class="com.biencloud.smarthome.web.rss.service.impl.WeatherServiceImpl"/>
+    <!-- 远程监控 -->
+    <bean id="monitorService" class="com.biencloud.smarthome.web.monitor.service.impl.MonitorServiceImpl"/>
+    <!-- 远程场景监控 -->
+    <bean id="sceneMonitorService" class="com.biencloud.smarthome.web.monitor.service.impl.SceneMonitorServiceImpl"/>
+    <!-- 广告管理服务代理 -->
+    <bean id="adService" class="com.biencloud.smarthome.web.ad.service.impl.AdServiceImpl"/>
+    <!-- 广告类型服务代理 -->
+    <bean id="adTypeService" class="com.biencloud.smarthome.web.ad.service.impl.AdTypeServiceImpl"/>
+    <!-- 广告投放目标系统服务代理 -->
+    <bean id="adSysService" class="com.biencloud.smarthome.web.ad.service.impl.AdSysServiceImpl"/>
+    <!-- 广告投放位置服务代理 -->
+    <bean id="adLocationService" class="com.biencloud.smarthome.web.ad.service.impl.AdLocationServiceImpl"/>
+    <!-- 广告投放目标服务代理 -->
+    <bean id="adTargetService" class="com.biencloud.smarthome.web.ad.service.impl.AdTargetServiceImpl"/>
+
+     <!-- 文件传输 -->
+    <bean id="hdfsFileService" class="com.biencloud.smarthome.web.hdfs.service.impl.HDFSFileServiceImpl"/>
+     <!-- 文件传输任务 -->
+    <bean id="hdfsTaskService" class="com.biencloud.smarthome.web.hdfstask.service.impl.HDFSTaskServiceImpl"/>
+
+    <bean id="requestRepairService" class="com.biencloud.smarthome.web.requestrepair.service.impl.RequestRepairServiceImpl"/>
+    <!-- 软件升级服务代理 -->
+    <bean id="softwareUpgradeService" class="com.biencloud.smarthome.web.softwareupgrade.service.impl.SoftwareUpgradeServiceImpl"/>
+
+    <!-- 获取文件上传服务的地址 -->
+    <bean id="uploadUrlUtil" class="com.biencloud.smarthome.web.housemgr.util.UploadUrlUtil">
+        <property name="sysParamService" ref="sysParamService" />
+    </bean>
+     <!-- 终端日志服务代理 -->
+    <bean id="clientLogService" class="com.biencloud.smarthome.web.log.service.impl.ClientLogServiceImpl"/>
+    <!-- 文件上传日志 -->
+    <bean id="fileUploadLogService" class="com.biencloud.smarthome.web.log.service.impl.FileUploadLogServiceImpl">
+    </bean>
+    <!-- 设备注册日志 -->
+    <bean id="diviceRegeditLogService" class="com.biencloud.smarthome.web.log.service.impl.DiviceRegeditLogServiceImpl">
+    </bean>
+    <!-- net service -->
+    <bean id="netService" class="com.biencloud.smarthome.web.net.service.impl.NetServiceImpl">
+    </bean>
+    <!-- app请求数据日志 -->
+    <bean id="appDataLogService" class="com.biencloud.smarthome.web.log.service.impl.AppDataLogServiceImpl">
+    </bean>
+    <!-- 电商页面服务 -->
+    <bean id="pageService" class="com.biencloud.smarthome.web.page.service.impl.PageServiceImpl" />
+	<!-- 电商页面组件服务 -->
+    <bean id="componentService" class="com.biencloud.smarthome.web.page.service.impl.ComponentServiceImpl" />
+    <!-- 二维码数组件服务 -->
+    <bean id="qrcodeCountService" class="com.biencloud.smarthome.web.qrcode.service.impl.QrcodeCountServiceImpl" />
+    <bean id="qrcodeService" class="com.biencloud.smarthome.web.qrcode.service.impl.QrcodeService" />
+    <bean id="sipRegisterService" class="com.biencloud.smarthome.web.sip.service.impl.SipRegisterService" />
+    <bean id="deviceSipService" class="com.biencloud.smarthome.web.device.service.impl.DeviceSipServiceImpl" />
+</beans>
+

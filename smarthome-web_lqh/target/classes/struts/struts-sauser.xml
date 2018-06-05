@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="SaUser" extends="default" namespace="/saUser">
+        <action name="viewDetail" class="com.biencloud.smarthome.web.user.action.SaUserAction" method="viewDetail">
+            <param name="menuCode">M001002</param>
+            <param name="operationCode">2</param>
+            <result>/WEB-INF/views/user/system_admin/view_detail.jsp</result>
+        </action>
+
+        <action name="viewPersonalInfo" class="com.biencloud.smarthome.web.user.action.SaUserAction" method="viewPersonalInfo">
+            <param name="menuCode">M001001</param>
+            <param name="operationCode">2</param>
+            <result>/WEB-INF/views/user/system_admin/view_personal_info.jsp</result>
+        </action>
+
+        <action name="queryList" class="com.biencloud.smarthome.web.user.action.SaUserAction" method="queryList">
+            <param name="menuCode">M001002</param>
+            <param name="operationCode">1</param>
+            <result>/WEB-INF/views/user/system_admin/query_list.jsp</result>
+        </action>
+
+        <action name="addInput" class="com.biencloud.smarthome.web.user.action.SaUserAction" method="addInput">
+            <param name="menuCode">M001002</param>
+            <param name="operationCode">3</param>
+            <result>/WEB-INF/views/user/system_admin/add_input.jsp</result>
+        </action>
+
+        <action name="save" class="com.biencloud.smarthome.web.user.action.SaUserAction" method="save">
+            <param name="menuCode">M001002</param>
+            <param name="operationCode">4</param>
+            <result>/WEB-INF/views/user/system_admin/add_input.jsp</result>
+        </action>
+        
+        <action name="updateInput" class="com.biencloud.smarthome.web.user.action.SaUserAction" method="updateInput">
+            <param name="menuCode">M001002</param>
+            <param name="operationCode">5</param>
+            <result>/WEB-INF/views/user/system_admin/update_input.jsp</result>
+        </action>
+
+        <action name="update" class="com.biencloud.smarthome.web.user.action.SaUserAction" method="update">
+            <param name="menuCode">M001002</param>
+            <param name="operationCode">6</param>
+            <result>/WEB-INF/views/user/system_admin/update_input.jsp</result>
+        </action>
+        
+        <action name="updatePersonalInfoInput" class="com.biencloud.smarthome.web.user.action.SaUserAction" method="updatePersonalInfoInput">
+            <param name="menuCode">M001001</param>
+            <param name="operationCode">5</param>
+            <result>/WEB-INF/views/user/system_admin/update_personal_info_input.jsp</result>
+        </action>
+
+        <action name="updatePersonalInfo" class="com.biencloud.smarthome.web.user.action.SaUserAction" method="updatePersonalInfo">
+            <param name="menuCode">M001001</param>
+            <param name="operationCode">6</param>
+            <result>/WEB-INF/views/user/system_admin/update_personal_info_input.jsp</result>
+        </action>
+    </package>
+</struts>
+

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.biencloud.smarthome.service.rest.mapper.MsgTokenMapper" >
+  <resultMap id="baseResult" type="com.biencloud.smarthome.service.rest.model.MsgToken" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="CHAR" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="token" property="token" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="baseColumns" >
+    id, type, user_id, token
+  </sql>
+  <select id="getForList" resultMap="baseResult" >
+    select id, type, user_id, token
+    from t_msg_token
+  </select>
+  <select id="getForOne" resultMap="baseResult" parameterType="java.lang.Long" >
+    select 
+    <include refid="baseColumns" />
+    from t_msg_token
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="delete" parameterType="java.lang.Long" >
+    delete from t_msg_token
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.biencloud.smarthome.service.rest.model.MsgToken" >
+    insert into t_msg_token (id, type, user_id, 
+      token)
+    values (#{id,jdbcType=BIGINT}, #{type,jdbcType=CHAR}, #{userId,jdbcType=BIGINT}, 
+      #{token,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateOnActive" parameterType="com.biencloud.smarthome.service.rest.model.MsgToken" >
+    update t_msg_token
+    <set >
+      <if test="type != null" >
+        type = #{type,jdbcType=CHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="token != null" >
+        token = #{token,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="update" parameterType="com.biencloud.smarthome.service.rest.model.MsgToken" >
+    update t_msg_token
+    set type = #{type,jdbcType=CHAR},
+      user_id = #{userId,jdbcType=BIGINT},
+      token = #{token,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="getEntityByToken" resultMap="baseResult" parameterType="java.lang.String" >
+    select 
+    <include refid="baseColumns" />
+    from t_msg_token
+    where token = #{token,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="getEntityByDeviceNo" resultMap="baseResult" parameterType="java.lang.String" >
+    select a.* from t_msg_token a left join t_user_device b on a.user_id = b.user_id
+	LEFT JOIN t_device c on c.device_id = b.device_id
+	where device_code = #{deviceCode,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="getListByDeviceId" resultMap="baseResult" parameterType="java.lang.Long" >
+    select a.* from t_msg_token a LEFT JOIN t_user_device b ON a.user_id=b.user_id
+	where b.device_id=#{deviceId,jdbcType=BIGINT}
+  </select>
+  
+  <delete id="deleteByEntity" parameterType="com.biencloud.smarthome.service.rest.model.MsgToken" >
+    delete from t_msg_token
+    where token = #{token,jdbcType=VARCHAR}
+  </delete>
+  
+  <select id="getListByEntity" resultMap="baseResult" parameterType="com.biencloud.smarthome.service.rest.model.MsgToken" >
+    select 
+    <include refid="baseColumns" />
+    from t_msg_token
+    where 1=1
+    <if test="type != null" >
+        and type = #{type,jdbcType=CHAR}
+      </if>
+      <if test="userId != null" >
+        and user_id = #{userId,jdbcType=BIGINT}
+      </if>
+      <if test="token != null" >
+        and token = #{token,jdbcType=VARCHAR}
+      </if>
+  </select>
+</mapper>

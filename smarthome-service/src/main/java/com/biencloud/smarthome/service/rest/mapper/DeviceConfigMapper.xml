@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.biencloud.smarthome.service.rest.mapper.DeviceConfigMapper" >
+  <resultMap id="baseResult" type="com.biencloud.smarthome.service.rest.model.DeviceConfig" >
+    <id column="device_id" property="deviceId" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="defence_status" property="defenceStatus" jdbcType="INTEGER" />
+    <result column="defence_time" property="defenceTime" jdbcType="VARCHAR" />
+    <result column="defence_day" property="defenceDay" jdbcType="VARCHAR" />
+    <result column="disarm_status" property="disarmStatus" jdbcType="INTEGER" />
+    <result column="disarm_time" property="disarmTime" jdbcType="VARCHAR" />
+    <result column="disarm_day" property="disarmDay" jdbcType="VARCHAR" />
+    <result column="ring" property="ring" jdbcType="VARCHAR" />
+    <result column="mute" property="mute" jdbcType="INTEGER" />
+    <result column="volume" property="volume" jdbcType="INTEGER" />
+    <result column="volume2" property="volume2" jdbcType="INTEGER" />
+    <result column="continue_alarm" property="continueAlarm" jdbcType="INTEGER" />
+    <result column="push_sound" property="pushSound" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="baseColumns" >
+    device_id, status, defence_status, defence_time, defence_day, disarm_status, 
+    disarm_time, disarm_day, ring, mute, volume, volume2, continue_alarm, push_sound
+  </sql>
+  <select id="getForList" resultMap="baseResult" >
+    select device_id, status, defence_status, defence_time, defence_day, disarm_status, 
+    disarm_time, disarm_day, ring, mute, volume, volume2, continue_alarm, push_sound
+    from t_device_config
+  </select>
+  <select id="getForOne" resultMap="baseResult" parameterType="java.lang.Long" >
+    select 
+    <include refid="baseColumns" />
+    from t_device_config
+    where device_id = #{deviceId,jdbcType=BIGINT}
+  </select>
+  <delete id="delete" parameterType="java.lang.Long" >
+    delete from t_device_config
+    where device_id = #{deviceId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.biencloud.smarthome.service.rest.model.DeviceConfig" >
+    insert into t_device_config (device_id, status, 
+      defence_status, defence_time, defence_day, 
+      disarm_status, disarm_time, disarm_day, 
+      ring, mute, volume, volume2, continue_alarm, push_sound)
+    values (#{deviceId,jdbcType=BIGINT}, #{status,jdbcType=INTEGER}, 
+      #{defenceStatus,jdbcType=INTEGER}, #{defenceTime,jdbcType=VARCHAR}, #{defenceDay,jdbcType=VARCHAR}, 
+      #{disarmStatus,jdbcType=INTEGER}, #{disarmTime,jdbcType=VARCHAR}, #{disarmDay,jdbcType=VARCHAR}, 
+      #{ring,jdbcType=VARCHAR}, #{mute,jdbcType=INTEGER}, #{volume,jdbcType=INTEGER}, #{volume2,jdbcType=INTEGER}, 
+      #{continueAlarm,jdbcType=INTEGER}, #{pushSound,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateOnActive" parameterType="com.biencloud.smarthome.service.rest.model.DeviceConfig" >
+    update t_device_config
+    <set >
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="defenceStatus != null" >
+        defence_status = #{defenceStatus,jdbcType=INTEGER},
+      </if>
+      <if test="defenceTime != null" >
+        defence_time = #{defenceTime,jdbcType=VARCHAR},
+      </if>
+      <if test="defenceDay != null" >
+        defence_day = #{defenceDay,jdbcType=VARCHAR},
+      </if>
+      <if test="disarmStatus != null" >
+        disarm_status = #{disarmStatus,jdbcType=INTEGER},
+      </if>
+      <if test="disarmTime != null" >
+        disarm_time = #{disarmTime,jdbcType=VARCHAR},
+      </if>
+      <if test="disarmDay != null" >
+        disarm_day = #{disarmDay,jdbcType=VARCHAR},
+      </if>
+      <if test="ring != null" >
+        ring = #{ring,jdbcType=VARCHAR},
+      </if>
+      <if test="mute != null" >
+        mute = #{mute,jdbcType=INTEGER},
+      </if>
+      <if test="volume != null" >
+        volume = #{volume,jdbcType=INTEGER},
+      </if>
+      <if test="volume2 != null" >
+        volume2 = #{volume2,jdbcType=INTEGER},
+      </if>
+      <if test="continueAlarm != null" >
+        continue_alarm = #{continueAlarm,jdbcType=INTEGER},
+      </if>
+      <if test="pushSound != null" >
+        push_sound = #{pushSound,jdbcType=VARCHAR}
+      </if>
+    </set>
+    where device_id = #{deviceId,jdbcType=BIGINT}
+  </update>
+  <update id="update" parameterType="com.biencloud.smarthome.service.rest.model.DeviceConfig" >
+    update t_device_config
+    set status = #{status,jdbcType=INTEGER},
+      defence_status = #{defenceStatus,jdbcType=INTEGER},
+      defence_time = #{defenceTime,jdbcType=VARCHAR},
+      defence_day = #{defenceDay,jdbcType=VARCHAR},
+      disarm_status = #{disarmStatus,jdbcType=INTEGER},
+      disarm_time = #{disarmTime,jdbcType=VARCHAR},
+      disarm_day = #{disarmDay,jdbcType=VARCHAR},
+      ring = #{ring,jdbcType=VARCHAR},
+      mute = #{mute,jdbcType=INTEGER},
+      volume = #{volume,jdbcType=INTEGER},
+      volume2 = #{volume2,jdbcType=INTEGER},
+      continue_alarm = #{continueAlarm,jdbcType=INTEGER},
+      push_sound = #{pushSound,jdbcType=VARCHAR}
+    where device_id = #{deviceId,jdbcType=BIGINT}
+  </update>
+  
+  <select id="getList" resultMap="baseResult" parameterType="com.biencloud.smarthome.service.rest.model.DeviceConfig" >
+    select 
+    <include refid="baseColumns" />
+    from t_device_config
+    where 1=1
+      <if test="status != null" >
+        and status = #{status,jdbcType=INTEGER}
+      </if>
+  </select>
+</mapper>

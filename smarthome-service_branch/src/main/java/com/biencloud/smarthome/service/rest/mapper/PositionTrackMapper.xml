@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.biencloud.smarthome.service.rest.mapper.PositionTrackMapper" >
+  <resultMap id="baseResult" type="com.biencloud.smarthome.service.rest.model.PositionTrack" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="sip_uid" property="sipUid" jdbcType="VARCHAR" />
+    <result column="longitude" property="longitude" jdbcType="VARCHAR" />
+    <result column="latitude" property="latitude" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    
+  </resultMap>
+  <sql id="baseColumns" >
+    id, sip_uid, longitude, latitude, create_time
+  </sql>
+  <select id="getForList" resultMap="baseResult" >
+    select id, sip_uid, longitude, latitude, create_time
+    from t_position_track
+  </select>
+  <select id="getForOne" resultMap="baseResult" parameterType="java.lang.Long" >
+    select 
+    <include refid="baseColumns" />
+    from t_position_track
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="delete" parameterType="java.lang.Long" >
+    delete from t_position_track
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.biencloud.smarthome.service.rest.model.PositionTrack" >
+    insert into t_position_track (id, sip_uid, longitude, 
+      latitude, create_time)
+    values (#{id,jdbcType=BIGINT}, #{sipUid,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR}, 
+      #{latitude,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateOnActive" parameterType="com.biencloud.smarthome.service.rest.model.PositionTrack" >
+    update t_position_track
+    <set >
+      <if test="sipUid != null" >
+        sip_uid = #{sipUid,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null" >
+        longitude = #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null" >
+        latitude = #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="update" parameterType="com.biencloud.smarthome.service.rest.model.PositionTrack" >
+    update t_position_track
+    set sip_uid = #{sipUid,jdbcType=VARCHAR},
+      longitude = #{longitude,jdbcType=VARCHAR},
+      latitude = #{latitude,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="getList" resultMap="baseResult" parameterType="com.biencloud.smarthome.service.rest.model.PositionTrack">
+    select id, sip_uid, longitude, latitude, create_time
+    from t_position_track
+    where 1=1
+    <if test="pos.sipUid != null" >
+       and sip_uid = #{pos.sipUid,jdbcType=VARCHAR}
+    </if>
+	<if test="beginTime != null and endTime!=null">
+       and (create_time between #{beginTime} and #{endTime})
+	</if>
+  </select>
+</mapper>

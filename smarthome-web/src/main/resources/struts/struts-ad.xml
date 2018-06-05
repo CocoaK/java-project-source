@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="Advertisement" extends="default" namespace="/ad">
+        <action name="viewDetail" class="com.biencloud.smarthome.web.ad.action.AdAction" method="viewDetail">
+            <param name="menuCode">M001014</param>
+            <param name="operationCode">2</param>
+            <result>/WEB-INF/views/ad/view_detail.jsp</result>
+        </action>
+
+        <action name="queryList" class="com.biencloud.smarthome.web.ad.action.AdAction" method="queryList">
+            <param name="menuCode">M001014</param>
+            <param name="operationCode">1</param>
+            <result>/WEB-INF/views/ad/query_list.jsp</result>
+        </action>
+
+        <action name="addInput" class="com.biencloud.smarthome.web.ad.action.AdAction" method="addInput">
+            <param name="menuCode">M001014</param>
+            <param name="operationCode">3</param>
+            <result>/WEB-INF/views/ad/add_input.jsp</result>
+        </action>
+        
+        <action name="addWebInput" class="com.biencloud.smarthome.web.ad.action.AdAction" method="addWebInput">
+            <param name="menuCode">M001014</param>
+            <param name="operationCode">3</param>
+            <result>/WEB-INF/views/ad/add_web_input.jsp</result>
+        </action>
+        
+        <action name="addAppInput" class="com.biencloud.smarthome.web.ad.action.AdAction" method="addAppInput">
+            <param name="menuCode">M001014</param>
+            <param name="operationCode">3</param>
+            <result>/WEB-INF/views/ad/add_app_input.jsp</result>
+        </action>
+        
+        <action name="saveWeb" class="com.biencloud.smarthome.web.ad.action.AdAction" method="saveWeb">
+            <param name="menuCode">M001014</param>
+            <param name="operationCode">4</param>
+            <result>/WEB-INF/views/ad/add_web_input.jsp</result>
+            <result name="input" type="redirectAction">
+                <param name="actionName">addWebInput</param>
+                <param name="ad.adName">${ad.adName}</param>
+                <param name="ad.adType.typeCode">${ad.adType.typeCode}</param>
+                <param name="ad.adBeginTime">${ad.adBeginTime}</param>
+                <param name="ad.adEndTime">${ad.adEndTime}</param>
+                <param name="ad.adLinkUrl">${ad.adLinkUrl}</param>
+                <param name="ad.adLocation.locationCode">${ad.adLocation.locationCode}</param>
+                <param name="ad.adDesc">${ad.adDesc}</param>
+                <param name="errorFlag">true</param>
+                <param name="adPicErrorMsg">${fieldErrors.adPicFile}</param>
+            </result>
+            <interceptor-ref name="fileUpload">
+                <param name="maximumSize">10485760</param>    
+            </interceptor-ref>
+            <interceptor-ref name="myStack"/>
+        </action>
+        
+        <action name="saveApp" class="com.biencloud.smarthome.web.ad.action.AdAction" method="saveApp">
+            <param name="menuCode">M001014</param>
+            <param name="operationCode">4</param>
+            <result>/WEB-INF/views/ad/add_app_input.jsp</result>
+            <result name="input" type="redirectAction">
+                <param name="actionName">addAppInput</param>
+                <param name="ad.adLocation.adSys.sysCode">${ad.adLocation.adSys.sysCode}</param>
+                <param name="ad.adName">${ad.adName}</param>
+                <param name="ad.adType.typeCode">${ad.adType.typeCode}</param>
+                <param name="ad.adBeginTime">${ad.adBeginTime}</param>
+                <param name="ad.adEndTime">${ad.adEndTime}</param>
+                <param name="ad.adLocation.locationCode">${ad.adLocation.locationCode}</param>
+                <param name="ad.adDesc">${ad.adDesc}</param>
+                <param name="groupIds">${groupIds}</param>
+                <param name="deviceTypes.deviceType">${deviceTypes.deviceType}</param>
+                <param name="errorFlag">true</param>
+                <param name="adPicErrorMsg">${fieldErrors.adPicFile}</param>
+                <param name="adDetailPicErrorMsg">${fieldErrors.adDetailPicFile}</param>
+            </result>
+            <interceptor-ref name="fileUpload">
+                <param name="maximumSize">10485760</param>    
+            </interceptor-ref>
+            <interceptor-ref name="myStack"/>
+        </action>
+        
+        <action name="updateInput" class="com.biencloud.smarthome.web.ad.action.AdAction" method="updateInput">
+            <param name="menuCode">M001014</param>
+            <param name="operationCode">5</param>
+            <result name="app">/WEB-INF/views/ad/update_app_input.jsp</result>
+            <result name="web">/WEB-INF/views/ad/update_web_input.jsp</result>
+        </action>
+
+        <action name="update" class="com.biencloud.smarthome.web.ad.action.AdAction" method="update">
+            <param name="menuCode">M001014</param>
+            <param name="operationCode">6</param>
+            <result name="app">/WEB-INF/views/ad/update_app_input.jsp</result>
+            <result name="web">/WEB-INF/views/ad/update_web_input.jsp</result>
+            <result name="input" type="redirectAction">
+                <param name="actionName">updateInput</param>
+                <param name="ad.adId">${ad.adId}</param>
+                <param name="adId">${ad.adId}</param>
+                <param name="ad.adLocation.adSys.sysCode">${ad.adLocation.adSys.sysCode}</param>
+                <param name="ad.adName">${ad.adName}</param>
+                <param name="ad.adType.typeCode">${ad.adType.typeCode}</param>
+                <param name="ad.adBeginTime">${ad.adBeginTime}</param>
+                <param name="ad.adEndTime">${ad.adEndTime}</param>
+                <param name="ad.adLinkUrl">${ad.adLinkUrl}</param>
+                <param name="ad.adLocation.locationCode">${ad.adLocation.locationCode}</param>
+                <param name="ad.adDesc">${ad.adDesc}</param>
+                <param name="groupIds">${groupIds}</param>
+                <param name="deviceTypes.deviceType">${deviceTypes.deviceType}</param>
+                <param name="errorFlag">true</param>
+                <param name="adPicErrorMsg">${fieldErrors.adPicFile}</param>
+                <param name="adDetailPicErrorMsg">${fieldErrors.adDetailPicFile}</param>
+            </result>
+            <interceptor-ref name="fileUpload">
+                <param name="maximumSize">10485760</param>    
+            </interceptor-ref>
+            <interceptor-ref name="myStack"/>
+        </action>
+        
+        <action name="publish" class="com.biencloud.smarthome.web.ad.action.AdAction" method="publish">
+            <param name="menuCode">M001014</param>
+            <param name="operationCode">9</param>
+            <result>/WEB-INF/views/ad/query_list.jsp</result>
+        </action>
+        
+        <action name="stop" class="com.biencloud.smarthome.web.ad.action.AdAction" method="stop">
+            <param name="menuCode">M001014</param>
+            <param name="operationCode">10</param>
+            <result>/WEB-INF/views/ad/query_list.jsp</result>
+        </action>
+        
+        <action name="resume" class="com.biencloud.smarthome.web.ad.action.AdAction" method="resume">
+            <param name="menuCode">M001014</param>
+            <param name="operationCode">10</param>
+            <result>/WEB-INF/views/ad/query_list.jsp</result>
+        </action>
+        
+        <action name="remove" class="com.biencloud.smarthome.web.ad.action.AdAction" method="remove">
+            <param name="menuCode">M001014</param>
+            <param name="operationCode">7</param>
+            <result>/WEB-INF/views/ad/query_list.jsp</result>
+        </action>
+    </package>
+</struts>
+

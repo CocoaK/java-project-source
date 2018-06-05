@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="sip" extends="default" namespace="/sip">
+
+        <action name="add" class="com.biencloud.smarthome.web.sip.action.SipRegisterAction" method="add">
+            <param name="menuCode"></param>
+            <param name="operationCode"></param>
+            <result>/WEB-INF/views/sip/qrcode_print.jsp</result>
+        </action>
+        
+        <action name="addInput" class="com.biencloud.smarthome.web.sip.action.SipRegisterAction" method="addInput">
+            <param name="menuCode"></param>
+            <param name="operationCode"></param>
+            <result>/WEB-INF/views/sip/qrcode_add.jsp</result>
+        </action>
+    </package>
+    
+    <package name="sipJson" extends="json" namespace="/sip/json">
+    	<action name="isExist" class="com.biencloud.smarthome.web.sip.action.SipRegisterAction" method="isExist">
+            <result type="json">
+				<param name="root">re</param>
+			</result>
+        </action>
+    </package>
+    
+</struts>
+

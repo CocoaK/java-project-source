@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="Json" extends="json" namespace="/json">
+        <action name="queryDevices" class="com.biencloud.smarthome.web.device.action.DeviceAction" method="queryDevices">
+            <param name="ignoreLog">true</param>
+            <result type="json">
+                <param name="includeProperties">
+                    ^devices\[\d+\]\.deviceId,
+                    ^devices\[\d+\]\.deviceAlias
+                </param>
+            </result>
+        </action>
+        
+        <action name="queryGateCardDevices" class="com.biencloud.smarthome.web.device.action.DeviceAction" method="queryGateCardDevices">
+            <param name="ignoreLog">true</param>
+            <result type="json">
+                <param name="includeProperties">
+                    ^devices\[\d+\]\.deviceId,^devices\[\d+\]\.deviceName,
+                    ^devices\[\d+\]\.deviceType\.deviceName,
+                    ^devices\[\d+\]\.housingDistrictRegionInfo\.name,
+                    ^devices\[\d+\]\.regionBuildingInfo\.name,
+                    ^devices\[\d+\]\.sipid,
+                    ^devices\[\d+\]\.buildingCellInfo\.name                   
+                </param>
+            </result>
+        </action>
+        
+        <action name="querySystemGroup" class="com.biencloud.smarthome.web.systemgroup.action.SystemGroupAction">
+            <param name="ignoreLog">true</param>
+            <result type="json">
+                <param name="includeProperties">
+                    ^devices\[\d+\]\.systemGroupId,
+                    ^devices\[\d+\]\.systemGroupName
+                </param>
+            </result>
+        </action>
+        <action name="queryDeviceList" class="com.biencloud.smarthome.web.device.action.DeviceAction" method="queryDeviceList">
+        	<param name="ignoreLog">true</param>
+            <result type="json">
+                <param name="includeProperties">
+                    ^devices\[\d+\]\.deviceId,
+                    ^devices\[\d+\]\.deviceAlias,
+                    ^devices\[\d+\]\.housingDistrictInfo\.name,
+                    ^devices\[\d+\]\.housingDistrictRegionInfo\.name,
+                    ^devices\[\d+\]\.regionBuildingInfo\.name,
+                    ^devices\[\d+\]\.buildingCellInfo\.name,
+                    ^devices\[\d+\]\.cellHouseholdInfo\.name,
+                    ^devices\[\d+\]\.deviceType\.deviceName
+                </param>
+            </result>
+        </action>
+        <action name="add" class="com.biencloud.smarthome.web.device.action.DeviceSipAction" method="add">
+            <result type="json">
+				<param name="root">deviceSipVO</param>
+			</result>
+        </action>
+    </package>
+    
+    <package name="device" extends="default" namespace="/device">
+        <action name="deviceList" class="com.biencloud.smarthome.web.device.action.DeviceAction" method="deviceList">
+        	<param name="menuCode">M002011</param>
+            <param name="operationCode">1</param>
+            <result name="list">/WEB-INF/views/device/device_list.jsp</result>
+        </action>
+        <action name="deviceDetail" class="com.biencloud.smarthome.web.device.action.DeviceAction" method="deviceDetail">
+        	<param name="menuCode">M002011</param>
+            <param name="operationCode">2</param>
+            <result name="detail">/WEB-INF/views/device/device_detail.jsp</result>
+        </action>
+        <action name="updateDetail" class="com.biencloud.smarthome.web.device.action.DeviceAction" method="updateDetail">
+        	<param name="menuCode">M002011</param>
+            <param name="operationCode">2</param>
+            <result name="detail">/WEB-INF/views/device/device_update_detail.jsp</result>
+        </action>
+        <action name="updateResult" class="com.biencloud.smarthome.web.device.action.DeviceAction" method="updateResult">
+        	<param name="menuCode">M002011</param>
+            <param name="operationCode">5</param>
+            <result name="update_result">/WEB-INF/views/device/device_update_detail.jsp</result>
+        </action>
+        <action name="pwdChangeDetail" class="com.biencloud.smarthome.web.device.action.DeviceAction" method="pwdChangeDetail">
+        	<param name="menuCode">M002011</param>
+            <param name="operationCode">2</param>
+            <result name="change_passwd">/WEB-INF/views/device/device_passwd_update_detail.jsp</result>
+        </action>
+        <action name="pwdChangeResult" class="com.biencloud.smarthome.web.device.action.DeviceAction" method="pwdChangeResult">
+        	<param name="menuCode">M002011</param>
+            <param name="operationCode">2</param>
+            <result name="result">/WEB-INF/views/device/device_passwd_update_detail.jsp</result>
+        </action>
+        <action name="ipList" class="com.biencloud.smarthome.web.device.action.DeviceIpAction" method="ipList">
+        	<param name="menuCode">M002011</param>
+            <param name="operationCode">1</param>
+            <result name="list">/WEB-INF/views/device/device_ip_list.jsp</result>
+        </action>     
+        <action name="ipAdd" class="com.biencloud.smarthome.web.device.action.DeviceIpAction" method="ipAdd">
+        	<param name="menuCode">M002011</param>
+            <param name="operationCode">3</param>
+            <interceptor-ref name="defaultStack" />
+            <result name="add">/WEB-INF/views/device/device_ip_list.jsp</result>
+            <result name="invalid.token">/WEB-INF/views/device/device_ip_list.jsp</result>
+            <interceptor-ref name="token" />
+        </action>
+        <action name="messageList" class="com.biencloud.smarthome.web.device.action.DeviceMessageAction" method="messageList">
+        	<param name="menuCode">M002011</param>
+            <param name="operationCode">1</param>
+            <result name="list">/WEB-INF/views/device/device_message_list.jsp</result>
+        </action>
+        <action name="htmlPlay" class="com.biencloud.smarthome.web.device.action.DeviceMessageAction" method="htmlPlay">
+        	<param name="menuCode">M002011</param>
+            <param name="operationCode">17</param>
+            <result name="play">/WEB-INF/views/device/play_html.html</result>
+        </action>
+        <action name="html5Play" class="com.biencloud.smarthome.web.device.action.DeviceMessageAction" method="html5Play">
+            <param name="menuCode">M002011</param>
+            <param name="operationCode">17</param>
+            <result name="play">/WEB-INF/views/device/play_html5.html</result>
+        </action>
+        <action name="dataTrace" class="com.biencloud.smarthome.web.device.action.DeviceAction" method="dataTrace">
+        	<param name="menuCode">M002011</param>
+            <param name="operationCode">1</param>
+            <result name="data_trace_list">/WEB-INF/views/device/pushList.jsp</result>
+        </action>
+        <action name="removeDevice" class="com.biencloud.smarthome.web.device.action.DeviceAction" method="removeDevice">
+        	<param name="menuCode">M002011</param>
+            <param name="operationCode">7</param>
+            <result name="list">/WEB-INF/views/device/device_list.jsp</result>
+        </action>
+        <action name="updateCoordinateResult" class="com.biencloud.smarthome.web.device.action.DeviceAction" method="updateCoordinateResult">
+        	<param name="menuCode">M002011</param>
+            <param name="operationCode">5</param>
+            <result name="update_result">/WEB-INF/views/device/device_update_coordinate_detail.jsp</result>
+        </action>
+        <action name="updateCoordinateDetail" class="com.biencloud.smarthome.web.device.action.DeviceAction" method="updateCoordinateDetail">
+        	<param name="menuCode">M002011</param>
+            <param name="operationCode">2</param>
+            <result name="detail">/WEB-INF/views/device/device_update_coordinate_detail.jsp</result>
+        </action>
+    </package>
+
+</struts>
+

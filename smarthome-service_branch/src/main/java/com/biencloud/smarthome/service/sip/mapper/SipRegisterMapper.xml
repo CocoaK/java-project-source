@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.biencloud.smarthome.service.sip.mapper.SipRegisterMapper" >
+  <resultMap id="baseResult" type="com.biencloud.smarthome.service.sip.model.SipRegister" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="domain" property="domain" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="email_address" property="emailAddress" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="ha1" property="ha1" jdbcType="VARCHAR" />
+    <result column="ha1b" property="ha1b" jdbcType="VARCHAR" />
+    <result column="rpid" property="rpid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="baseColumns" >
+    id, username, domain, password, email_address,type, ha1, ha1b, rpid
+  </sql>
+  <select id="getForList" resultMap="baseResult" >
+    select id, username, domain, password, email_address,type, ha1, ha1b, rpid
+    from subscriber
+  </select>
+  <select id="getForOne" resultMap="baseResult" parameterType="java.lang.Integer" >
+    select 
+    <include refid="baseColumns" />
+    from subscriber
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="delete" parameterType="java.lang.Integer" >
+    delete from subscriber
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <delete id="deleteByUsername" parameterType="java.lang.String" >
+    delete from subscriber
+    where username = #{username,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.biencloud.smarthome.service.sip.model.SipRegister" >
+    insert into subscriber (id, username, domain, 
+      password, email_address,type, ha1, 
+      ha1b, rpid)
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{domain,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{emailAddress,jdbcType=VARCHAR},#{type,jdbcType=INTEGER},
+      #{ha1,jdbcType=VARCHAR}, #{ha1b,jdbcType=VARCHAR}, #{rpid,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateOnActive" parameterType="com.biencloud.smarthome.service.sip.model.SipRegister" >
+    update subscriber
+    <set >
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="domain != null" >
+        domain = #{domain,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="emailAddress != null" >
+        email_address = #{emailAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="ha1 != null" >
+        ha1 = #{ha1,jdbcType=VARCHAR},
+      </if>
+      <if test="ha1b != null" >
+        ha1b = #{ha1b,jdbcType=VARCHAR},
+      </if>
+      <if test="rpid != null" >
+        rpid = #{rpid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="update" parameterType="com.biencloud.smarthome.service.sip.model.SipRegister" >
+    update subscriber
+    set username = #{username,jdbcType=VARCHAR},
+      domain = #{domain,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      email_address = #{emailAddress,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      ha1 = #{ha1,jdbcType=VARCHAR},
+      ha1b = #{ha1b,jdbcType=VARCHAR},
+      rpid = #{rpid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="getMaxUsername" resultType="java.lang.String" parameterType="java.lang.Integer">
+    select MAX( username+0 )
+    from subscriber
+    where type = #{type,jdbcType=INTEGER}
+  </select>
+  
+   <select id="getByUsername" resultMap="baseResult" parameterType="java.lang.String" >
+    select 
+    <include refid="baseColumns" />
+    from subscriber
+    where username = #{username,jdbcType=VARCHAR}
+  </select>
+</mapper>

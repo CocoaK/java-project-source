@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="qrcode" extends="default" namespace="/qrcode">
+
+        <action name="detailInput" class="com.biencloud.smarthome.web.qrcode.action.QrcodeCountAction" method="detailInput">
+            <param name="menuCode"></param>
+            <param name="operationCode"></param>
+            <result>/WEB-INF/views/qrcode/qrcode_count_add_input.jsp</result>
+        </action>
+        
+        <action name="detail" class="com.biencloud.smarthome.web.qrcode.action.QrcodeCountAction" method="get">
+            <param name="menuCode"></param>
+            <param name="operationCode"></param>
+            <result>/WEB-INF/views/qrcode/query_detail.jsp</result>
+        </action>
+        
+        <action name="save" class="com.biencloud.smarthome.web.qrcode.action.QrcodeCountAction" method="saveInput">
+            <param name="menuCode"></param>
+            <param name="operationCode"></param>
+            <result>/WEB-INF/views/qrcode/add_input.jsp</result>
+        </action>
+        
+        <action name="queryList" class="com.biencloud.smarthome.web.qrcode.action.QrcodeAction" method="queryList">
+            <param name="menuCode"></param>
+            <param name="operationCode"></param>
+            <result>/WEB-INF/views/qrcode/qrcode_list.jsp</result>
+        </action>
+        
+        <action name="printQrcode" class="com.biencloud.smarthome.web.qrcode.action.QrcodeAction" method="printQrcode">
+            <param name="menuCode"></param>
+            <param name="operationCode"></param>
+            <result>/WEB-INF/views/qrcode/qrcode_print.jsp</result>
+        </action>
+        
+        <action name="queryReqList" class="com.biencloud.smarthome.web.qrcode.action.QrcodeAction" method="queryReqList">
+            <param name="menuCode"></param>
+            <param name="operationCode"></param>
+            <result>/WEB-INF/views/qrcode/qrcode_req_list.jsp</result>
+        </action>
+        
+        <action name="addReqInput" class="com.biencloud.smarthome.web.qrcode.action.QrcodeAction" method="addReqInput">
+            <param name="menuCode"></param>
+            <param name="operationCode"></param>
+            <result>/WEB-INF/views/qrcode/qrcode_req_input.jsp</result>
+        </action>
+        
+        <action name="add" class="com.biencloud.smarthome.web.qrcode.action.QrcodeAction" method="add">
+            <param name="menuCode"></param>
+            <param name="operationCode"></param>
+            <result>/WEB-INF/views/qrcode/qrcode_list.jsp</result>
+        </action>
+        
+        <action name="deleteSip" class="com.biencloud.smarthome.web.qrcode.action.QrcodeAction" method="deleteSip">
+            <param name="menuCode"></param>
+            <param name="operationCode"></param>
+            <result>/WEB-INF/views/qrcode/qrcode_list.jsp</result>
+        </action>
+    </package>
+    
+    <package name="qrcodeJson" extends="json" namespace="/qrcode/json">
+    	<action name="update" class="com.biencloud.smarthome.web.qrcode.action.QrcodeAction" method="update">
+            <result type="json">
+				<param name="root">qrcodeVO</param>
+			</result>
+        </action>
+    </package>
+</struts>
+

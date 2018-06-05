@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.biencloud.smarthome.service.rest.mapper.RoomMobileEntryMapper" >
+  <resultMap id="baseResult" type="com.biencloud.smarthome.service.rest.model.RoomMobileEntry" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="district_no" property="districtNo" jdbcType="VARCHAR" />
+    <result column="regin_no" property="reginNo" jdbcType="VARCHAR" />
+    <result column="building_no" property="buildingNo" jdbcType="VARCHAR" />
+    <result column="unit_no" property="unitNo" jdbcType="VARCHAR" />
+    <result column="room_no" property="roomNo" jdbcType="VARCHAR" />
+    <result column="target_uid" property="targetUid" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="ios_token" property="iosToken" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="baseColumns" >
+    id, district_no, regin_no, building_no, unit_no, room_no, target_uid, type, ios_token
+  </sql>
+  <select id="getForList" resultMap="baseResult" >
+    select
+    <include refid="baseColumns" />
+    from t_room_mobile_entry
+  </select>
+  <select id="getForOne" resultMap="baseResult" parameterType="java.lang.Long" >
+    select 
+    <include refid="baseColumns" />
+    from t_room_mobile_entry
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="delete" parameterType="java.lang.Long" >
+    delete from t_room_mobile_entry
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.biencloud.smarthome.service.rest.model.RoomMobileEntry" >
+    insert into t_room_mobile_entry (id, district_no, regin_no, 
+      building_no, unit_no, room_no, 
+      target_uid, type, ios_token
+      )
+    values (#{id,jdbcType=BIGINT}, #{districtNo,jdbcType=VARCHAR}, #{reginNo,jdbcType=VARCHAR}, 
+      #{buildingNo,jdbcType=VARCHAR}, #{unitNo,jdbcType=VARCHAR}, #{roomNo,jdbcType=VARCHAR}, 
+      #{targetUid,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{iosToken,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateOnActive" parameterType="com.biencloud.smarthome.service.rest.model.RoomMobileEntry" >
+    update t_room_mobile_entry
+    <set >
+      <if test="districtNo != null" >
+        district_no = #{districtNo,jdbcType=VARCHAR},
+      </if>
+      <if test="reginNo != null" >
+        regin_no = #{reginNo,jdbcType=VARCHAR},
+      </if>
+      <if test="buildingNo != null" >
+        building_no = #{buildingNo,jdbcType=VARCHAR},
+      </if>
+      <if test="unitNo != null" >
+        unit_no = #{unitNo,jdbcType=VARCHAR},
+      </if>
+      <if test="roomNo != null" >
+        room_no = #{roomNo,jdbcType=VARCHAR},
+      </if>
+      <if test="targetUid != null" >
+        target_uid = #{targetUid,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="iosToken != null" >
+        ios_token = #{iosToken,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="update" parameterType="com.biencloud.smarthome.service.rest.model.RoomMobileEntry" >
+    update t_room_mobile_entry
+    set district_no = #{districtNo,jdbcType=VARCHAR},
+      regin_no = #{reginNo,jdbcType=VARCHAR},
+      building_no = #{buildingNo,jdbcType=VARCHAR},
+      unit_no = #{unitNo,jdbcType=VARCHAR},
+      room_no = #{roomNo,jdbcType=VARCHAR},
+      target_uid = #{targetUid,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      ios_token = #{iosToken,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="getList" resultMap="baseResult" parameterType="com.biencloud.smarthome.service.rest.model.RoomMobileEntry">
+    select
+    <include refid="baseColumns" />
+	from t_room_mobile_entry
+	where 1=1 
+	<if test="districtNo != null">
+		and district_no = #{districtNo,jdbcType=VARCHAR}
+	</if>
+	<if test="reginNo != null">
+		and regin_no = #{reginNo,jdbcType=VARCHAR}
+	</if>
+	<if test="buildingNo != null">
+		and building_no = #{buildingNo,jdbcType=VARCHAR}
+	</if>
+	<if test="unitNo != null">
+		and unit_no = #{unitNo,jdbcType=VARCHAR}
+		or unit_no = '00'
+	</if>
+	<if test="targetUid != null">
+		and target_uid = #{targetUid,jdbcType=VARCHAR}
+	</if>
+	<if test="type != null">
+		and type = #{type,jdbcType=INTEGER}
+	</if>
+  </select>
+  
+  <select id="getListForEntity" resultMap="baseResult" parameterType="com.biencloud.smarthome.service.rest.model.RoomMobileEntry">
+    select
+    <include refid="baseColumns" />
+	from t_room_mobile_entry
+	where 1=1 
+	<if test="districtNo != null">
+		and district_no = #{districtNo,jdbcType=VARCHAR}
+	</if>
+	<if test="reginNo != null">
+		and regin_no = #{reginNo,jdbcType=VARCHAR}
+	</if>
+	<if test="buildingNo != null">
+		and building_no = #{buildingNo,jdbcType=VARCHAR}
+	</if>
+	<if test="unitNo != null">
+		and unit_no = #{unitNo,jdbcType=VARCHAR}
+	</if>
+	<if test="targetUid != null">
+		and target_uid = #{targetUid,jdbcType=VARCHAR}
+	</if>
+
+  </select>
+</mapper>

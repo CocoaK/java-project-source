@@ -1,0 +1,56 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Video Play</title>
+<script type="text/javascript" src="Images/swfobject.js"></script>
+<script type="text/javascript">
+	function getparastr(strname) 
+		{ 
+			//alert("strname:"+strname);
+			var hrefstr,pos,parastr,para,tempstr; 
+			hrefstr = window.location.href; 
+			pos = hrefstr.indexOf("?");
+			parastr = hrefstr.substring(pos+1); 
+			para = parastr.split("&"); 
+			tempstr=""; 
+			for(i=0;i<para.length;i++) 
+			{ 
+				tempstr = para[i]; 
+				pos = tempstr.indexOf("="); 
+				if(tempstr.substring(0,pos) == strname){ 
+					return tempstr.substring(pos+1); 
+				} 
+			} 
+			return null; 
+		}
+</script>
+</head>
+
+<body>
+	<div align="center">       
+		<div id="CuPlayer" >Error!</div>
+		<script type=text/javascript>
+		var so = new SWFObject("CuPlayerMiniV22_Black_S.swf","CuPlayer","640","480","9","#000000");
+		var filePath = getparastr("callRecordVO.videoNetPath");
+		so.addParam("allowfullscreen","false");
+		so.addParam("allowscriptaccess","always");
+		so.addParam("wmode","opaque");
+		so.addParam("quality","high");
+		so.addParam("salign","lt");
+		so.addVariable("CuPlayerFile",filePath);
+		//so.addVariable("CuPlayerImage","Images/flashChangfa2.jpg");
+		//so.addVariable("CuPlayerLogo","Images/mylogo.png");
+		so.addVariable("CuPlayerShowImage","true");
+		//so.addVariable("CuPlayerWidth","640");
+		//so.addVariable("CuPlayerHeight","480");
+		so.addVariable("CuPlayerAutoPlay","true");
+		so.addVariable("CuPlayerAutoRepeat","false");
+		so.addVariable("CuPlayerShowControl","true");
+		so.addVariable("CuPlayerAutoHideControl","false");
+		so.addVariable("CuPlayerAutoHideTime","6");
+		so.addVariable("CuPlayerVolume","80");
+		so.write("CuPlayer");
+		</script>
+    </div> 
+</body>
+</html>

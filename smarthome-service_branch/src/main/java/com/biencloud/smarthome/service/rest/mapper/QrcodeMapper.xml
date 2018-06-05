@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.biencloud.smarthome.service.rest.mapper.QrcodeMapper" >
+  <resultMap id="baseResult" type="com.biencloud.smarthome.service.rest.model.Qrcode" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="CHAR" />
+    <result column="sip_uid" property="sipUid" jdbcType="VARCHAR" />
+    <result column="door_sipid" property="doorSipid" jdbcType="VARCHAR" />
+    <result column="house_id" property="houseId" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="device_type" property="deviceType" jdbcType="INTEGER" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="room_no" property="roomNo" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    
+  </resultMap>
+  <sql id="baseColumns" >
+    id, type, sip_uid, door_sipid, house_id, status, device_type,create_time,room_no,code
+  </sql>
+  <select id="getForList" resultMap="baseResult" >
+    select id, type, sip_uid, door_sipid, house_id, status, device_type,roomNo,code,create_time
+    from t_qrcode
+  </select>
+  
+  <select id="getListByHouseId" resultMap="baseResult" >
+    select id, type, sip_uid, door_sipid, house_id, status, device_type,roomNo,code,create_time
+    from t_qrcode
+    where house_id = #{houseId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="getForOne" resultMap="baseResult" parameterType="java.lang.Long" >
+    select 
+    <include refid="baseColumns" />
+    from t_qrcode
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="delete" parameterType="java.lang.Long" >
+    delete from t_qrcode
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.biencloud.smarthome.service.rest.model.Qrcode" useGeneratedKeys="true" keyProperty="id">
+    insert into t_qrcode (id, type, sip_uid, 
+      door_sipid, house_id, status, 
+      device_type, room_no,code,create_time)
+    values (#{id,jdbcType=BIGINT}, #{type,jdbcType=CHAR}, #{sipUid,jdbcType=VARCHAR}, 
+      #{doorSipid,jdbcType=VARCHAR}, #{houseId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{deviceType,jdbcType=INTEGER},#{roomNo,jdbcType=VARCHAR},#{code,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateOnActive" parameterType="com.biencloud.smarthome.service.rest.model.Qrcode" >
+    update t_qrcode
+    <set >
+      <if test="type != null" >
+        type = #{type,jdbcType=CHAR},
+      </if>
+      <if test="sipUid != null" >
+        sip_uid = #{sipUid,jdbcType=VARCHAR},
+      </if>
+      <if test="doorSipid != null" >
+        door_sipid = #{doorSipid,jdbcType=VARCHAR},
+      </if>
+      <if test="houseId != null" >
+        house_id = #{houseId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="deviceType != null" >
+        device_type = #{deviceType,jdbcType=INTEGER},
+      </if>
+      <if test="roomNo != null" >
+        room_no = #{roomNo,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="update" parameterType="com.biencloud.smarthome.service.rest.model.Qrcode" >
+    update t_qrcode
+    set type = #{type,jdbcType=CHAR},
+      sip_uid = #{sipUid,jdbcType=VARCHAR},
+      door_sipid = #{doorSipid,jdbcType=VARCHAR},
+      house_id = #{houseId,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      device_type = #{deviceType,jdbcType=INTEGER},
+      room_no = #{roomNo,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="queryList" resultMap="baseResult" >
+    select id, type, sip_uid, door_sipid, house_id, status, device_type,room_no,create_time
+    from t_qrcode
+    where 1=1
+    <if test="type != null" >
+    	and type = #{type,jdbcType=CHAR}
+    </if> 
+    <if test="sipUid != null" >
+    	and sip_uid = #{sipUid,jdbcType=VARCHAR}
+    </if> 
+    <if test="doorSipid != null" >
+    	and door_sipid = #{doorSipid,jdbcType=VARCHAR}
+    </if> 
+    <if test="houseId != null" >
+    	and house_id = #{houseId,jdbcType=INTEGER}
+    </if>
+    <if test="status != null" >
+    	and status = #{status,jdbcType=INTEGER}
+    </if> 
+    <if test="deviceType != null" >
+    	and device_type = #{deviceType,jdbcType=INTEGER}
+    </if>
+    <if test="roomNo != null" >
+    	and room_no like CONCAT('%',#{doorSipid,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="code != null" >
+    	and code = #{code,jdbcType=VARCHAR}
+    </if>
+    order by house_id,type asc,create_time desc
+  </select>
+  
+  <select id="getQrcodeCount" resultType="java.lang.Integer" parameterType="com.biencloud.smarthome.service.rest.model.Qrcode" >
+    select count(1)
+    from t_qrcode
+    where 1=1
+    <if test="type != null" >
+    	and type = #{type,jdbcType=CHAR}
+    </if> 
+    <if test="houseId != null" >
+    	and house_id = #{houseId,jdbcType=INTEGER}
+    </if>
+    <if test="status != null" >
+    	and status = #{status,jdbcType=INTEGER}
+    </if> 
+    <if test="deviceType != null" >
+    	and device_type = #{deviceType,jdbcType=INTEGER}
+    </if> 
+  </select>
+</mapper>

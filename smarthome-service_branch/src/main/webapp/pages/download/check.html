@@ -1,0 +1,44 @@
+<html>
+<title>download</title>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script type="text/javascript">
+	
+	function isIOS() {
+	    var ua = navigator.userAgent.toLowerCase();
+	    if (/(iphone|ipad|ipod|ios)/i.test(ua)) {
+	        return true;
+	    } else {
+	        return false;
+	    }
+	}
+	
+	function isAndroid() {
+	    var ua = navigator.userAgent.toLowerCase();
+	    if (/(android)/i.test(ua)) {
+	        return true;
+	    } else {
+	        return false;
+	    }
+	}
+	
+	function check(){
+		if(isIOS()){
+			window.location.href ="https://itunes.apple.com/cn/app/skeeper-zhong-wen-ban/id1166458431?mt=8";
+		}else if(isAndroid()){
+			window.location.href ="http://a.app.qq.com/o/simple.jsp?pkgname=com.quhwa.smarthome";
+		}else{
+			document.getElementById("center").innerHTML = "对不起您的设备不支持此二维码";
+		}
+	}
+</script>
+</head>
+
+<body onload="check()">
+	<center id="center">页面正在跳转中...</center>
+</body>
+
+</html>
+
+
+</html>

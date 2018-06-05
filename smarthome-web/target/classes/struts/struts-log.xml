@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="log" extends="default" namespace="/log">
+        <action name="systemLogList" class="com.biencloud.smarthome.web.log.action.SystemLogAction" method="systemLogList">
+            <param name="menuCode">M001004</param>
+            <param name="operationCode">1</param>
+            <result name="list">/WEB-INF/views/log/system_log_list.jsp</result>
+        </action>
+        <action name="systemLogDetail" class="com.biencloud.smarthome.web.log.action.SystemLogAction" method="systemLogDetail">
+            <param name="menuCode">M001004</param>
+            <param name="operationCode">2</param>
+            <result name="viewdetail">/WEB-INF/views/log/system_log_detail.jsp</result>
+        </action>
+        
+        <action name="operationLogList" class="com.biencloud.smarthome.web.log.action.OperationLogAction" method="operationLogList">
+            <param name="menuCode">M001004</param>
+            <param name="operationCode">1</param>
+            <result name="list">/WEB-INF/views/log/operation_log_list.jsp</result>
+        </action>
+        <action name="operationLogDetail" class="com.biencloud.smarthome.web.log.action.OperationLogAction" method="operationLogDetail">
+            <param name="menuCode">M001004</param>
+            <param name="operationCode">2</param>
+            <result name="viewdetail">/WEB-INF/views/log/operation_log_detail.jsp</result>
+        </action>
+        
+        <action name="fileUploadLogList" class="com.biencloud.smarthome.web.log.action.FileUploadLogAction" method="queryList">
+            <param name="menuCode">M001004</param>
+            <param name="operationCode">1</param>
+            <result name="list">/WEB-INF/views/log/fileupload_log_list.jsp</result>
+        </action>
+        <action name="fileUploadLogDetail" class="com.biencloud.smarthome.web.log.action.FileUploadLogAction" method="findById">
+            <param name="menuCode">M001004</param>
+            <param name="operationCode">2</param>
+            <result name="viewdetail">/WEB-INF/views/log/fileupload_log_detail.jsp</result>
+        </action>
+        <action name="diviceRegeditLogList" class="com.biencloud.smarthome.web.log.action.DiviceRegeditLogAction" method="queryList">
+            <param name="menuCode">M001004</param>
+            <param name="operationCode">1</param>
+            <result name="list">/WEB-INF/views/log/diviceregedit_log_list.jsp</result>
+        </action>
+        <action name="diviceRegeditLogDetail" class="com.biencloud.smarthome.web.log.action.DiviceRegeditLogAction" method="findById">
+            <param name="menuCode">M001004</param>
+            <param name="operationCode">2</param>
+            <result name="viewdetail">/WEB-INF/views/log/diviceregedit_log_detail.jsp</result>
+        </action>
+        <action name="clientLogList" class="com.biencloud.smarthome.web.log.action.ClientLogAction" method="list">
+            <param name="menuCode">M001004</param>
+            <param name="operationCode">1</param>
+            <result name="list">/WEB-INF/views/log/client_log_list.jsp</result>
+        </action>
+        <action name="clientLogAction_*" class="com.biencloud.smarthome.web.log.action.ClientLogAction" method="{1}">
+            <param name="menuCode">M001004</param>
+            <param name="operationCode">2</param>
+            <result name="detail">/WEB-INF/views/log/client_log_detail.jsp</result>
+        </action>
+        <action name="clientLogDetail" class="com.biencloud.smarthome.web.log.action.ClientLogAction" method="detail">
+            <param name="menuCode">M001004</param>
+            <param name="operationCode">2</param>
+            <result name="detail">/WEB-INF/views/log/client_log_detail.jsp</result>
+        </action>
+        <action name="regeditLogList" class="com.biencloud.smarthome.web.log.action.DiviceRegeditLogAction" method="queryList">
+            <param name="menuCode">M001004</param>
+            <param name="operationCode">1</param>
+            <result name="list">/WEB-INF/views/device/diviceregedit_log_list.jsp</result>
+        </action>
+        <action name="regeditLogDetail" class="com.biencloud.smarthome.web.log.action.DiviceRegeditLogAction" method="findById">
+            <param name="menuCode">M001004</param>
+            <param name="operationCode">2</param>
+            <result name="viewdetail">/WEB-INF/views/device/diviceregedit_log_detail.jsp</result>
+        </action>
+        <action name="clientLogs" class="com.biencloud.smarthome.web.log.action.ClientLogAction" method="list">
+            <param name="menuCode">M001004</param>
+            <param name="operationCode">1</param>
+            <result name="list">/WEB-INF/views/device/client_log_list.jsp</result>
+        </action>
+        <action name="clientDetail" class="com.biencloud.smarthome.web.log.action.ClientLogAction" method="detail">
+            <param name="menuCode">M001004</param>
+            <param name="operationCode">2</param>
+            <result name="detail">/WEB-INF/views/device/client_log_detail.jsp</result>
+        </action>
+        <action name="appDataLogList" class="com.biencloud.smarthome.web.log.action.AppDataLogAction" method="queryList">
+            <param name="menuCode">M001004</param>
+            <param name="operationCode">1</param>
+            <result name="query_list">/WEB-INF/views/log/app_log_list.jsp</result>
+        </action>
+        <action name="appDataLogDetail" class="com.biencloud.smarthome.web.log.action.AppDataLogAction" method="queryDetail">
+            <param name="menuCode">M001004</param>
+            <param name="operationCode">2</param>
+            <result name="query_detail">/WEB-INF/views/log/app_log_detail.jsp</result>
+        </action>
+        <action name="appDataLogs" class="com.biencloud.smarthome.web.log.action.AppDataLogAction" method="queryList">
+            <param name="menuCode">M001004</param>
+            <param name="operationCode">1</param>
+            <result name="query_list">/WEB-INF/views/device/app_log_list.jsp</result>
+        </action>
+        <action name="appDataDetail" class="com.biencloud.smarthome.web.log.action.AppDataLogAction" method="queryDetail">
+            <param name="menuCode">M001004</param>
+            <param name="operationCode">2</param>
+            <result name="query_detail">/WEB-INF/views/device/app_log_detail.jsp</result>
+        </action>
+    </package>
+     <package name="logjson" extends="json-default" namespace="/logjson">
+     	<action name="logAction_*" class="com.biencloud.smarthome.web.log.action.FileUploadLogAction" method="{1}">		    	    					
+			<result name="saveFileUploadLog" type="json">
+				<param name="includeProperties">successFlag</param>
+			</result>
+		</action>	
+     </package>
+</struts>
+

@@ -1,0 +1,138 @@
+body{
+	height: 100%;
+	width: 100%;
+}
+#layout{
+	display:none;
+	position: absolute;
+	width: 480px;
+	height: 300px;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	margin: auto;
+	border:#446D8C solid 5px;
+	border-radius:10px;
+	z-index: 1002;
+	background-color: white;
+}
+#layout label{
+	/* font-family: Microsoft YaHei; */
+	font-size: 12px;
+	padding-left: 45px;
+}
+#layout span{
+	font-size: 12px;
+}
+#top{
+	width: 100%;
+	height: 50px;
+	background-color: #4F667D;
+}
+#layout div{
+	padding-top: 15px;
+}
+#layout input{
+	margin-left: 1px;
+	font-size: 12px;
+	width: 120px;
+}
+#layout button{
+	width: 75px;
+	height: 30px;
+	font-size: 12px;
+}
+#button{
+	padding-left:160px;
+}
+#sure{
+	border: #4F667D solid 1px;
+	background-color: #4F667D;
+	border-radius: 6px;
+}
+#cancel{
+	border: #ccc solid 1px;
+	border-radius: 6px;
+}
+.black_overlay {
+	display:none;
+	position: absolute;
+	top: 0%;
+	left: 0%;
+	width: 100%;
+	height: 100%;
+	background-color: #5A5A5A;
+	z-index: 1001;
+	-moz-opacity: 0.8;
+	opacity: .80;
+	filter: alpha(opacity = 80);
+}
+.showBoundSip:hover{
+	pointer:cursor;
+}
+#table{
+	width:480px;
+	height: 300px;
+	border:#446D8C solid 5px;
+	border-radius:5px;
+	display:none;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	margin: auto;
+	z-index: 1002;
+	background-color: white;
+}
+#table table{
+	margin-top:22px;
+	margin-bottom: 22px;
+	width:380px;
+	border-collapse: collapse;
+	border:#ccc solid 1px;
+	border-radius:4px;
+}
+#table table thead tr th{
+	background:url(../images/all_topbg.png) repeat-x;
+}
+#icon{
+	position:absolute;
+	width:25px;
+	height:18px;
+	top:0px;
+	right:0px;
+	background:url(../images/icon.png) no-repeat 9px -38px;
+}
+#tbody td{
+	height: 40px;
+}
+#select{
+	font-size: 12px;
+}
+#select option{
+	font-size: 12px;
+}
+.div_green,.div_red{
+	width: 120px;
+	line-height: 50px;
+	display: none;
+	position: absolute;
+	text-align: center;
+	top: 60px;
+	left: 0;
+	right: 0;
+	margin: auto;
+	border-radius: 10px;
+	z-index: 1003;
+}
+.div_green{
+	background-color: green;
+}
+.div_red{
+	background-color: red;
+}
+.div_green b,.div_red{
+	color:white;
+}

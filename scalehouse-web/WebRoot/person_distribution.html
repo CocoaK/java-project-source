@@ -1,0 +1,84 @@
+<meta http-equiv="content-type" content="text/html;charset=UTF-8">
+<div class="easyui-layout" data-options="fit:true" style="overflow-y:scroll">
+	<!-- <div style="width:950px;height:24px;margin:30px auto;">
+		<label>地区选择：</label><input id="area" class="easyui-combobox" data-options="editable:false,panelHeight:'auto'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<select id="area_person_d" style="width:115px">
+
+		</select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	    <label>产品选择：</label><input id="product" class="easyui-combobox" data-options="valueField: 'deviceType',textField: 'deviceName',editable:false,panelHeight:'auto'">
+	    <select id="product_person_d" style="width:115px">   
+		   
+		</select>
+	</div> -->
+	<div>
+		<!-- <img alt="The World" src="images/world.jpg" class="img">
+		<img alt="position" src="images/google_maps.png" style="position:absolute;top:234px;left:440px;">
+		<img alt="position" src="images/google_maps.png" style="position:absolute;top:184px;left:847px;"> -->
+		<table class="person_dis" cellspacing="0" cellpadding="6">
+			<thead>
+				<tr>
+					<th>国家</th>
+					<th>用户数量</th>
+					<th>占比</th>
+				</tr>
+			</thead>
+			<tbody id="getCountryPeople">
+				
+			</tbody>
+		</table>
+	</div>
+</div>
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript">
+	$(function(){
+		//loadCombobox('area_person_d','product_person_d');
+		getCountryPeople();
+	});
+	function getCountryPeople(){
+		$.ajax({
+			url:service_url+'scalehouse/person/getCountry',
+			type:'post',
+			dataType:'json',
+			data:{
+			},
+			cache:false,
+			success:function(json){
+				if(json.code==1){
+					var str="";
+					for(var i=0;i<json.data.length;i++){
+						str=str+"<tr><td>"+json.data[i].countryName+"</td></tr>";
+					}
+					$("#getCountryPeople").append(str+"<tr><td>"+'全部'+"</td></tr>");
+				}else{
+					alert("网络太差，请稍后再试");
+				}
+			},
+			error:function(){
+				alert("网络太差，请稍后再试");
+			}
+		});
+		$.ajax({
+			url:service_url+'scalehouse/person/getCountryPeople',
+			type:'post',
+			dataType:'json',
+			data:{
+			},
+			cache:false,
+			success:function(json){
+				if(json.code==1){
+					var str="";
+					for(var i=0;i<json.data.length;i++){
+						str="<td>"+json.data[i]+"</td><td>"+parseInt((json.data[i]/json.total).toFixed(2)*100)+"%</td>";
+						$("#getCountryPeople tr:eq("+i+")").append(str);
+					}
+					$("#getCountryPeople tr:eq(-1)").append("<td>"+json.total+"</td><td>100%</td>");
+				}else{
+					alert("网络太差，请稍后再试");
+				}
+			},
+			error:function(){
+				alert("网络太差，请稍后再试");
+			}
+		});
+	}
+</script>

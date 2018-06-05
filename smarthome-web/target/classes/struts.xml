@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+    <package name="appData" extends="json-default">
+        <interceptors> 
+            <interceptor name="appDataLog" class="com.biencloud.smarthome.web.base.interceptor.AppDataLogInterceptor" />
+            <interceptor-stack name="myStack">               
+                <interceptor-ref name="params" />
+                <interceptor-ref name="defaultStack" />
+                <interceptor-ref name="appDataLog" />           
+            </interceptor-stack>
+        </interceptors>
+       
+        <!--默认调用拦截器 -->
+        <default-interceptor-ref name="myStack" />
+    </package>
+    
+    <package name="json" extends="json-default">
+        <interceptors>
+            
+
+            <interceptor name="paramTrim" class="com.biencloud.smarthome.web.base.interceptor.ParamTrimInterceptor" />
+            
+            <interceptor name="i18n" class="com.opensymphony.xwork2.interceptor.I18nInterceptor" />
+                
+            <interceptor-stack name="myStack">          
+                <interceptor-ref name="paramTrim" />            
+                <interceptor-ref name="params" />
+                <interceptor-ref name="defaultStack" />
+                <interceptor-ref name="i18n" />
+            
+            </interceptor-stack>
+        </interceptors>
+       
+        <!--默认调用拦截器 -->
+        <default-interceptor-ref name="myStack" />
+        <!-- 定义全局result -->
+        <global-results>
+            <result name="reLogin">/forwardLogin.jsp</result>
+        </global-results>
+    </package>
+
+    <package name="default" extends="struts-default">
+        <interceptors>
+
+            <interceptor name="appDataLog" class="com.biencloud.smarthome.web.base.interceptor.AppDataLogInterceptor" />
+            <interceptor name="sessionout" class="com.biencloud.smarthome.web.login.interceptor.SessionInterceptor">
+                <param name="excludeMethods">changeLocale,login,exit,getValidCode,queryPosition</param>
+            </interceptor>
+            <interceptor name="log" class="com.biencloud.smarthome.web.base.interceptor.LogInterceptor">
+                <param name="errorResults">error</param>
+            </interceptor>
+            <interceptor name="paramTrim" class="com.biencloud.smarthome.web.base.interceptor.ParamTrimInterceptor" />
+            <interceptor name="filter" class="com.biencloud.smarthome.web.base.interceptor.FilterInterceptor">
+            	<param name="excludeMethods">
+            		get*,changeLocale,login,exit,go,index,head,main,*Input,query*,forward*,*Pass,enableOrDisable,
+            		*List,*Detail,find*,del*
+            	</param>
+            </interceptor>
+            
+            <interceptor-stack name="myStack">          
+                <interceptor-ref name="defaultStack" />
+                <interceptor-ref name="filter" />
+                <interceptor-ref name="sessionout" />
+                <!-- <interceptor-ref name="log" /> -->
+                <interceptor-ref name="paramTrim" />            
+            </interceptor-stack>
+        </interceptors>
+       
+        <!--默认调用拦截器 -->
+        <default-interceptor-ref name="myStack" />
+        <!-- 定义全局result-->
+        <global-results>
+            <result name="reLogin">/forwardLogin.jsp</result>
+            <result name="exception">/WEB-INF/views/common/error.jsp</result>
+            <!-- 禁止的敏感词 -->
+            <result name="forbidden">/WEB-INF/views/common/forbidden.jsp</result>
+        </global-results>
+        
+        <!-- 定义全局未处理的异常 -->
+
+    </package>
+
+    <package name="mobile-json" extends="json-default">
+        <interceptors>
+
+            <interceptor name="paramTrim" class="com.biencloud.smarthome.web.base.interceptor.ParamTrimInterceptor" />
+            
+            <interceptor name="i18n" class="com.opensymphony.xwork2.interceptor.I18nInterceptor" />
+                
+            <interceptor-stack name="myStack">          
+                <interceptor-ref name="paramTrim" />            
+                <interceptor-ref name="params" />
+                <interceptor-ref name="defaultStack" />
+                <interceptor-ref name="i18n" />
+            
+            </interceptor-stack>
+        </interceptors>
+       
+        <!--默认调用拦截器 -->
+        <default-interceptor-ref name="myStack" />
+        <!-- 定义全局result -->
+		<global-results>
+            <!-- 禁止的敏感词 -->
+            <result name="forbidden">/WEB-INF/views/common/forbidden.jsp</result>
+        </global-results>
+    </package>
+
+    <package name="mobile-default" extends="struts-default">
+        <interceptors>
+
+            <interceptor name="appDataLog" class="com.biencloud.smarthome.web.base.interceptor.AppDataLogInterceptor" />
+            
+            
+            <interceptor name="paramTrim" class="com.biencloud.smarthome.web.base.interceptor.ParamTrimInterceptor" />
+            
+            <interceptor-stack name="myStack">          
+                <interceptor-ref name="paramTrim" />            
+                <interceptor-ref name="defaultStack" />        
+            </interceptor-stack>
+        </interceptors>
+       
+        <!--默认调用拦截器 -->
+        <default-interceptor-ref name="myStack" />
+        <!-- 定义全局result -->
+        <global-results>
+            <result name="reLogin">/mobile/forward_login.jsp</result>
+            <result name="exception">/WEB-INF/views/mobile/common/error.jsp</result>
+            <!-- 禁止的敏感词 -->
+            <result name="forbidden">/WEB-INF/views/mobile/common/error.jsp</result>
+        </global-results>
+        
+    </package>
+    
+    <package name="shop-default" extends="struts-default">
+        <interceptors>
+
+            <interceptor name="paramTrim" class="com.biencloud.smarthome.web.base.interceptor.ParamTrimInterceptor" />
+            
+            <interceptor-stack name="myStack">          
+                <interceptor-ref name="paramTrim" />            
+                <interceptor-ref name="defaultStack" />        
+            </interceptor-stack>
+        </interceptors>
+       
+        <!--默认调用拦截器 -->
+        <default-interceptor-ref name="myStack" />
+        <!-- 定义全局result -->
+        <global-results>
+            <result name="reLogin">/shop/forward_login.jsp</result>
+        </global-results>
+        
+    </package>
+
+    <constant name="struts.objectFactory" value="org.apache.struts2.spring.StrutsSpringObjectFactory" />
+    <constant name="struts.objectFactory.spring.autoWire" value="name" />
+    <constant name="struts.i18n.reload" value="true" />
+    <constant name="struts.i18n.encoding" value="UTF-8" />
+    <constant name="struts.devMode" value="false" />
+    <constant name="struts.configuration.xml.reload" value="true" />
+    <constant name="struts.custom.i18n.resources" value="i18n.info_messages,i18n.error_messages" />
+    <constant name="struts.action.extension" value="action,," />
+    <constant name="struts.multipart.maxSize" value="1048576000"/>
+
+    <include file="struts/struts-appdata.xml" /> 
+    <include file="struts/struts-login.xml" />
+    <include file="struts/struts-pushdata.xml" />
+    <include file="struts/struts-sysparam.xml"/> 
+    <include file="struts/struts-housemgr.xml"/>
+    <include file="struts/struts-log.xml"/>
+    <include file="struts/struts-device.xml"/>
+    <include file="struts/struts-sauser.xml"/>
+    <include file="struts/struts-pauser.xml"/>
+    <include file="struts/struts-owneruser.xml"/>
+    <include file="struts/struts-sysgroup.xml"/>
+    <include file="struts/struts-deviceno.xml"/> 
+    <include file="struts/struts-charge.xml"/>
+    <include file="struts/struts-info.xml"/>
+    <include file="struts/struts-customercomplaint.xml"/>
+    <include file="struts/struts-monitor.xml"/>
+    <include file="struts/struts-rss.xml"/>
+    <include file="struts/struts-ad.xml"/>
+    <include file="struts/struts-alarm.xml"/>
+    <include file="struts/struts-requestrepair.xml"/>
+    <include file="struts/struts-hdfs.xml"/>
+    <include file="struts/struts-softwareupgrade.xml"/>
+    <include file="struts/struts-menu.xml"/>
+    <include file="struts/struts-gatecard.xml"/>
+    <include file="struts/struts-gatecardvisit.xml"/>
+    <include file="struts/struts-idcardvisit.xml"/>
+    <include file="struts/struts-permissions.xml"/> 
+    <include file="struts/struts-net.xml"/>
+    <include file="struts/struts-mobile.xml" />
+    <include file="struts/struts-template.xml" /> 
+    <include file="struts/struts-page.xml" />   
+    <include file="struts/struts-qrcode.xml" /> 
+    <include file="struts/struts-sip.xml" /> 
+    <include file="struts/struts-shop.xml" /> 
+</struts>

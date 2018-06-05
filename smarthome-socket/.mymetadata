@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="smarthome-socket"
+  id="myeclipse.1334827705109"
+  context-root="/smarthome-socket"
+  j2ee-spec="6.0"
+  archive="smarthome-socket.war">
+  <attributes>
+    <attribute name="webrootdir" value="src/main/webapp" />
+  </attributes>
+</project-module>
+

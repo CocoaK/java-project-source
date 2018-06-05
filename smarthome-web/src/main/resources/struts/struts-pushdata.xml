@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="push" extends="default" namespace="/push">
+        <action name="pushAction_list" class="com.biencloud.smarthome.web.push.action.PushAction" method="list">		    	    					
+			<param name="menuCode">M001012</param>
+            <param name="operationCode">1</param> 
+            <result name="list" >/WEB-INF/views/dataPush/pushList.jsp</result>
+		</action>
+		<action name="pushAction_viewDetail" class="com.biencloud.smarthome.web.push.action.PushAction" method="viewDetail">		    	    					
+			<param name="menuCode">M001012</param>
+            <param name="operationCode">2</param>
+            <result name="detail" >/WEB-INF/views/dataPush/pushDetail.jsp</result>
+		</action>
+		<action name="pushAction_query" class="com.biencloud.smarthome.web.push.action.PushAction" method="query">		    	    					
+			<param name="menuCode">M001012</param>
+            <param name="operationCode">12</param>
+            <result name="list" >/WEB-INF/views/dataPush/pushList.jsp</result>
+		</action>
+		<action name="pushAction_repush" class="com.biencloud.smarthome.web.push.action.PushAction" method="repush">		    	    					
+			<result name="list" >/WEB-INF/views/dataPush/pushList.jsp</result>		
+			<param name="menuCode">M001012</param>
+            <param name="operationCode">3</param>
+		</action>
+		<action name="pushFinishAction_list" class="com.biencloud.smarthome.web.push.action.PushFinishAction" method="list">		    	    					
+			<result name="list" >/WEB-INF/views/dataPush/pushedList.jsp</result>		
+			<param name="menuCode">M001012</param>
+            <param name="operationCode">1</param>
+		</action>	
+		<action name="pushFinishAction_query" class="com.biencloud.smarthome.web.push.action.PushFinishAction" method="query">		    	    					
+			<result name="list" >/WEB-INF/views/dataPush/pushedList.jsp</result>		
+			<param name="menuCode">M001012</param>
+            <param name="operationCode">12</param>
+		</action>	
+		<action name="pushFinishAction_viewDetail" class="com.biencloud.smarthome.web.push.action.PushFinishAction" method="viewDetail">		    	    					
+            <result name="detail" >/WEB-INF/views/dataPush/pushedDetail.jsp</result>
+            <param name="menuCode">M001012</param>
+            <param name="operationCode">2</param>
+		</action>
+		<action name="pushAction_queryByDeviceNo" class="com.biencloud.smarthome.web.push.action.PushAction" method="queryByDeviceNo">		
+			<param name="menuCode">M001012</param>
+            <param name="operationCode">1</param>    	    					
+            <result name="list_deviceNo" >/WEB-INF/views/device/pushList.jsp</result>
+		</action>
+		<action name="pushAction_devicevViewDetail" class="com.biencloud.smarthome.web.push.action.PushAction" method="viewDetail">
+			<param name="menuCode">M001012</param>
+            <param name="operationCode">2</param>		    	    					
+            <result name="detail" >/WEB-INF/views/device/pushDetail.jsp</result>
+		</action>
+		<action name="pushFinishAction_listByDeviceNo" class="com.biencloud.smarthome.web.push.action.PushFinishAction" method="listByDeviceNo">
+			<param name="menuCode">M001012</param>
+            <param name="operationCode">1</param>		    	    					
+            <result name="list_deviceNo" >/WEB-INF/views/device/pushedList.jsp</result>
+		</action>
+		<action name="pushFinishAction_devicevViewDetail" class="com.biencloud.smarthome.web.push.action.PushFinishAction" method="viewDetail">	
+			<param name="menuCode">M001012</param>
+            <param name="operationCode">2</param>	    	    					
+            <result name="detail" >/WEB-INF/views/device/pushedDetail.jsp</result>
+		</action>
+		<action name="pushAction_deviceRepush" class="com.biencloud.smarthome.web.push.action.PushAction" method="repush">		    	    					
+			<result name="list" >/WEB-INF/views/device/pushList.jsp</result>		
+			<param name="menuCode">M001012</param>
+            <param name="operationCode">3</param>
+		</action>
+    </package>
+</struts>
+

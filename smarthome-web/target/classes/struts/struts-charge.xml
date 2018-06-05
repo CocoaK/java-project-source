@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="charge" namespace="/charge" extends="default">	
+	    <!-- ChargeMonetaryUnit -->	
+		<action name="queryChargeMonetaryUnitList" class="com.biencloud.smarthome.web.charge.action.ChargeMonetaryUnitAction" method="queryList">
+		    <param name="menuCode">M002005</param>
+            <param name="operationCode">1</param>
+            <result name="list" >/WEB-INF/views/charge/chargeMonetaryUnit_list.jsp</result>	
+        </action>
+        <action name="saveChargeMonetaryUnit" class="com.biencloud.smarthome.web.charge.action.ChargeMonetaryUnitAction" method="save">
+            <param name="menuCode">M002005</param>
+            <param name="operationCode">4</param>
+            <result name="list" >/WEB-INF/views/charge/chargeMonetaryUnit_list.jsp</result>	
+        </action>
+        <action name="updateChargeMonetaryUnit" class="com.biencloud.smarthome.web.charge.action.ChargeMonetaryUnitAction" method="update">
+            <param name="menuCode">M002005</param>
+            <param name="operationCode">5</param>
+            <result name="list" >/WEB-INF/views/charge/chargeMonetaryUnit_list.jsp</result>	
+            <result name="editPage" >/WEB-INF/views/charge/chargeMonetaryUnit_add.jsp</result>
+        </action>
+        <action name="goToInputChargeMonetaryUnit" class="com.biencloud.smarthome.web.charge.action.ChargeMonetaryUnitAction" method="goToUpdate">
+            <param name="menuCode">M002005</param>
+            <param name="operationCode">3</param>
+            <result name="editPage" >/WEB-INF/views/charge/chargeMonetaryUnit_add.jsp</result>	
+        </action>
+        <action name="findChargeMonetaryUnit" class="com.biencloud.smarthome.web.charge.action.ChargeMonetaryUnitAction" method="findById">
+            <param name="menuCode">M002005</param>
+            <param name="operationCode">2</param>
+            <result name="editPage" >/WEB-INF/views/charge/chargeMonetaryUnit_add.jsp</result>	
+        </action>
+        <action name="delChargeMonetaryUnit" class="com.biencloud.smarthome.web.charge.action.ChargeMonetaryUnitAction" method="delById">
+            <param name="menuCode">M002005</param>
+            <param name="operationCode">7</param>
+            <result name="list" >/WEB-INF/views/charge/chargeMonetaryUnit_list.jsp</result>	
+        </action>	
+        <action name="getChargeMonetaryUnitName" class="com.biencloud.smarthome.web.charge.action.ChargeMonetaryUnitAction" method="getName">
+            <param name="menuCode">M002005</param>
+            <param name="operationCode">1</param>
+        </action>	
+		<!-- ChargeCalMode -->	
+		<action name="queryChargeCalModeList" class="com.biencloud.smarthome.web.charge.action.ChargeCalModeAction" method="queryList">
+		    <param name="menuCode">M002005</param>
+            <param name="operationCode">1</param>
+            <result name="list" >/WEB-INF/views/charge/chargeCalMode_list.jsp</result>	
+        </action>
+        <action name="saveChargeCalMode" class="com.biencloud.smarthome.web.charge.action.ChargeCalModeAction" method="save">
+            <param name="menuCode">M002005</param>
+            <param name="operationCode">4</param>
+            <result name="list" >/WEB-INF/views/charge/chargeCalMode_list.jsp</result>	
+        </action>
+        <action name="updateChargeCalMode" class="com.biencloud.smarthome.web.charge.action.ChargeCalModeAction" method="update">
+            <param name="menuCode">M002005</param>
+            <param name="operationCode">6</param>
+            <result name="list" >/WEB-INF/views/charge/chargeCalMode_list.jsp</result>	
+             <result name="editPage" >/WEB-INF/views/charge/chargeCalMode_add.jsp</result>
+        </action>
+        <action name="goToInputChargeCalMode" class="com.biencloud.smarthome.web.charge.action.ChargeCalModeAction" method="goToUpdate">
+            <param name="menuCode">M002005</param>
+            <param name="operationCode">3</param>
+            <result name="editPage" >/WEB-INF/views/charge/chargeCalMode_add.jsp</result>	
+        </action>
+        <action name="findChargeCalMode" class="com.biencloud.smarthome.web.charge.action.ChargeCalModeAction" method="findById">
+            <param name="menuCode">M002005</param>
+            <param name="operationCode">2</param>
+            <result name="editPage" >/WEB-INF/views/charge/chargeCalMode_add.jsp</result>	
+        </action>
+        <action name="delChargeCalMode" class="com.biencloud.smarthome.web.charge.action.ChargeCalModeAction" method="delById">
+            <param name="menuCode">M002005</param>
+            <param name="operationCode">7</param>
+            <result name="list" >/WEB-INF/views/charge/chargeCalMode_list.jsp</result>	
+        </action>		
+        <action name="getChargeCalModeName" class="com.biencloud.smarthome.web.charge.action.ChargeCalModeAction" method="getName">
+            <param name="menuCode">M002005</param>
+            <param name="operationCode">1</param>
+        </action>	
+        <!-- ChargeCalUnit -->	
+		<action name="queryChargeCalUnitList" class="com.biencloud.smarthome.web.charge.action.ChargeCalUnitAction" method="queryList">
+		    <param name="menuCode">M002005</param>
+            <param name="operationCode">1</param>
+            <result name="list" >/WEB-INF/views/charge/chargeCalUnit_list.jsp</result>	
+        </action>
+        <action name="saveChargeCalUnit" class="com.biencloud.smarthome.web.charge.action.ChargeCalUnitAction" method="save">
+            <param name="menuCode">M002005</param>
+            <param name="operationCode">4</param>
+            <result name="list" >/WEB-INF/views/charge/chargeCalUnit_list.jsp</result>	
+        </action>
+        <action name="updateChargeCalUnit" class="com.biencloud.smarthome.web.charge.action.ChargeCalUnitAction" method="update">
+            <param name="menuCode">M002005</param>
+            <param name="operationCode">6</param>
+            <result name="list" >/WEB-INF/views/charge/chargeCalUnit_list.jsp</result>	
+            <result name="editPage" >/WEB-INF/views/charge/chargeCalUnit_add.jsp</result>
+        </action>
+        <action name="goToInputChargeCalUnit" class="com.biencloud.smarthome.web.charge.action.ChargeCalUnitAction" method="goToUpdate">
+            <param name="menuCode">M002005</param>
+            <param name="operationCode">3</param>
+            <result name="editPage" >/WEB-INF/views/charge/chargeCalUnit_add.jsp</result>	
+        </action>
+        <action name="findChargeCalUnit" class="com.biencloud.smarthome.web.charge.action.ChargeCalUnitAction" method="findById">
+            <param name="menuCode">M002005</param>
+            <param name="operationCode">2</param>
+            <result name="editPage" >/WEB-INF/views/charge/chargeCalUnit_add.jsp</result>	
+        </action>
+        <action name="delChargeCalUnit" class="com.biencloud.smarthome.web.charge.action.ChargeCalUnitAction" method="delById">
+            <param name="menuCode">M002005</param>
+            <param name="operationCode">7</param>
+            <result name="list" >/WEB-INF/views/charge/chargeCalUnit_list.jsp</result>	
+        </action>		
+        <action name="getChargeCalUnitName" class="com.biencloud.smarthome.web.charge.action.ChargeCalUnitAction" method="getName">
+            <param name="menuCode">M002005</param>
+            <param name="operationCode">1</param>
+        </action>	
+		<!-- ChargeType -->	
+		<action name="queryChargeTypeList" class="com.biencloud.smarthome.web.charge.action.ChargeTypeAction" method="queryList">
+		    <param name="menuCode">M002005</param>
+            <param name="operationCode">1</param>
+            <result name="list" >/WEB-INF/views/charge/chargeType_list.jsp</result>	
+        </action>
+        <action name="saveChargeType" class="com.biencloud.smarthome.web.charge.action.ChargeTypeAction" method="save">
+            <param name="menuCode">M002005</param>
+            <param name="operationCode">4</param>
+            <result name="list" >/WEB-INF/views/charge/chargeType_list.jsp</result>	
+        </action>
+        <action name="updateChargeType" class="com.biencloud.smarthome.web.charge.action.ChargeTypeAction" method="update">
+            <param name="menuCode">M002005</param>
+            <param name="operationCode">6</param>
+            <result name="list" >/WEB-INF/views/charge/chargeType_list.jsp</result>	
+             <result name="editPage" >/WEB-INF/views/charge/chargeType_add.jsp</result>
+        </action>
+        <action name="goToInputChargeType" class="com.biencloud.smarthome.web.charge.action.ChargeTypeAction" method="goToUpdate">
+            <param name="menuCode">M002005</param>
+            <param name="operationCode">3</param>
+            <result name="editPage" >/WEB-INF/views/charge/chargeType_add.jsp</result>	
+        </action>
+        <action name="findChargeType" class="com.biencloud.smarthome.web.charge.action.ChargeTypeAction" method="findById">
+            <param name="menuCode">M002005</param>
+            <param name="operationCode">2</param>
+            <result name="editPage" >/WEB-INF/views/charge/chargeType_add.jsp</result>	
+        </action>
+        <action name="delChargeType" class="com.biencloud.smarthome.web.charge.action.ChargeTypeAction" method="delById">
+            <param name="menuCode">M002005</param>
+            <param name="operationCode">7</param>
+            <result name="list" >/WEB-INF/views/charge/chargeType_list.jsp</result>	
+        </action>
+        <action name="getName" class="com.biencloud.smarthome.web.charge.action.ChargeTypeAction" method="getName">
+            <param name="menuCode">M002005</param>
+            <param name="operationCode">1</param>
+        </action>	
+		<!-- ChargeTypeResult -->	
+		<action name="queryChargeTypeResultList" class="com.biencloud.smarthome.web.charge.action.ChargeTypeResultAction" method="queryList">
+		    <param name="menuCode">M002005</param>
+            <param name="operationCode">1</param>
+            <result name="list" >/WEB-INF/views/charge/chargeTypeResult_list.jsp</result>	
+        </action>
+        <action name="saveChargeTypeResult" class="com.biencloud.smarthome.web.charge.action.ChargeTypeResultAction" method="save">
+            <param name="menuCode">M002005</param>
+            <param name="operationCode">4</param>
+            <result name="list" >/WEB-INF/views/charge/chargeTypeResult_list.jsp</result>	
+        </action>
+        <action name="updateChargeTypeResult" class="com.biencloud.smarthome.web.charge.action.ChargeTypeResultAction" method="update">
+            <param name="menuCode">M002005</param>
+            <param name="operationCode">6</param>
+            <result name="list" >/WEB-INF/views/charge/chargeTypeResult_list.jsp</result>	
+            <result name="editPage" >/WEB-INF/views/charge/chargeTypeResult_add.jsp</result>
+        </action>
+        <action name="goToInputChargeTypeResult" class="com.biencloud.smarthome.web.charge.action.ChargeTypeResultAction" method="goToUpdate">
+            <param name="menuCode">M002005</param>
+            <param name="operationCode">3</param>
+            <result name="editPage" >/WEB-INF/views/charge/chargeTypeResult_add.jsp</result>	
+        </action>
+        <action name="findChargeTypeResult" class="com.biencloud.smarthome.web.charge.action.ChargeTypeResultAction" method="findById">
+            <param name="menuCode">M002005</param>
+            <param name="operationCode">2</param>
+            <result name="editPage" >/WEB-INF/views/charge/chargeTypeResult_add.jsp</result>	
+        </action>
+        <action name="delChargeTypeResult" class="com.biencloud.smarthome.web.charge.action.ChargeTypeResultAction" method="delById">
+            <param name="menuCode">M002005</param>
+            <param name="operationCode">7</param>
+            <result name="list" >/WEB-INF/views/charge/chargeTypeResult_list.jsp</result>	
+        </action>	
+		<!-- ChargeDetail -->	
+		<action name="queryChargeDetailList" class="com.biencloud.smarthome.web.charge.action.ChargeDetailAction" method="queryList">
+		    <param name="menuCode">M002005</param>
+            <param name="operationCode">1</param>
+            <result name="list" >/WEB-INF/views/charge/chargeDetail_list.jsp</result>	
+        </action>
+        <action name="saveChargeDetail" class="com.biencloud.smarthome.web.charge.action.ChargeDetailAction" method="save">
+            <param name="menuCode">M002005</param>
+            <param name="operationCode">4</param>
+            <result name="list" >/WEB-INF/views/charge/chargeDetail_list.jsp</result>	
+        </action>
+        <action name="updateChargeDetail" class="com.biencloud.smarthome.web.charge.action.ChargeDetailAction" method="update">
+            <param name="menuCode">M002005</param>
+            <param name="operationCode">6</param>
+            <result name="list" >/WEB-INF/views/charge/chargeDetail_list.jsp</result>	
+            <result name="editPage" >/WEB-INF/views/charge/chargeDetail_add.jsp</result>
+        </action>
+        <action name="goToInputChargeDetail" class="com.biencloud.smarthome.web.charge.action.ChargeDetailAction" method="goToUpdate">
+            <param name="menuCode">M002005</param>
+            <param name="operationCode">3</param>
+            <result name="editPage" >/WEB-INF/views/charge/chargeDetail_add.jsp</result>	
+        </action>
+        <action name="findChargeDetail" class="com.biencloud.smarthome.web.charge.action.ChargeDetailAction" method="findById">
+            <param name="menuCode">M002005</param>
+            <param name="operationCode">2</param>
+            <result name="editPage" >/WEB-INF/views/charge/chargeDetail_add.jsp</result>	
+        </action>
+        <action name="delChargeDetail" class="com.biencloud.smarthome.web.charge.action.ChargeDetailAction" method="delById">
+            <param name="menuCode">M002005</param>
+            <param name="operationCode">7</param>
+            <result name="list" >/WEB-INF/views/charge/chargeDetail_list.jsp</result>	
+        </action>	
+        <action name="publishChargeInfo" class="com.biencloud.smarthome.web.charge.action.ChargeDetailAction" method="publishChargeInfo">
+            <param name="menuCode">M002005</param>
+            <param name="operationCode">9</param>
+            <result name="list" >/WEB-INF/views/charge/chargeDetail_list.jsp</result>	
+        </action>
+        <action name="updateChargeDetailStatus" class="com.biencloud.smarthome.web.charge.action.ChargeDetailAction" method="updateStatus">
+            <param name="menuCode">M002005</param>
+            <param name="operationCode">6</param>
+            <result name="list" >/WEB-INF/views/charge/chargeDetail_list.jsp</result>	
+        </action>
+        <!-- ChargeData -->	
+		<action name="queryChargeDataList" class="com.biencloud.smarthome.web.charge.action.ChargeDataAction" method="queryList">
+		    <param name="menuCode">M002005</param>
+            <param name="operationCode">1</param>
+            <result name="list" >/WEB-INF/views/charge/chargeData_list.jsp</result>	
+        </action>
+        <action name="saveChargeData" class="com.biencloud.smarthome.web.charge.action.ChargeDataAction" method="save">
+            <param name="menuCode">M002005</param>
+            <param name="operationCode">4</param>
+            <result name="list" >/WEB-INF/views/charge/chargeData_list.jsp</result>	
+             <result name="editPage" >/WEB-INF/views/charge/chargeData_add.jsp</result>	
+        </action>
+        <action name="updateChargeData" class="com.biencloud.smarthome.web.charge.action.ChargeDataAction" method="update">
+            <param name="menuCode">M002005</param>
+            <param name="operationCode">6</param>
+            <result name="list" >/WEB-INF/views/charge/chargeData_list.jsp</result>	
+            <result name="editPage" >/WEB-INF/views/charge/chargeData_add.jsp</result>
+        </action>
+        <action name="goToInputChargeData" class="com.biencloud.smarthome.web.charge.action.ChargeDataAction" method="goToUpdate">
+            <param name="menuCode">M002005</param>
+            <param name="operationCode">3</param>
+            <result name="editPage" >/WEB-INF/views/charge/chargeData_add.jsp</result>	
+        </action>
+        <action name="findChargeData" class="com.biencloud.smarthome.web.charge.action.ChargeDataAction" method="findById">
+            <param name="menuCode">M002005</param>
+            <param name="operationCode">2</param>
+            <result name="editPage" >/WEB-INF/views/charge/chargeData_add.jsp</result>	
+        </action>
+        <action name="delChargeData" class="com.biencloud.smarthome.web.charge.action.ChargeDataAction" method="delById">
+            <param name="menuCode">M002005</param>
+            <param name="operationCode">7</param>
+            <result name="list" >/WEB-INF/views/charge/chargeData_list.jsp</result>	
+        </action>
+        <action name="statisticsCharge" class="com.biencloud.smarthome.web.charge.action.ChargeDataAction" method="statisticsCharge">
+            <param name="menuCode">M002005</param>
+            <param name="operationCode">1</param>
+            <result name="stalist" >/WEB-INF/views/charge/chargeData_stalist.jsp</result>	
+        </action>
+	</package>
+</struts>    

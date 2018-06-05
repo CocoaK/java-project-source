@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.biencloud.smarthome.service.rest.mapper.UserCameraMapper" >
+  <resultMap id="baseResult" type="com.biencloud.smarthome.service.rest.model.UserCameraKey" >
+    <id column="user_id" property="userId" jdbcType="BIGINT" />
+    <id column="camera_id" property="cameraId" jdbcType="BIGINT" />
+  </resultMap>
+  
+  <resultMap id="mapResult" type="map" >
+    <id column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="pwd" property="pwd" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="CHAR" />
+    <result column="status" property="status" jdbcType="CHAR" />
+    <result column="created_user" property="createdUser" jdbcType="VARCHAR" />
+    <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="updated_user" property="updatedUser" jdbcType="VARCHAR" />
+    <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP" />
+    <result column="indx" property="indx" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <delete id="delete" parameterType="com.biencloud.smarthome.service.rest.model.UserCameraKey" >
+    delete from t_user_camera
+    where user_id = #{userId,jdbcType=BIGINT}
+      and camera_id = #{cameraId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.biencloud.smarthome.service.rest.model.UserCameraKey" >
+    insert into t_user_camera (user_id, camera_id, indx)
+    values (#{userId,jdbcType=BIGINT}, #{cameraId,jdbcType=BIGINT}, #{indx,jdbcType=INTEGER})
+  </insert>
+  
+  <select id="getList" resultMap="mapResult" parameterType="com.biencloud.smarthome.service.rest.model.UserCameraKey">
+   	 select user_id, camera_id, indx from t_user_camera
+   	 where 1=1
+   	 <if test="userId != null" >
+        and user_id = #{userId,jdbcType=BIGINT}
+     </if>
+     <if test="cameraId != null" >
+        and camera_id = #{cameraId,jdbcType=BIGINT}
+     </if>
+   </select>
+   
+  <select id="getListByUserId" resultMap="mapResult" >
+    select d.*,u.indx
+    from t_user_camera u left join t_camera d on u.camera_id=d.id
+    where u.user_id=#{userId,jdbcType=BIGINT}
+    order by d.updated_time desc
+   </select>
+</mapper>

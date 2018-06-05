@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="clientUser" extends="default" namespace="/clientuser">
+
+        <action name="queryList" class="com.biencloud.smarthome.web.clientuser.action.ClientUserAction" method="queryList">
+            <param name="menuCode"></param>
+            <param name="operationCode"></param>
+            <result>/WEB-INF/views/client_user/query_list.jsp</result>
+        </action>
+        <action name="userList" class="com.biencloud.smarthome.web.clientuser.action.ClientUserAction" method="userList">
+            <param name="menuCode"></param>
+            <param name="operationCode"></param>
+            <result>/WEB-INF/views/client_user/user_list.jsp</result>
+        </action>
+        <action name="updateDetail3" class="com.biencloud.smarthome.web.clientuser.action.ClientUserAction" method="update">
+        	<param name="menuCode"></param>
+            <param name="operationCode"></param>
+            <result>/WEB-INF/views/client_user/update.jsp</result>
+        </action>
+        <action name="updateResult2" class="com.biencloud.smarthome.web.clientuser.action.ClientUserAction" method="updateResult">
+            <result>/WEB-INF/views/client_user/update.jsp</result>
+        </action>
+        
+        <action name="userDetail" class="com.biencloud.smarthome.web.clientuser.action.ClientUserAction" method="userDetail">
+        	<param name="menuCode"></param>
+            <param name="operationCode"></param>
+            <result>/WEB-INF/views/client_user/user_detail.jsp</result>
+        </action>
+        <action name="delete" class="com.biencloud.smarthome.web.clientuser.action.ClientUserAction" method="delete">
+            <result>/WEB-INF/views/client_user/query_list.jsp</result>
+        </action>
+	</package>
+</struts>
+

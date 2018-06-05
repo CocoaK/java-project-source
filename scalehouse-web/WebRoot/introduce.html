@@ -1,0 +1,141 @@
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<div class="easyui-layout" data-options="fit:true" style="overflow-y:scroll">
+	<div style="width:950px;height:24px;margin:30px auto;">
+		<label>地区选择：</label><!-- <input id="area" class="easyui-combobox" data-options="editable:false,panelHeight:'auto'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+		<select id="area" style="width:115px">
+			<!-- <option value="All" selected>全部地区</option>
+			<option value="AF">非洲</option>
+			<option value="EU">欧洲</option>
+			<option value="AS">亚洲</option>
+			<option value="OA">大洋洲</option>
+			<option value="NA">北美洲</option>
+			<option value="SA">南美洲</option>
+			<option value="AN">南极洲</option> -->
+		</select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	    <label>产品选择：</label><!-- <input id="product" class="easyui-combobox" data-options="valueField: 'deviceType',textField: 'deviceName',editable:false,panelHeight:'auto'"> -->
+	    <select id="product" style="width:115px">   
+		   
+		</select>
+	</div>
+	<div id="useranddevice">
+		<div class="usercount">
+			<div class="square">
+				<span class="circle"></span>
+				<b>用户总数</b>
+			</div>
+			<div class="number">
+				<b id="usercount">999999</b>
+			</div>
+		</div>
+		<div class="todayuseractive">
+			<div class="square">
+				<span class="circle"></span>
+				<b>今日活跃用户数</b>
+			</div>
+			<div class="number">
+				<b id="todayuseractive">999999</b>
+			</div>
+		</div>
+		<div class="devicecount">
+			<div class="square">
+				<span class="circle"></span>
+				<b>设备总数</b>
+			</div>
+			<div class="number">
+				<b id="devicecount">999999</b>
+			</div>
+		</div>
+		<div class="todaydeviceactive">
+			<div class="square">
+				<span class="circle"></span>
+				<b>今日活跃设备数</b>
+			</div>
+			<div class="number">
+				<b id="todaydeviceactive">999999</b>
+			</div>
+		</div>
+	</div>
+	<div style="width:950px;margin: 0 auto;height:500px;border:1px solid #ccc">
+		<div id="tabbar">
+			<table cellpadding="3" cellspacing="0">
+				<tr>
+					<td id="person/getPersons">用户总数</td>
+					<td class="hover" id="person/getChartsData">用户增长</td>
+					<td id="device/getDevices">设备总数</td>
+					<td id="device/getChartsData">设备增长</td>
+				</tr>
+			</table>
+			<select id="cc" name="dept" style="width:80px;height:22px;">
+			    <option value="7" selected>近7天</option>
+			    <option value="30">近30天</option>
+			</select>
+		</div>
+		<div id="container" style="width: 850px; height: 400px; margin: 30px auto">
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript">
+	$(function(){
+		loadCombobox('area','product');
+		var op=$("#cc option:selected");
+		var ex_url=$(".hover").attr("id");
+		getChartsData(ex_url,op.val(),'container');
+		commonAjax('person/personNum', 'usercount');
+		commonAjax('person/todayActivePerN', 'todayuseractive');
+		commonAjax('device/deviceNum', 'devicecount');
+		commonAjax('device/todayActiveDevN', 'todaydeviceactive');
+		$("#cc").change(function(){
+			var options=$("#cc option:selected");
+			var countryCode=$("#area option:selected");
+			var type=$("#product option:selected");
+			var ex_url=$(".hover").attr("id");
+			getChartsData(ex_url,options.val(),'container',countryCode.val(),type.val());
+		});
+		$("#tabbar table td").each(function(){
+	        $(this).click(function(){
+	            $("#tabbar table .hover").removeClass("hover");  
+	            $(this).addClass("hover");    
+       		});
+   		});
+		$("#area").change(function(){
+	   		changeValue();
+		});	
+		$("#product").change(function(){
+			/* var countryCode=$("#area option:selected");
+	   		var type=$("#product option:selected");
+			var intervals=$("#cc option:selected");
+			var ex_url=$(".hover").attr("id");
+			getChartsData(ex_url, intervals.val(),'container', countryCode.val(), type.val());
+			commonAjax('person/personNum', 'usercount', countryCode.val(), type.val());
+			commonAjax('person/todayActivePerN', 'todayuseractive', countryCode.val(), type.val());
+			commonAjax('device/deviceNum', 'devicecount', countryCode.val(), type.val());
+			commonAjax('device/todayActiveDevN', 'todaydeviceactive', countryCode.val(), type.val()); */
+			changeValue();
+		});
+		$("#tabbar table td").click(function(){
+			/* var countryCode=$("#area option:selected");
+	   		var type=$("#product option:selected");
+			var intervals=$("#cc option:selected");
+			var ex_url=$(".hover").attr("id");
+			getChartsData(ex_url, intervals.val(),'container', countryCode.val(), type.val());
+			commonAjax('person/personNum', 'usercount', countryCode.val(), type.val());
+			commonAjax('person/todayActivePerN', 'todayuseractive', countryCode.val(), type.val());
+			commonAjax('device/deviceNum', 'devicecount', countryCode.val(), type.val());
+			commonAjax('device/todayActiveDevN', 'todaydeviceactive', countryCode.val(), type.val()); */
+			changeValue();
+		});
+		
+	});
+	function changeValue(){
+		var countryCode=$("#area option:selected");
+   		var type=$("#product option:selected");
+		var intervals=$("#cc option:selected");
+		var ex_url=$(".hover").attr("id");
+		getChartsData(ex_url, intervals.val(),'container', countryCode.val(), type.val());
+		commonAjax('person/personNum', 'usercount', countryCode.val(), type.val());
+		commonAjax('person/todayActivePerN', 'todayuseractive', countryCode.val(), type.val());
+		commonAjax('device/deviceNum', 'devicecount', countryCode.val(), type.val());
+		commonAjax('device/todayActiveDevN', 'todaydeviceactive', countryCode.val(), type.val());
+	}
+</script>

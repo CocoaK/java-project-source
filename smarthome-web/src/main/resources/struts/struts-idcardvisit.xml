@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="IdCardVisit" extends="default" namespace="/idCardVisit">
+        <action name="viewDetail" class="com.biencloud.smarthome.web.gate.action.IdCardVisitAction" method="viewDetail">
+            <param name="menuCode">M002008</param>
+            <param name="operationCode">2</param>
+            <result>/WEB-INF/views/id_card_visit/view_detail.jsp</result>
+        </action>
+
+        <action name="queryList" class="com.biencloud.smarthome.web.gate.action.IdCardVisitAction" method="queryList">
+            <param name="menuCode">M002008</param>
+            <param name="operationCode">1</param>
+            <result>/WEB-INF/views/id_card_visit/query_list.jsp</result>
+        </action>
+        <action name="toReadCard" class="com.biencloud.smarthome.web.gate.action.IdCardVisitAction" method="toReadCard">
+            <param name="menuCode">M002008</param>
+            <param name="operationCode">3</param>
+            <result name="to_read_card">/WEB-INF/views/id_card_visit/readInfo.jsp</result>
+        </action>  
+        <action name="saveCard" class="com.biencloud.smarthome.web.gate.action.IdCardVisitAction" method="saveCard">
+            <param name="menuCode">M002008</param>
+            <param name="operationCode">4</param>
+            <result name="list" type="redirect">/idCardVisit/queryList.action</result>
+        </action>  
+            
+    </package>
+     <package name="flushIdCardJson" extends="json" namespace="/flushIdCardJson">
+        <action name="idCardVisitAction_saveCard" class="com.biencloud.smarthome.web.gate.action.IdCardVisitAction" method="saveCard">
+            <param name="ignoreLog">true</param>
+            <result name="save" type="json">
+                <param name="root">flushCardSuccess</param>
+            </result>
+        </action>
+    </package>
+</struts>
+

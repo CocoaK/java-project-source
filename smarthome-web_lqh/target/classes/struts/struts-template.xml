@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="template" namespace="/template" extends="default">		
+		<action name="upload" class="com.biencloud.smarthome.web.template.action.ModuleAction" method="upload">
+            <result name="upload" >/WEB-INF/views/template/template.jsp</result>
+        </action>
+        <action name="list" class="com.biencloud.smarthome.web.template.action.ModuleAction" method="list">
+            <result name="list" >/WEB-INF/views/template/template.jsp</result>
+        </action>
+         <action name="addTemplate" class="com.biencloud.smarthome.web.template.action.TemplateAction" method="addTemplate">
+            <result name="add" >/WEB-INF/views/template/template.jsp</result>
+        </action>
+        
+	</package>
+	
+	<package name="JsonTemplate" extends="json" namespace="/json/template">
+        <action name="upload" class="com.biencloud.smarthome.web.template.action.ModuleAction" method="upload">
+            <param name="ignoreLog">true</param>
+            <result type="json">
+                <param name="includeProperties">
+					module.*
+                </param>
+            </result>
+        </action>
+        <action name="getSource" class="com.biencloud.smarthome.web.template.action.ModuleAction" method="getSource">
+            <param name="ignoreLog">true</param>
+            <result type="json">
+                <param name="includeProperties">
+					module.*
+                </param>
+            </result>
+        </action>
+        <action name="updateModule" class="com.biencloud.smarthome.web.template.action.ModuleAction" method="updateModule">
+            <param name="ignoreLog">true</param>
+            <result type="json">
+                <param name="includeProperties">
+					message
+                </param>
+            </result>
+        </action>
+    </package>
+</struts>    

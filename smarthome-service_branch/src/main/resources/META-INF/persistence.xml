@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+
+	<persistence-unit name="smartHomePU" transaction-type="RESOURCE_LOCAL">
+        <class>com.biencloud.smarthome.service.log.model.SystemLog</class>
+        <class>com.biencloud.smarthome.service.device.model.DeviceIp</class>
+        <class>com.biencloud.smarthome.service.device.model.CallRecord</class>
+        <class>com.biencloud.smarthome.service.device.model.DevicePassword</class>
+		<class>com.biencloud.smarthome.service.sysparam.model.SystemParam</class>
+		<class>com.biencloud.smarthome.service.menu.model.Menu</class>
+		<class>com.biencloud.smarthome.service.permissions.model.Role</class>
+		<class>com.biencloud.smarthome.service.log.model.OperationLog</class>
+		<class>com.biencloud.smarthome.service.softwareupgrade.model.SoftwareUpgrade</class>
+        <class>com.biencloud.smarthome.service.softwareupgrade.model.SoftwareUpgradeTarget</class>
+		<class>com.biencloud.smarthome.service.device.model.DeviceType</class>
+		<class>com.biencloud.smarthome.service.device.model.Device</class>
+		<class>com.biencloud.smarthome.service.gate.model.GateCard</class>
+		<class>com.biencloud.smarthome.service.gate.model.GatePermissions</class>
+		<class>com.biencloud.smarthome.service.gate.model.GateCardVisit</class>
+		<class>com.biencloud.smarthome.service.gate.model.IdCardVisit</class>		
+		<class>com.biencloud.smarthome.service.hdfs.model.LocalHdfs</class>
+		<class>com.biencloud.smarthome.service.hdfstask.model.HdfsTask</class>
+		<class>com.biencloud.smarthome.service.log.model.SystemLog</class>
+		<class>com.biencloud.smarthome.service.push.model.Push</class>
+		<class>com.biencloud.smarthome.service.push.model.PushFinish</class>
+		<class>com.biencloud.smarthome.service.login.model.Login</class>
+		<class>com.biencloud.smarthome.service.user.model.SaUser</class>
+		<class>com.biencloud.smarthome.service.user.model.PaUser</class>
+        <class>com.biencloud.smarthome.service.user.model.OwnerUser</class>
+		<class>com.biencloud.smarthome.service.sysgroup.model.SystemGroup</class>
+		<class>com.biencloud.smarthome.service.deivceno.model.DeviceNo</class>
+		<class>com.biencloud.smarthome.service.info.model.InfoReceiver</class>
+		<class>com.biencloud.smarthome.service.info.model.InfoSend</class>
+		<class>com.biencloud.smarthome.service.info.model.InfoReceiverDevice</class>
+		<class>com.biencloud.smarthome.service.alarm.model.Alarm</class>
+		<class>com.biencloud.smarthome.service.alarm.model.AlarmType</class>
+		<class>com.biencloud.smarthome.service.requestrepair.model.RequestRepair</class>
+
+		<!-- 房产管理模块 -->
+		<class>com.biencloud.smarthome.service.housemgr.model.BuildingCellInfo</class>
+		<class>com.biencloud.smarthome.service.housemgr.model.CellHouseholdInfo</class>
+		<class>com.biencloud.smarthome.service.housemgr.model.CellSizeInfo</class>
+		<class>com.biencloud.smarthome.service.housemgr.model.HousingDistrictInfo</class>
+		<class>com.biencloud.smarthome.service.housemgr.model.HousingDistrictRegionInfo</class>
+		<class>com.biencloud.smarthome.service.housemgr.model.PropertyCompanyInfo</class>
+		<class>com.biencloud.smarthome.service.housemgr.model.RegionBuildingInfo</class>
+		<class>com.biencloud.smarthome.service.housemgr.model.Room</class>
+		<!-- 收费模块 -->
+		<class>com.biencloud.smarthome.service.charge.model.ChargeCalUnit</class>
+		<class>com.biencloud.smarthome.service.charge.model.ChargeCalMode</class>
+		<class>com.biencloud.smarthome.service.charge.model.ChargeData</class>
+		<class>com.biencloud.smarthome.service.charge.model.ChargeDetail</class>
+		<class>com.biencloud.smarthome.service.charge.model.ChargeMonetaryUnit</class>
+		<class>com.biencloud.smarthome.service.charge.model.ChargeTypeResult</class>
+		<class>com.biencloud.smarthome.service.charge.model.ChargeType</class>
+		
+        <!-- 广告投放模块 -->
+        <class>com.biencloud.smarthome.service.ad.model.Advertisement</class>
+        <class>com.biencloud.smarthome.service.ad.model.AdType</class>
+        <class>com.biencloud.smarthome.service.ad.model.AdLocation</class>
+        <class>com.biencloud.smarthome.service.ad.model.AdTarget</class>
+        <class>com.biencloud.smarthome.service.ad.model.AdSys</class>
+        <!-- 地址薄 -->
+        <class>com.biencloud.smarthome.service.addressbook.model.AddressBook</class>
+        <!-- 客服投诉模块 -->
+        <class>com.biencloud.smarthome.service.customercomplaint.model.Complaint</class>
+
+         <!-- 监控管理模块 -->
+        <class>com.biencloud.smarthome.service.monitor.model.Scene</class>
+        <class>com.biencloud.smarthome.service.monitor.model.SceneDevice</class>
+
+        <!-- Rss服务信息 模块-->
+        <class>com.biencloud.smarthome.service.rss.model.RssServer</class>
+        <class>com.biencloud.smarthome.service.rss.model.Weather</class>
+        <!-- 终端日志-->
+        <class>com.biencloud.smarthome.service.log.model.ClientLog</class>
+        <class>com.biencloud.smarthome.service.log.model.FileUploadLog</class>
+        <class>com.biencloud.smarthome.service.log.model.DiviceRegeditLog</class>
+        <class>com.biencloud.smarthome.service.log.model.AppDataLog</class>
+        <!-- 电商页面 -->
+		<class>com.biencloud.smarthome.service.page.model.Component</class>
+		<class>com.biencloud.smarthome.service.page.model.PageLayout</class>
+		<class>com.biencloud.smarthome.service.page.model.PageContent</class>
+		<class>com.biencloud.smarthome.service.page.model.PageDistrict</class>
+		<properties>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
+		</properties>
+	</persistence-unit>
+</persistence>

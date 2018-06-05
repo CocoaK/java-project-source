@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.biencloud.smarthome.service.rest.mapper.DeviceAccessoriesMapper" >
+  <resultMap id="baseResult" type="com.biencloud.smarthome.service.rest.model.DeviceAccessories" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="device_id" property="deviceId" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="defence_area" property="defenceArea" jdbcType="VARCHAR" />
+    <result column="continue_alarm" property="continueAlarm" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="baseColumns" >
+    id, device_id, name, type, status, code, create_time, defence_area, continue_alarm, remark
+  </sql>
+  <select id="getList" resultMap="baseResult" parameterType="com.biencloud.smarthome.service.rest.model.DeviceAccessories">
+    select id, device_id, name, type, status, code, create_time, defence_area, continue_alarm, remark
+    from t_device_accessories
+    where 1=1
+      <if test="deviceId != null" >
+        and device_id = #{deviceId,jdbcType=BIGINT}
+      </if>
+      <if test="type != null" >
+        and type = #{type,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null" >
+        and status = #{status,jdbcType=INTEGER}
+      </if>
+      <if test="code != null" >
+        and code = #{code,jdbcType=VARCHAR}
+      </if>
+      <if test="continueAlarm != null" >
+        and continue_alarm = #{continueAlarm,jdbcType=INTEGER}
+      </if>
+ 	 order by create_time desc
+  </select>
+  <select id="getForOne" resultMap="baseResult" parameterType="java.lang.Long" >
+    select 
+    <include refid="baseColumns" />
+    from t_device_accessories
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="delete" parameterType="java.lang.Long" >
+    delete from t_device_accessories
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.biencloud.smarthome.service.rest.model.DeviceAccessories" >
+    insert into t_device_accessories (id, device_id, name, 
+      type, status, code, 
+      create_time, defence_area, continue_alarm, remark)
+    values (#{id,jdbcType=BIGINT}, #{deviceId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{defenceArea,jdbcType=VARCHAR}, #{continueAlarm,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateOnActive" parameterType="com.biencloud.smarthome.service.rest.model.DeviceAccessories" >
+    update t_device_accessories
+    <set >
+      <if test="deviceId != null" >
+        device_id = #{deviceId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="defenceArea != null" >
+        defence_area = #{defenceArea,jdbcType=VARCHAR},
+      </if>
+      <if test="continueAlarm != null" >
+        continue_alarm = #{continueAlarm,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="update" parameterType="com.biencloud.smarthome.service.rest.model.DeviceAccessories" >
+    update t_device_accessories
+    set device_id = #{deviceId,jdbcType=BIGINT},
+      name = #{name,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      code = #{code,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      defence_area = #{defenceArea,jdbcType=VARCHAR},
+      continue_alarm = #{continueAlarm,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <delete id="deleteByEntity" parameterType="com.biencloud.smarthome.service.rest.model.DeviceAccessories" >
+    delete from t_device_accessories
+    where 1=1
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR}
+      </if>
+      <if test="deviceId != null" >
+        and device_id = #{deviceId,jdbcType=BIGINT}
+      </if>
+      <if test="type != null" >
+        and type = #{type,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null" >
+        and status = #{status,jdbcType=INTEGER}
+      </if>
+  </delete>
+  
+  <update id="updateNewStatus" parameterType="java.lang.Long" >
+    update t_device_accessories
+    set status = 1
+    where device_id = #{device_id,jdbcType=BIGINT}
+    and status = 2
+  </update>
+</mapper>

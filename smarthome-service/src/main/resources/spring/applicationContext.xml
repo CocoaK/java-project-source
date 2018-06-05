@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" default-autowire="byName"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:aop="http://www.springframework.org/schema/aop"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:tx="http://www.springframework.org/schema/tx"
+        xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+     
+     <!-- 第二数据源 -->
+    <import resource="app-context.xml"/>
+    <!-- rest -->
+    <import resource="rest-context.xml"/>
+    <!-- 定时器配置  -->
+    <import resource="applicationContext-scheduler.xml"/>  
+    <!-- service配置 -->
+    <import resource="applicationContext-service.xml"/>
+    <!-- cxf 配置  -->
+    <import resource="cxf-servlet.xml"/>
+    <!-- dao配置 -->
+    <import resource="applicationContext-dao.xml"/>
+    
+    <context:component-scan base-package="com.biencloud.smarthome.service"/>
+    
+    <context:annotation-config/>
+    
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+    
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="driverClass" value="${jdbc.driverClass}"/>
+        <property name="jdbcUrl" value="${jdbc.url}"/>
+        <property name="user" value="${jdbc.user}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="initialPoolSize" value="${jdbc.initialPoolSize}"/> 
+        <property name="minPoolSize" value="${jdbc.minPoolSize}"/> 
+        <property name="maxPoolSize" value="${jdbc.maxPoolSize}"/> 
+        <property name="maxIdleTime" value="${jdbc.maxIdleTime}"/>  
+        <property name="acquireIncrement" value="${jdbc.acquireIncrement}"/>
+        <property name="automaticTestTable" value="${jdbc.automaticTestTable}"/>
+        <property name="idleConnectionTestPeriod" value="${jdbc.idleConnectionTestPeriod}"/> 
+    </bean>
+    
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource" />  
+        <property name="jpaVendorAdapter">  
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">  
+                <property name="database" value="${jdbc.db}" />  
+                <property name="showSql" value="${jdbc.showSql}" />
+            </bean>  
+        </property>       
+    </bean>
+    
+    <bean id="transactionManager"  
+        class="org.springframework.orm.jpa.JpaTransactionManager">  
+        <property name="entityManagerFactory" ref="entityManagerFactory" />  
+    </bean>
+      
+    <tx:annotation-driven transaction-manager="transactionManager" />
+    
+    <bean id="autoProxyCreator" class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" />
+    
+  <!--   <bean id="logInterceptor" class="com.biencloud.smarthome.service.common.interceptor.LogInterceptor">
+        <property name="excludePatterns">
+            <list>
+                <value>getNoReadReceiverCount</value>
+            </list>          
+        </property>
+    </bean>
+    
+   <bean id="logAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+        <property name="advice">
+            <ref local="logInterceptor"/>
+        </property>
+       
+        <property name="patterns">
+            <value>com\.biencloud\.smarthome\.service\..*\.service\..*</value>
+        </property> 
+    </bean>     -->
+</beans>
+

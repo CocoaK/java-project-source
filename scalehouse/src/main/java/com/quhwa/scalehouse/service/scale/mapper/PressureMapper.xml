@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.quhwa.scalehouse.service.scale.mapper.PressureMapper">
+  <resultMap id="BaseResultMap" type="com.quhwa.scalehouse.service.scale.model.Pressure">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="diastolic" jdbcType="VARCHAR" property="diastolic" />
+    <result column="systolic" jdbcType="VARCHAR" property="systolic" />
+    <result column="pulse" jdbcType="VARCHAR" property="pulse" />
+    <result column="record_time" jdbcType="TIMESTAMP" property="recordTime" />
+    <result column="person_id" jdbcType="INTEGER" property="personId" />
+    <result column="device_id" jdbcType="INTEGER" property="deviceId" />
+    <result column="app_type" jdbcType="VARCHAR" property="appType" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.quhwa.scalehouse.service.scale.model.Pressure">
+    <result column="note" jdbcType="LONGVARCHAR" property="note" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, diastolic, systolic, pulse, record_time, person_id, create_time, device_id, app_type
+  </sql>
+  <sql id="Blob_Column_List">
+    note
+  </sql>
+  <select id="getList" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+	select
+	*
+	from
+		t_pressure
+	where person_id = #{personId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPersonId" parameterType="java.lang.Integer">
+    delete from t_pressure
+    where person_id = #{personId,jdbcType=INTEGER}
+  </delete>
+  <select id="getOne" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_pressure
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="delete" parameterType="java.lang.Integer">
+    delete from t_pressure
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.quhwa.scalehouse.service.scale.model.Pressure">
+    insert into t_pressure (id, diastolic, systolic, 
+      pulse, record_time, person_id, note, device_id, app_type)
+    values (#{id,jdbcType=INTEGER}, #{diastolic,jdbcType=VARCHAR}, #{systolic,jdbcType=VARCHAR}, 
+      #{pulse,jdbcType=VARCHAR}, #{recordTime,jdbcType=TIMESTAMP}, #{personId,jdbcType=INTEGER}, 
+      #{note,jdbcType=LONGVARCHAR}, #{deviceId,jdbcType=INTEGER}, #{appType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertActive" parameterType="com.quhwa.scalehouse.service.scale.model.Pressure">
+    insert into t_pressure
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="diastolic != null">
+        diastolic,
+      </if>
+      <if test="systolic != null">
+        systolic,
+      </if>
+      <if test="pulse != null">
+        pulse,
+      </if>
+      <if test="recordTime != null">
+        record_time,
+      </if>
+      <if test="personId != null">
+        person_id,
+      </if>
+      <if test="deviceId != null">
+        device_id,
+      </if>
+      <if test="appType != null">
+        app_type,
+      </if>
+      <if test="note != null">
+        note,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="diastolic != null">
+        #{diastolic,jdbcType=VARCHAR},
+      </if>
+      <if test="systolic != null">
+        #{systolic,jdbcType=VARCHAR},
+      </if>
+      <if test="pulse != null">
+        #{pulse,jdbcType=VARCHAR},
+      </if>
+      <if test="recordTime != null">
+        #{recordTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="personId != null">
+        #{personId,jdbcType=INTEGER},
+      </if>
+      <if test="deviceId != null">
+        #{deviceId,jdbcType=INTEGER},
+      </if>
+      <if test="appType != null">
+        #{appType,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null">
+        #{note,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateActive" parameterType="com.quhwa.scalehouse.service.scale.model.Pressure">
+    update t_pressure
+    <set>
+      <if test="diastolic != null">
+        diastolic = #{diastolic,jdbcType=VARCHAR},
+      </if>
+      <if test="systolic != null">
+        systolic = #{systolic,jdbcType=VARCHAR},
+      </if>
+      <if test="pulse != null">
+        pulse = #{pulse,jdbcType=VARCHAR},
+      </if>
+      <if test="recordTime != null">
+        record_time = #{recordTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="personId != null">
+        person_id = #{personId,jdbcType=INTEGER},
+      </if>
+      <if test="note != null">
+        note = #{note,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.quhwa.scalehouse.service.scale.model.Pressure">
+    update t_pressure
+    set diastolic = #{diastolic,jdbcType=VARCHAR},
+      systolic = #{systolic,jdbcType=VARCHAR},
+      pulse = #{pulse,jdbcType=VARCHAR},
+      record_time = #{recordTime,jdbcType=TIMESTAMP},
+      person_id = #{personId,jdbcType=INTEGER},
+      note = #{note,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="update" parameterType="com.quhwa.scalehouse.service.scale.model.Pressure">
+    update t_pressure
+    set diastolic = #{diastolic,jdbcType=VARCHAR},
+      systolic = #{systolic,jdbcType=VARCHAR},
+      pulse = #{pulse,jdbcType=VARCHAR},
+      record_time = #{recordTime,jdbcType=TIMESTAMP},
+      person_id = #{personId,jdbcType=INTEGER},
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="requestRepair" namespace="/requestRepair" extends="default">		
+		<!-- RequestRepair -->	
+		<action name="queryRequestRepairList" class="com.biencloud.smarthome.web.requestrepair.aciton.RequestRepairAction" method="queryList">
+		    <param name="menuCode">M002014</param>
+            <param name="operationCode">1</param>
+            <result name="list" >/WEB-INF/views/requestrepair/requestRepair_list.jsp</result>	
+        </action>
+        <action name="saveRequestRepair" class="com.biencloud.smarthome.web.requestrepair.aciton.RequestRepairAction" method="save">
+            <param name="menuCode">M002014</param>
+            <param name="operationCode">4</param>
+            <result name="list" >/WEB-INF/views/requestrepair/requestRepair_list.jsp</result>	
+        </action>
+        <action name="updateRequestRepair" class="com.biencloud.smarthome.web.requestrepair.aciton.RequestRepairAction" method="update">
+            <param name="menuCode">M002014</param>
+            <param name="operationCode">6</param>
+            <result name="editPage" >/WEB-INF/views/requestrepair/requestRepair_detail.jsp</result>	
+        </action>
+        <action name="goToInputRequestRepair" class="com.biencloud.smarthome.web.requestrepair.aciton.RequestRepairAction" method="goToUpdate">
+            <param name="menuCode">M002014</param>
+            <param name="operationCode">3</param>
+            <result name="editPage" >/WEB-INF/views/requestrepair/requestRepair_add.jsp</result>	
+        </action>
+        <action name="findRequestRepair" class="com.biencloud.smarthome.web.requestrepair.aciton.RequestRepairAction" method="findById">
+            <param name="menuCode">M002014</param>
+            <param name="operationCode">2</param>
+            <result name="editPage" >/WEB-INF/views/requestrepair/requestRepair_add.jsp</result>	
+            <result name="detailPage" >/WEB-INF/views/requestrepair/requestRepair_detail.jsp</result>	
+        </action>
+        <action name="delRequestRepair" class="com.biencloud.smarthome.web.requestrepair.aciton.RequestRepairAction" method="delById">
+            <param name="menuCode">M002014</param>
+            <param name="operationCode">7</param>
+            <result name="list" >/WEB-INF/views/requestrepair/requestRepair_list.jsp</result>	
+        </action>
+        <action name="updateRequestRepairStatus" class="com.biencloud.smarthome.web.requestrepair.aciton.RequestRepairAction" method="updateStatus">
+            <param name="menuCode">M002014</param>
+            <param name="operationCode">6</param>
+            <result name="list" >/WEB-INF/views/requestrepair/requestRepair_list.jsp</result>	
+        </action>
+        <action name="repairInfo" class="com.biencloud.smarthome.web.requestrepair.aciton.RequestRepairAction" method="repairInfo">
+            <param name="menuCode">M002014</param>
+            <param name="operationCode">6</param>
+            <result name="info" >/WEB-INF/views/requestrepair/repair_info.jsp</result>	
+        </action>
+	</package>
+</struts>    

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="app" extends="appData" namespace="/app">
+        <action name="appDataAction_*" class="com.biencloud.smarthome.web.appdata.action.AppDataAction" method="{1}">		    	    					
+			<result name="gate_data" type="json">
+                <param name="ignoreHierarchy">false</param>
+                <param name="root">gp</param>
+			</result>		
+			<result name="query_call_record" type="json">
+				<param name="root">callRecordJson.callRecordList</param>
+				<param name="excludeProperties">.*\.device</param>
+			</result>
+			<result name="save_call_record" type="json">
+				<param name="root">json</param>
+			</result>
+			<result name="remove_call_record" type="json">
+				<param name="includeProperties">successFlag</param>
+			</result>
+			<result name="query_gate_card_visit" type="json">
+				<param name="root">gateCardVisitVOs</param>
+			</result>
+			<result name="save_gate_card_visit" type="json">
+				<param name="root">json</param>
+			</result>
+			<result name="remove_gate_card_visit" type="json">
+				<param name="includeProperties">successFlag</param>
+			</result>
+			<result name="query_id_card_visit" type="json">
+				<param name="root">idCardVisitVOs</param>
+			</result>
+			<result name="save_id_card_visit" type="json">
+				<param name="includeProperties">idCardVisitVO.*,successFlag</param>
+			</result>
+			<result name="remove_id_card_visit" type="json">
+				<param name="includeProperties">successFlag</param>
+			</result>
+			<result name="query_alarm" type="json">
+				<param name="root">alarmJson.alarmList</param>
+				<param name="excludeProperties">.*\.alarmType,.*\.systemGroup</param>
+			</result>
+			<result name="save_update_alarm" type="json">
+				<param name="root">json</param>
+			</result>
+			<result name="cancel_alarm" type="json">
+				<param name="root">json</param>
+			</result>
+			<result name="update_device_passwd" type="json">
+				<param name="root">json</param>
+			</result>
+			<result name="save_address_book" type="json">			    
+				<param name="root">json</param>
+			</result>
+			<result name="delete_address_book" type="json">
+			    <param name="ignoreHierarchy">false</param>
+				<param name="root">json</param>
+			</result>
+			<result name="list_address_book" type="json">
+			    <param name="ignoreHierarchy">false</param>
+				<param name="root">addressBookJson</param>
+			</result>
+			<result name="query_charge_detail" type="json">
+				<param name="root">chargeJson</param>
+			</result>
+			<result name="query_owner_complaint" type="json">
+				<param name="root">complaintJson.complaintList</param>
+				<param name="excludeProperties">.*\.complaintLogin</param>
+			</result>
+			<result name="query_property_complaint" type="json">
+				<param name="root">complaintJson</param>
+				<param name="excludeProperties">.*\.complaintLogin</param>
+			</result>
+			<result name="save_complaint" type="json">
+				<param name="root">json</param>
+			</result>
+			<result name="remove_complaint" type="json">
+				<param name="root">json</param>
+			</result>
+			<result name="update_complaint" type="json">
+				<param name="root">json</param>
+			</result>
+			<result name="save_request_repair" type="json">
+				<param name="includeProperties">successFlag</param>
+			</result>
+			<result name="company_info" type="json">
+			    <param name="ignoreHierarchy">false</param>
+				<param name="root">companyInfoVO</param>
+			</result>
+			<result name="query_room_device" type="json">
+				<param name="root">roomJson.roomList</param>
+			</result>
+			<result name="query_monitor_device" type="json">
+				<param name="root">monitorJson.monitorList</param>
+			</result>
+			<result name="room_info" type="json">
+			    <param name="ignoreHierarchy">false</param>
+				<param name="root">roomInfoJson</param>
+			</result>
+			<result name="scene_data" type="json">			    
+				<param name="root">json</param>
+			</result>
+			<result name="scene_device_data" type="json">			    
+				<param name="root">json</param>
+			</result>
+			<result name="server_time" type="json">			    
+				 <param name="ignoreHierarchy">false</param>
+				<param name="root">serverTime</param>
+			</result>
+			<result name="delete_scene" type="json"> 			 
+				<param name="root">json</param>
+			</result>
+			<result name="delete_scene_device" type="json">			 
+				<param name="root">json</param>
+			</result>
+			<result name="save_device_password" type="json">			 
+				<param name="root">json</param>
+			</result>
+			<result name="query_device_password" type="json">			 
+				<param name="root">passwordJson.passwordList</param>
+			</result>
+			<result name="query_room" type="json">			 
+				<param name="root">roomVO</param>
+			</result>
+			<result name="query_manage_device" type="json">			 
+				<param name="root">roomJson.roomList</param>
+			</result>
+            <result name="device_location" type="json">
+                <param name="ignoreHierarchy">false</param>
+                <param name="root">deviceLocationJson</param>
+            </result>
+            <result name="query_page" type="json">			 
+				<param name="root">pageJson</param>
+				<param name="excludeProperties">.*\.pageDesc,.*\.districts,.*\.district</param>
+			</result>
+			<result name="query_component" type="json">			 
+				<param name="root">ComponentJson</param>
+			</result>
+			<result name="query_page_component" type="json">			 
+				<param name="root">pageComponentJson</param>
+			</result>
+			<result name="query_all_page_component" type="json">			 
+				<param name="root">pageComponentJsonList</param>
+			</result>
+			<result name="room_device_data" type="json">
+			    <param name="ignoreHierarchy">false</param>
+				<param name="root">roomDeviceJson</param>
+			</result>
+			<result name="query_manage_device_by_room" type="json">			 
+				<param name="root">roomSipJson.roomSipList</param>
+			</result>
+		</action>	
+    </package>
+</struts>
+

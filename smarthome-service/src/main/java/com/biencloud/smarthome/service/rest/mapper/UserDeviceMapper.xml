@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.biencloud.smarthome.service.rest.mapper.UserDeviceMapper" >
+  <resultMap id="baseResult" type="com.biencloud.smarthome.service.rest.model.UserDeviceKey" >
+    <id column="user_id" property="userId" jdbcType="BIGINT" />
+    <id column="device_id" property="deviceId" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <resultMap id="mapResult" type="map" >
+    <id column="user_id" property="userId" jdbcType="BIGINT" />
+    <id column="device_id" property="deviceId" jdbcType="BIGINT" />
+    <result column="device_code" property="deviceCode" jdbcType="VARCHAR" />
+    <result column="device_name" property="deviceName" jdbcType="VARCHAR" />
+    <result column="device_alias" property="deviceAlias" jdbcType="VARCHAR" />
+    <result column="device_pwd" property="devicePwd" jdbcType="VARCHAR" />
+    <result column="device_type" property="deviceType" jdbcType="VARCHAR" />
+    <result column="device_status" property="deviceStatus" jdbcType="VARCHAR" />
+    <result column="device_ip" property="deviceIp" jdbcType="VARCHAR" />
+    <result column="device_mac" property="deviceMac" jdbcType="VARCHAR" />
+    <result column="version" property="version" jdbcType="VARCHAR" />
+    <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="userDeviceResult" type="com.biencloud.smarthome.service.rest.model.UserDeviceKey" >
+    <id column="user_id" property="userId" jdbcType="BIGINT" />
+    <id column="device_id" property="deviceId" jdbcType="BIGINT" />
+    <result column="device_code" property="deviceCode" jdbcType="VARCHAR" />
+    <result column="device_name" property="deviceName" jdbcType="VARCHAR" />
+    <result column="device_alias" property="deviceAlias" jdbcType="VARCHAR" />
+    <result column="device_pwd" property="devicePwd" jdbcType="VARCHAR" />
+    <result column="device_type" property="deviceType" jdbcType="VARCHAR" />
+    <result column="device_status" property="deviceStatus" jdbcType="VARCHAR" />
+    <result column="device_ip" property="deviceIp" jdbcType="VARCHAR" />
+    <result column="device_mac" property="deviceMac" jdbcType="VARCHAR" />
+    <result column="version" property="version" jdbcType="VARCHAR" />
+    <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="sipid" property="sipid" jdbcType="VARCHAR" />
+    <result column="room_id" property="roomId" jdbcType="VARCHAR" />
+    <result column="room_no" property="roomNo" jdbcType="VARCHAR" />
+    <result column="unitdoor_no" property="unitDoorNo" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="deviceUserResult" type="map" >
+    <id column="user_id" property="userId" jdbcType="BIGINT" />
+    <id column="device_id" property="deviceId" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="getUserListByDeviceId" type="map" >
+    <id column="user_id" property="userId" jdbcType="BIGINT" />
+    <id column="device_id" property="deviceId" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="sipid" property="sipid" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <delete id="delete" parameterType="com.biencloud.smarthome.service.rest.model.UserDeviceKey" >
+    delete from t_user_device
+    where user_id = #{userId,jdbcType=BIGINT}
+      and device_id = #{deviceId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.biencloud.smarthome.service.rest.model.UserDeviceKey" >
+    insert into t_user_device (user_id, device_id, type,status)
+    values (#{userId,jdbcType=BIGINT}, #{deviceId,jdbcType=BIGINT}, #{type,jdbcType=INTEGER}, #{status,jdbcType=INTEGER})
+  </insert>
+  <select id="getDeviceListByUserId" resultMap="mapResult" >
+    select d.device_id,device_code,device_name,device_alias,device_pwd,device_type,device_status,device_ip,device_mac,version,created_time,updated_time,created_time,status 
+    from t_user_device u left join t_device d on u.device_id=d.device_id
+    where u.user_id=#{userId,jdbcType=BIGINT}
+    order by d.updated_time desc
+   </select>
+   
+   <update id="updateOnActive" parameterType="com.biencloud.smarthome.service.rest.model.UserDeviceKey" >
+    update t_user_device
+    <set >
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER}
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=BIGINT}
+      and device_id = #{deviceId,jdbcType=BIGINT}
+  </update>
+  <update id="update" parameterType="com.biencloud.smarthome.service.rest.model.UserDeviceKey" >
+    update t_user_device
+    set type = #{type,jdbcType=INTEGER},
+    	status = #{status,jdbcType=INTEGER}
+    where user_id = #{userId,jdbcType=BIGINT}
+      and device_id = #{deviceId,jdbcType=BIGINT}
+  </update>
+  
+   <select id="getList" resultMap="mapResult" parameterType="com.biencloud.smarthome.service.rest.model.UserDeviceKey">
+   	 select user_id, device_id, type, status from t_user_device
+   	 where 1=1
+   	 <if test="userId != null" >
+        and user_id = #{userId,jdbcType=BIGINT}
+     </if>
+     <if test="deviceId != null" >
+        and device_id = #{deviceId,jdbcType=BIGINT}
+     </if>
+   </select>
+
+   <select id="getDeviceUserList" resultMap="deviceUserResult" parameterType="com.biencloud.smarthome.service.rest.model.UserDeviceKey">
+   	 select user_id, device_id, username, a.type from t_user_device a
+   	 left join t_user b on b.id = a.user_id
+   	 where 1=1
+        and device_id = #{deviceId,jdbcType=BIGINT}
+		order by type desc
+   </select>
+   
+   <select id="getUserListByDeviceId" resultMap="getUserListByDeviceId" parameterType="com.biencloud.smarthome.service.rest.model.UserDeviceKey">
+   	 select user_id, device_id, username, a.type, b.sipid from t_user_device a
+   	 left join t_user b on b.id = a.user_id
+   	 where 1=1
+        and device_id = #{deviceId,jdbcType=BIGINT}
+		order by type desc
+   </select>
+   
+   <select id="getDevicesByUserId" resultMap="userDeviceResult" >
+    select d.device_id,device_code,device_name,device_alias,device_pwd,device_type,device_status,device_ip,device_mac,version,created_time,updated_time,created_time,status,sipid,room_id,unitdoor_no 
+    from t_user_device u left join t_device d on u.device_id=d.device_id
+    where u.user_id=#{userId,jdbcType=BIGINT}
+    order by d.updated_time desc
+   </select>
+</mapper>

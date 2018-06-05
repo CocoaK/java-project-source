@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <!-- name和namespace以mobile开头 -->
+    <package name="ShopLogin" extends="shop-default" namespace="/shop/login">       
+             
+        <action name="logout" class="com.biencloud.smarthome.web.login.action.LoginAction" method="exit">
+            <param name="menuCode">M000000</param>
+            <param name="operationCode">15</param>
+            <result>/shop/login.jsp</result>            
+        </action>
+        <action name="changeLocale" class="com.biencloud.smarthome.web.login.action.LoginAction" method="changeLocale">
+            <param name="ignoreLog">true</param>
+            <result>/shop/login.jsp</result>
+        </action>
+        <action name="go" class="com.biencloud.smarthome.web.login.action.LoginAction" method="login">
+            <param name="menuCode">M000000</param>
+            <param name="operationCode">13</param>
+            <result name='error'>/shop/login.jsp</result>
+            <result type="redirectAction">
+                <param name="actionName">index</param>
+            </result>
+        </action>
+        <action name="index" class="com.biencloud.smarthome.web.login.action.LoginAction" method="index">
+            <param name="ignoreLog">true</param>
+            <result>/index.jsp</result>
+        </action>
+    </package>
+</struts>    

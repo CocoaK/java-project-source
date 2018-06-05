@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.biencloud.smarthome.service.rest.mapper.NoticeMapper" >
+  <resultMap id="baseResult" type="com.biencloud.smarthome.service.rest.model.Notice" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="house_id" property="houseId" jdbcType="INTEGER" />
+    <result column="room_no" property="roomNo" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="baseColumns" >
+    id, title, house_id, room_no, create_time, update_time, status, type, create_by, content, remark
+  </sql>
+  <select id="getForList" resultMap="baseResult" >
+    select 
+		<include refid="baseColumns" />
+    from t_notice
+  </select>
+  
+  <select id="getForPage" resultMap="baseResult" >
+    select 
+		<include refid="baseColumns" />
+    from t_notice
+    where 1=1
+    <if test="po.status != null" >
+        and status = #{po.status,jdbcType=CHAR}
+    </if>
+    <if test="po.type != null" >
+        and type = #{po.type,jdbcType=CHAR}
+    </if>
+    <if test="po.houseId != null" >
+        and house_id = #{po.houseId,jdbcType=CHAR} 
+    </if>
+    <if test="po.roomNo != null" >
+        and room_no = #{po.roomNo,jdbcType=CHAR} 
+    </if>
+    order by update_time desc
+  </select>
+  
+  <select id="getForOne" resultMap="baseResult" parameterType="java.lang.Long" >
+    select 
+    	<include refid="baseColumns" />
+    from t_notice
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="delete" parameterType="java.lang.Long" >
+    delete from t_notice
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.biencloud.smarthome.service.rest.model.Notice" >
+    insert into t_notice (id, title, house_id, room_no,
+      create_time, update_time, status, 
+      type, create_by, content, 
+      remark)
+    values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{houseId,jdbcType=INTEGER}, #{roomNo,jdbcType=VARCHAR},
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, 
+      #{type,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateOnActive" parameterType="com.biencloud.smarthome.service.rest.model.Notice" >
+    update t_notice
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="houseId != null" >
+        house_id = #{houseId,jdbcType=INTEGER},
+      </if>
+       <if test="roomNo != null" >
+        room_no = #{roomNo,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="update" parameterType="com.biencloud.smarthome.service.rest.model.Notice" >
+    update t_notice
+    set title = #{title,jdbcType=VARCHAR},
+      house_id = #{houseId,jdbcType=INTEGER},
+      room_no = #{roomNo,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      content = #{content,jdbcType=LONGVARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="deviceno" namespace="/deviceno" extends="default">		
+		<action name="querydeviceNoList" class="com.biencloud.smarthome.web.deviceno.action.DeviceNoAction" method="queryList">
+		    <param name="menuCode">M001011</param>
+            <param name="operationCode">1</param>
+            <result name="list" >/WEB-INF/views/deviceno/device_list.jsp</result>	
+        </action>	
+	</package>
+</struts>    

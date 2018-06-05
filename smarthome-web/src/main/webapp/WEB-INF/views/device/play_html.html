@@ -1,0 +1,46 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>html video</title>
+	<script type="text/javascript">
+		//获得播放地址
+		function getparastr(strname) 
+		{ 
+			var hrefstr,pos,parastr,para,tempstr; 
+			hrefstr = window.location.href; 
+			pos = hrefstr.indexOf("?");
+			parastr = hrefstr.substring(pos+1); 
+			para = parastr.split("&"); 
+			tempstr=""; 
+			for(i=0;i<para.length;i++) 
+			{ 
+				tempstr = para[i]; 
+				pos = tempstr.indexOf("="); 
+				if(tempstr.substring(0,pos) == strname){ 
+					return tempstr.substring(pos+1); 
+				} 
+			} 
+			return null; 
+		} 
+
+		function changeSource() {
+			//获得播放地址
+			var filePath = getparastr("callRecordVO.videoNetPath");
+			//播放对象
+			var vlcPlayer = ' <object id="vlcplayer" classid="clsid:E23FE9C6-778E-49D4-B537-38FCDE4887D8" codebase="http://downloads.videolan.org/pub/videolan/vlc/latest/win32/axvlc.cab" id="vlc" events="True">'
+						  + ' <param name="Src" value="'+filePath+'" />'
+						  + ' <param name="ShowDisplay" value="True" />'
+						  + ' <param name="Loop" value="False" />'
+						  + ' <param name="AutoPlay" value="True" /></object>';
+			document.getElementById('player').innerHTML = vlcPlayer;
+			document.getElementById('vlcplayer').removeAttribute('style');	//删除style属性
+			document.getElementById('vlcplayer').setAttribute('width','680');  //设置宽度
+			document.getElementById('vlcplayer').setAttribute('height','500');  //设置高度
+		}
+	</script>
+  
+</head>
+	<body onload="changeSource()">
+     	<div id="player" align="center">       
+    	</div> 
+</body>
+</html>

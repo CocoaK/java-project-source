@@ -1,0 +1,581 @@
+<meta http-equiv="content-type" content="text/html;charset=UTF-8">
+<div class="easyui-layout" data-options="fit:true">
+    <div data-options="region:'center',border:false">
+    	<!-- Begin of toolbar -->
+        <!-- <div id="toolbar1">
+            <div class="toolbar-button">
+                <a href="#" class="easyui-linkbutton" iconCls="icon-add" onclick="openAdd()" plain="true">添加</a>
+                <a href="#" class="easyui-linkbutton" iconCls="icon-edit" onclick="openEditPer()" plain="true">修改</a>
+                <a href="#" class="easyui-linkbutton" iconCls="icon-remove" onclick="removePer()" plain="true">删除</a> 
+            </div>
+            <div class="toolbar-search">
+                <label>起始时间：</label><input class="easyui-datebox" id="startTime" style="width:100px">&nbsp;
+                <label>结束时间：</label><input class="easyui-datebox" id="endTime" style="width:100px">&nbsp;
+                <label>账户：</label><input class="text" id="personAccount" style="width:100px">
+                <a href="#" class="easyui-linkbutton" id="search" iconCls="icon-search">开始检索</a>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="#" class="easyui-linkbutton" id="today">今天</a>&nbsp;
+                <a href="#" class="easyui-linkbutton" id="sevenday">近七天</a>&nbsp;
+                <a href="#" class="easyui-linkbutton" id="month">近一个月</a>&nbsp;
+                <a href="#" class="easyui-linkbutton" id="list">全部记录</a>&nbsp;
+            </div>
+        </div> -->
+        <div style="width:100%;line-height:50px" id="toolbar1">
+			<label>地区选择：</label><!-- <input id="area" class="easyui-combobox" data-options="editable:false,panelHeight:'auto'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+			<select id="area_person" style="width:115px">
+				
+			</select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		    <label>产品选择：</label><!-- <input id="product" class="easyui-combobox" data-options="valueField: 'deviceType',textField: 'deviceName',editable:false,panelHeight:'auto'"> -->
+		    <select id="product_person" style="width:115px">   
+			   
+			</select>
+		</div>
+        <!-- End of toolbar -->
+        <table id="datagridPer" toolbar="#toolbar1"></table>
+    </div>
+</div>
+<!-- Begin of easyui-dialog -->
+<div id="dialogPer" class="easyui-dialog" data-options="closed:true,iconCls:'icon-save'" style="width:400px; padding:10px;">
+	<form id="formPer" method="post">
+        <table>
+        	<tr><td colspan="2"><input type="hidden" name="id"/></td></tr>
+            <tr>
+                <td width="100" align="right">账户:</td>
+                <td><input type="text" name="account" id="account" class="text"/></td>
+            </tr>
+            <tr>
+                <td align="right">密码:</td>
+                <td><input type="password" name="password" id="password" class="text" /></td>
+            </tr>
+            <tr>
+                <td align="right">用户名:</td>
+                <td><input type="text" name="username" id="username" class="text" /></td>
+            </tr>
+           <tr>
+                <td align="right">出生日期:</td>
+                <td><input type="text" name="birthday" id="birthday" class="text"/></td>
+            </tr>
+           <tr>
+                <td align="right">性别:</td>
+                <!-- <td><input type="text" name="gender" id="gender" class="text" /></td> -->
+                <td><input type="radio" name="radio" value="00" class="male radio"/><font>男</font>&nbsp;&nbsp;&nbsp;<input type="radio" name="radio" value="01" class="female radio"/><font>女</font></td>
+            </tr>
+           <tr>
+                <td align="right">身高:</td>
+                <td><input type="text" name="height" id="height" class="text" /></td>
+            </tr>
+           <tr>
+                <td align="right">身高单位:</td>
+                <!-- <td><input type="text" name="heightUnit" id="heightUnit" class="text" /></td> -->
+                <td><input type="radio" name="hu" value="00" class="cm radio"/><font>cm</font>&nbsp;&nbsp;&nbsp;<input type="radio" name="hu" value="01" class="feet radio"/><font>feet</font></td>
+            </tr>
+           <tr>
+                <td align="right">体重:</td>
+                <td><input type="text" name="targetWeight" id="targetWeight" class="text" /></td>
+            </tr>
+           <tr>
+                <td align="right">体重单位:</td>
+                <!-- <td><input type="text" name="weightUnit" id="weightUnit" class="text" /></td> -->
+                <td><input type="radio" name="wu" value="00" class="kg radio"/><font>kg</font>&nbsp;&nbsp;&nbsp;<input type="radio" name="wu" value="01" class="lb radio"/><font>lb</font>&nbsp;&nbsp;&nbsp;<input type="radio" name="wu" value="02" class="st radio"/><font>st:lb</font></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<!-- End of easyui-dialog -->
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript">
+	//var url="http://192.156.1.230:8088/";
+	var storage = window.sessionStorage;
+	/**
+	* Name 载入菜单树
+	*/
+	/* $('#category-tree').tree({
+		url:'temp/menu.json',
+		onClick:function(node){
+			alert(node.text);
+		}
+	}); */
+
+	/**
+	* Name 添加记录
+	*/
+	function addPer(){
+		$('#formPer').form('submit', {
+			url:'',
+			success:function(data){
+				if(data){
+					$.messager.alert('信息提示','提交成功！','info');
+					$('#dialog').dialog('close');
+				}
+				else
+				{
+					$.messager.alert('信息提示','提交失败！','info');
+				}
+			}
+		});
+	}
+	
+	/**
+	* Name 修改记录
+	*/
+	function editPer(){
+		$('#formPer').form('submit', {
+			//url:url+'scalehouse/person/updateEasyui',
+			onSubmit:function(){
+				var account=$("#account").val();
+				var password=$("#password").val();
+				var username=$("#username").val();
+				var birthday=$("#birthday").val();
+				var gender=$("input[name='radio']:checked").val();
+				var height=$("#height").val();
+				var heightUnit=$("input[name='hu']:checked").val();
+				var targetWeight=$("#targetWeight").val();
+				var weightUnit=$("input[name='wu']:checked").val();
+				if(account==null || account=="" || password==null  || password=="" || username==null || username=="" || birthday==null || birthday=="" || gender==null || gender=="" || height==null || height=="" || heightUnit==null || heightUnit=="" || targetWeight==null || targetWeight=="" || weightUnit==null || weightUnit==""){
+					//console.log(account+"--"+password+"--"+username+"--"+birthday+"--"+gender+"--"+height+"--"+heightUnit+"--"+targetWeight+"--"+weightUnit)
+					$.messager.alert('警告', '输入框不能为空');  
+	                return false; 
+				}
+				$.ajax({
+					url:service_url+'scalehouse/person/updateEasyui',
+					type:'post',
+					dataType:'json',
+					data:{
+						'account':account,
+						'password':password,
+						'username':username,
+						'birthday':birthday,
+						'gender':gender,
+						'height':height,
+						'heightUnit':heightUnit,
+						'targetWeight':targetWeight,
+						'weightUnit':weightUnit
+					},
+					cache:false,
+					success:function(json){
+						if(json.code==1){
+							$.messager.alert('信息提示','提交成功！','info');
+							$('#dialogPer').dialog('close');
+							datagridPer();
+						}else{
+							$.messager.alert('信息提示','更新失败！','info');
+						}
+					},
+					error:function(){
+						$.messager.alert('信息提示','error','info');
+					}
+				});
+				return false;
+			}
+			
+		});
+	}
+	
+	/**
+	* Name 删除记录
+	*/
+	function removePer(){
+		var items = $('#datagridPer').datagrid('getSelections');
+		if(items==null || items.length==0){
+			//alert("请先选择要删除的内容");
+			$.messager.alert('信息提示','请先选择要删除的内容！','info');
+		}else{
+			$.messager.confirm('信息提示','确定要删除该记录？', function(result){
+				if(result){
+					var items = $('#datagridPer').datagrid('getSelections');
+					var ids = [];
+					$(items).each(function(){
+						ids.push(this.id);	
+					});
+					//console.log(ids);
+					$.ajax({
+						url:service_url+'scalehouse/person/deleteGroup',
+						type:'post',
+						dataType:'json',
+						traditional: true,
+						data:{
+							"ids":ids
+						},
+						cache:false,
+						success:function(json){
+							if(json.code==1){
+								$.messager.alert('信息提示','删除成功！','info');
+								datagridPer();
+							}else{
+								$.messager.alert('信息提示','删除失败！','info');
+							}
+						},
+						error:function(){
+							$.messager.alert('信息提示','网络错误,删除失败！','info');
+						}
+					});
+				}	
+			});
+		}
+	}
+	
+	/**
+	* Name 打开添加窗口
+	*/
+	function openAddPer(){
+		$('#formPer').form('clear');
+		$('#dialogPer').dialog({
+			closed: false,
+			modal:true,
+            title: "添加信息",
+            buttons: [{
+                text: '确定',
+                iconCls: 'icon-ok',
+                handler: add
+            }, {
+                text: '取消',
+                iconCls: 'icon-cancel',
+                handler: function () {
+                    $('#dialog').dialog('close');                    
+                }
+            }]
+        });
+	}
+	
+	/**
+	* Name 打开修改窗口
+	*/
+	function openEditPer(){
+		$('#formPer').form('clear');
+		var item = $('#datagridPer').datagrid('getSelections');
+		if(item==null || item.length==0){
+			//alert("请先选择要修改的内容");
+			$.messager.alert('信息提示','请先选择要修改的内容！','info');
+		}else if(item.length!=1){
+			/* $.messager.show({
+			title:'提示信息!',
+			msg:'只能选择一行记录进行修改!',
+			width:300,
+			height:132,
+			style:{
+				right:'',
+				bottom:''
+			}}); */
+			$.messager.alert('信息提示','只能选择一行记录进行修改!','info');
+		}else{
+			$.ajax({
+				url:service_url+'scalehouse/person/getOne',
+				type:'post',
+				dataType:'json',
+				data:{
+					'id':item[0].id
+				},
+				cache:false,
+				success:function(json){
+					if(json.code==1){
+						//$('#dialog').dialog('close');	
+						//绑定值
+						if(json.data.gender=="男"){
+							$(".male").prop("checked",true);
+						}else if(json.data.gender=="女"){
+							$(".female").prop("checked",true);
+						}
+						if(json.data.heightUnit=="cm"){
+							$(".cm").prop("checked",true);
+						}else if(json.data.heightUnit=="feet"){
+							$(".feet").prop("checked",true);
+						}
+						if(json.data.weightUnit=="kg"){
+							$(".kg").prop("checked",true);
+						}else if(json.data.weightUnit=="lb"){
+							$(".lb").prop("checked",true);
+						}else if(json.data.weightUnit=="st"){
+							$(".st").prop("checked",true);
+						}
+						$('#formPer').form('load', json.data);
+					}else{
+						//alert("稍等一会~，无法获取！");
+						$.messager.alert('信息提示','稍等一会~，无法获取！','info');
+					}
+				},
+				error:function(){
+					//alert("稍等一会~，网络异常");
+					$.messager.alert('信息提示','稍等一会~，网络异常','info');
+				}
+			});
+			$('#dialogPer').dialog({
+				closed: false,
+				modal:true,
+	            title: "修改信息",
+	            buttons: [{
+	                text: '确定',
+	                iconCls: 'icon-ok',
+	                handler: editPer
+	            }, {
+	                text: '取消',
+	                iconCls: 'icon-cancel',
+	                handler: function () {
+	                    $('#dialogPer').dialog('close');                    
+	                }
+	            }]
+	        });
+		}
+		//alert(item.productid);return;
+		
+	}	
+	
+	/**
+	*获取数据
+	*/
+	function getData(link){
+		$.ajax({
+			url:service_url+link,
+			type:'post',
+			dataType:'json',
+			data:{
+				'account':storage.getItem('account'),
+				'password':storage.getItem('password')
+			},
+			cache:false,
+			success:function(json){
+				if(json.code==1){
+					$('#datagridPer').datagrid('loadData',json);
+					$('#datagridPer').datagrid('hideColumn','id');
+				}else{
+					$.messager.alert('信息提示','所传参数有误!','info');
+				}
+			},
+			error:function(){
+				$.messager.alert('信息提示','网络错误，error!','info');
+			}
+		});
+	}
+	
+	/**
+	* Name 载入数据
+	*/
+	$(function(){
+		loadCombobox('area_person','product_person');
+		datagridPer();
+		/* var options=$("#datagridPer").datagrid("options");
+		alert(options.pageSize);//页面大小
+		alert(options.pageNumber);//当前页号 */
+		$("#area_person").change(function(){
+			var area=$("#area_person option:selected");
+			var product=$("#product_person option:selected");
+			var options=$("#datagridPer").datagrid("options");
+			var pageStart=(options.pageNumber-1)*parseInt(options.pageSize);
+			pSelectAreaOrProduct(area.val(), product.val(),pageStart,options.pageSize);
+		});
+		$("#product_person").change(function(){
+			var area=$("#area_person option:selected");
+			var product=$("#product_person option:selected");
+			var options=$("#datagridPer").datagrid("options");
+			var pageStart=(options.pageNumber-1)*parseInt(options.pageSize);
+			pSelectAreaOrProduct(area.val(), product.val(),pageStart,options.pageSize);
+		});
+		
+		var p = $('#datagridPer').datagrid('getPager');
+		if(p){
+			$(p).pagination({
+				onSelectPage:function(pageNumber, pageSize){
+					var gridOpts = $('#datagridPer').datagrid('options');
+					var area=$("#area_person option:selected");
+					var product=$("#product_person option:selected");
+					var pageStart=(pageNumber-1)*parseInt(pageSize);
+					gridOpts.pageNumber = pageNumber;
+					gridOpts.pageSize = pageSize;
+					pgetAll(pageStart, pageSize,area.val(),product.val());
+					/* var rowNumbers = $('.datagrid-cell-rownumber');
+					$(rowNumbers).each(function(index){
+						var row = parseInt($(rowNumbers[index]).html()) + parseInt((pageNumber-1)*parseInt(pageSize));
+						$(rowNumbers[index]).html("");
+						$(rowNumbers[index]).html(row);
+					}); */
+				}
+			});
+		}
+		//var param="[{\"note\":\"one\",\"scaleType\":\"CA\",\"recordTime\":\"05/05/2018 10:47:32\",\"unitType\":\"00\",\"weight\":\"54\",\"bmi\":\"12.5\",\"boneMass\":\"12.5\",\"bodyFat\":\"12.5\",\"muscle\":\"12.5\",\"bodyWater\":\"12.5\",\"visceralFat\":\"12.5\",\"bmr\":\"12.5\",\"mac\":\"bc:ba:55555\",\"name\":\"kkkk\",\"model\":\"CF\",\"type\":\"01\",\"appType\":\"1\"},{\"note\":\"2342334534dftyertertgaergaerterterte\",\"scaleType\":\"CA\",\"recordTime\":\"05/05/2018 10:47:23\",\"unitType\":\"00\",\"weight\":\"54\",\"bmi\":\"12.5\",\"boneMass\":\"12.5\",\"bodyFat\":\"12.5\",\"muscle\":\"12.5\",\"bodyWater\":\"12.5\",\"visceralFat\":\"12.5\",\"bmr\":\"12.5\",\"mac\":\"bc:ba:55555:32\",\"name\":\"kkkk\",\"model\":\"CF\",\"type\":\"01\",\"appType\":\"1\"}]";
+		var param="[{\"note\":\"2342334534dftyertertgaergaerterterte\",\"scaleType\":\"CA\",\"recordTime\":\"1525488420000\",\"unitType\":\"00\",\"weight\":\"54\",\"bmi\":\"12.5\",\"boneMass\":\"12.5\",\"bodyFat\":\"12.5\",\"muscle\":\"12.5\",\"bodyWater\":\"12.5\",\"visceralFat\":\"12.5\",\"bmr\":\"12.5\"},{\"note\":\"2342334534dftyertertgaergaerterterte\",\"scaleType\":\"CA\",\"recordTime\":\"1525488420000\",\"unitType\":\"00\",\"weight\":\"54\",\"bmi\":\"12.5\",\"boneMass\":\"12.5\",\"bodyFat\":\"12.5\",\"muscle\":\"12.5\",\"bodyWater\":\"12.5\",\"visceralFat\":\"12.5\",\"bmr\":\"12.5\"}]";
+		$.ajax({
+			url:service_url+'scalehouse/bodyInfo/insertJsonGroup',
+			type:'post',
+			dataType:'json',
+			data:{
+				'jsonGroup':param,
+				'account':'we2',
+				'password':'123456'
+			},
+			cache:false,
+			success:function(json){
+				alert(json.code);
+			},
+			error:function(){
+				$.messager.alert('信息提示','网络错误，error!','info');
+			}
+		});
+		
+		//var param="[{\"note\":\"two\",\"diastolic\":\"90.5\",\"recordTime\":\"05/05/2018 10:47:12\",\"systolic\":\"105.6\",\"pulse\":\"86\",\"mac\":\"bc:ba:1\",\"name\":\"kkkk\",\"model\":\"BP\",\"type\":\"01\",\"appType\":\"1\"},{\"note\":\"pressuretest\",\"recordTime\":\"04/05/2018 10:47:12\",\"diastolic\":\"90.5\",\"systolic\":\"105.6\",\"pulse\":\"86\",\"mac\":\"bc:ba:9786:32\",\"name\":\"kkkk\",\"model\":\"BP\",\"type\":\"01\",\"appType\":\"1\"},{\"note\":\"pressuretest\",\"recordTime\":\"05/05/2018 10:47:50\",\"diastolic\":\"90.5\",\"systolic\":\"105.6\",\"pulse\":\"86\",\"mac\":\"bc:ba:789:32\",\"name\":\"kkkk\",\"model\":\"BP\",\"type\":\"01\",\"appType\":\"1\"}]";
+		//var param="[{\"note\":\"pressuretest\",\"diastolic\":\"90.5\",\"recordTime\":\"1525488420000\",\"systolic\":\"105.6\",\"pulse\":\"86\"},{\"note\":\"pressuretest\",\"recordTime\":\"1525488420000\",\"diastolic\":\"90.5\",\"systolic\":\"105.6\",\"pulse\":\"86\"},{\"note\":\"pressuretest\",\"recordTime\":\"1525488420000\",\"diastolic\":\"90.5\",\"systolic\":\"105.6\",\"pulse\":\"86\"}]";
+		/* $.ajax({
+			url:service_url+'scalehouse/pressure/upload',
+			type:'post',
+			dataType:'json',
+			data:{
+				'jsonGroup':param,
+				'account':'we1',
+				'password':'123456'
+			},
+			cache:false,
+			success:function(json){
+				alert(json.code);
+			},
+			error:function(){
+				$.messager.alert('信息提示','网络错误，error!','info');
+			}
+		}); */
+		
+		/* var param="[{\"type\":\"01\",\"mac\":\"44:ea:d8:1e:f7:06\"},{\"type\":\"01\",\"mac\":\"64:CF:D9:0F:29:20\"},{\"type\":\"01\",\"mac\":\"ba:cc\"},{\"type\":\"01\",\"mac\":\"cc:aa\"}]";
+		$.ajax({
+			url:'http://52.42.215.227:8088/scalehouse/mac/uploadMac',
+			type:'post',
+			dataType:'json',
+			data:{
+				'macGroup':param,
+				'account':'1525842536@qq.com',
+			},
+			cache:false,
+			success:function(json){
+				alert(json.code);
+			},
+			error:function(){
+				$.messager.alert('信息提示','网络错误，error!','info');
+			}
+		}); */
+		
+		/* var param="[{\"loginTime\":\"1525488420000\"},{\"loginTime\":\"1525488420000\"}]";
+		$.ajax({
+			url:service_url+'scalehouse/login/uploadLogin',
+			type:'post',
+			dataType:'json',
+			data:{
+				'loginTimeGroup':param,
+				'account':'we1',
+			},
+			cache:false,
+			success:function(json){
+				alert(json.code);
+			},
+			error:function(){
+				$.messager.alert('信息提示','网络错误，error!','info');
+			}
+		}); */
+		
+		/* $.ajax({
+			url:'http://52.42.215.227:8088/scalehouse/person/toResetPwd',
+			type:'post',
+			dataType:'json',
+			data:{
+				'account':'1525842536@qq.com'
+			},
+			cache:false,
+			success:function(json){
+				alert(json.code);
+			},
+			error:function(){
+				$.messager.alert('信息提示','网络错误，error!','info');
+			}
+		}); */
+		/* $.ajax({
+			url:'http://127.0.0.1:8088/scalehouse/feedback/uploadFeedbackInfo',
+			type:'post',
+			dataType:'json',
+			data:{
+				'account':'1525842536@qq.com',
+				'title':'1byone health',
+				'content':'hello',
+			},
+			cache:false,
+			success:function(json){
+				alert(json.code);
+			},
+			error:function(){
+				$.messager.alert('信息提示','网络错误，error!','info');
+			}
+		}); */
+		
+	});
+	function datagridPer(){
+		$('#datagridPer').datagrid({
+			//loadFilter:pagerFilter,
+			rownumbers:true,
+			singleSelect:false,
+			pageSize:20,
+			pagination:true,
+			multiSort:true,
+			fitColumns:true,
+			fit:true,
+			columns:[[
+				/* { checkbox:true}, */
+				{ title:'id',field:'id',sortable:true,align:'center'},
+				{ title:'账户',field:'account',sortable:true,width:80,align:'center'},
+				{ title:'密码',field:'password',sortable:true,width:40,align:'center'},
+				{ title:'用户名',field:'username',width:50,align:'center'},
+				{ title:'出生日期',field:'birthday',width:50,align:'center',
+					formatter: function(value, row, index) {
+						/* Date.prototype.toLocaleString = function() {
+					          //return this.getFullYear() + "-" + (this.getMonth() + 1) + "-" + this.getDate() + " " + this.getHours() + ":" + this.getMinutes() + ":" + this.getSeconds();
+					          return this.getFullYear() + "-" + (this.getMonth() + 1) + "-" + this.getDate();
+					    }; */
+						var unixTimestamp = new Date(row.birthday) ;
+						//commonTime = unixTimestamp.toLocaleString();
+						//return unixTimestamp.getFullYear() + "-" + (unixTimestamp.getMonth() + 1) + "-" + unixTimestamp.getDate();
+						return unixTimestamp.Format("yyyy-MM-dd");
+                    }
+                },
+				{ title:'性别',field:'gender',width:50,align:'center'},
+				{ title:'身高',field:'height',width:50,align:'center'},
+				{ title:'身高单位',field:'heightUnit',width:50,align:'center'},
+				{ title:'体重',field:'targetWeight',width:50,align:'center'},
+				{ title:'体重单位',field:'weightUnit',width:50,align:'center'},
+				{ title:'注册时间',field:'recordTime',width:50,align:'center',
+					formatter: function(value, row, index) {
+						/* Date.prototype.toLocaleString = function() {
+					          return this.getFullYear() + "-" + (this.getMonth() + 1) + "-" + this.getDate() + " " + this.getHours() + ":" + this.getMinutes() + ":" + this.getSeconds();
+					    }; */
+						var unixTimestamp = new Date(row.recordTime) ;
+						//commonTime = unixTimestamp.toLocaleString();
+						//return commonTime;
+						return unixTimestamp.Format("yyyy-MM-dd HH:mm:ss");
+                    }
+                }
+			]],
+			onLoadSuccess : function () {
+		        $(this).datagrid("fixRownumber");
+		    }
+		});
+		var options=$("#datagridPer").datagrid("options");
+		var pageStart=(options.pageNumber-1)*parseInt(options.pageSize);
+		pgetAll(pageStart,options.pageSize);
+		/* var area=$("#area_person option:selected");
+		var product=$("#area_product option:selected");
+		pSelectAreaOrProduct(area.val(), product.val()); */
+	}
+	function pgetAll(pageNumber,pageSize,countryCode,type){
+		$.ajax({
+			url:service_url+'scalehouse/person/getAll',
+			type:'post',
+			dataType:'json',
+			data:{
+				'pageNumber':pageNumber,
+				'pageSize':pageSize,
+				'countryCode':countryCode,
+				'type':type
+			},
+			cache:false,
+			success:function(json){
+				$('#datagridPer').datagrid('loadData', json);
+				$('#datagridPer').datagrid('hideColumn', 'id');
+			},
+			error:function(){
+				//alert("error");
+				$.messager.alert('信息提示','error!','info');
+			}
+		});
+	}
+</script>

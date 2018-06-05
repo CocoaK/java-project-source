@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.biencloud.smarthome.service.rest.mapper.GateCardInfoMapper" >
+  <resultMap id="baseResult" type="com.biencloud.smarthome.service.rest.model.GateCardInfo" >
+    <id column="gate_card_id" property="gateCardId" jdbcType="BIGINT" />
+    <result column="district_id" property="districtId" jdbcType="INTEGER" />
+    <result column="card_no" property="cardNo" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="CHAR" />
+    <result column="owner_name" property="ownerName" jdbcType="VARCHAR" />
+    <result column="owner_id_card" property="ownerIdCard" jdbcType="VARCHAR" />
+    <result column="house_id" property="houseId" jdbcType="VARCHAR" />
+    <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="created_user" property="createdUser" jdbcType="VARCHAR" />
+    <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP" />
+    <result column="updated_user" property="updatedUser" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="mapResult" type="map" >
+    <id column="gate_card_id" property="gateCardId" jdbcType="BIGINT" />
+    <result column="district_id" property="districtId" jdbcType="INTEGER" />
+    <result column="card_no" property="cardNo" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="CHAR" />
+    <result column="owner_name" property="ownerName" jdbcType="VARCHAR" />
+    <result column="owner_id_card" property="ownerIdCard" jdbcType="VARCHAR" />
+    <result column="house_id" property="houseId" jdbcType="VARCHAR" />
+    <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="created_user" property="createdUser" jdbcType="VARCHAR" />
+    <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP" />
+    <result column="updated_user" property="updatedUser" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="baseColumns" >
+    gate_card_id, district_id, card_no, status, owner_name, owner_id_card, house_id, 
+    created_time, created_user, updated_time, updated_user
+  </sql>
+  <select id="getForList" resultMap="baseResult" >
+    select gate_card_id, district_id, card_no, status, owner_name, owner_id_card, house_id, 
+    created_time, created_user, updated_time, updated_user
+    from t_gate_card
+  </select>
+  <select id="getForOne" resultMap="baseResult" parameterType="java.lang.Long" >
+    select 
+    <include refid="baseColumns" />
+    from t_gate_card
+    where gate_card_id = #{gateCardId,jdbcType=BIGINT}
+  </select>
+  <delete id="delete" parameterType="java.lang.Long" >
+    delete from t_gate_card
+    where gate_card_id = #{gateCardId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.biencloud.smarthome.service.rest.model.GateCardInfo" >
+    insert into t_gate_card (gate_card_id, district_id, card_no, 
+      status, owner_name, owner_id_card, 
+      house_id, created_time, created_user, 
+      updated_time, updated_user)
+    values (#{gateCardId,jdbcType=BIGINT}, #{districtId,jdbcType=INTEGER}, #{cardNo,jdbcType=VARCHAR}, 
+      #{status,jdbcType=CHAR}, #{ownerName,jdbcType=VARCHAR}, #{ownerIdCard,jdbcType=VARCHAR}, 
+      #{houseId,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{createdUser,jdbcType=VARCHAR}, 
+      #{updatedTime,jdbcType=TIMESTAMP}, #{updatedUser,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateOnActive" parameterType="com.biencloud.smarthome.service.rest.model.GateCardInfo" >
+    update t_gate_card
+    <set >
+      <if test="districtId != null" >
+        district_id = #{districtId,jdbcType=INTEGER},
+      </if>
+      <if test="cardNo != null" >
+        card_no = #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=CHAR},
+      </if>
+      <if test="ownerName != null" >
+        owner_name = #{ownerName,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerIdCard != null" >
+        owner_id_card = #{ownerIdCard,jdbcType=VARCHAR},
+      </if>
+      <if test="houseId != null" >
+        house_id = #{houseId,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null" >
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUser != null" >
+        created_user = #{createdUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedTime != null" >
+        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedUser != null" >
+        updated_user = #{updatedUser,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where gate_card_id = #{gateCardId,jdbcType=BIGINT}
+  </update>
+  <update id="update" parameterType="com.biencloud.smarthome.service.rest.model.GateCardInfo" >
+    update t_gate_card
+    set district_id = #{districtId,jdbcType=INTEGER},
+      card_no = #{cardNo,jdbcType=VARCHAR},
+      status = #{status,jdbcType=CHAR},
+      owner_name = #{ownerName,jdbcType=VARCHAR},
+      owner_id_card = #{ownerIdCard,jdbcType=VARCHAR},
+      house_id = #{houseId,jdbcType=VARCHAR},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      created_user = #{createdUser,jdbcType=VARCHAR},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      updated_user = #{updatedUser,jdbcType=VARCHAR}
+    where gate_card_id = #{gateCardId,jdbcType=BIGINT}
+  </update>
+  
+  <select id="queryForList" resultMap="mapResult">
+    select a.* from t_gate_card a 
+    	LEFT JOIN t_hm_cell_household_info b ON b.ID = a.house_id
+		LEFT JOIN t_hm_building_cell_info c on c.id = b.CELL_ID
+		LEFT JOIN t_hm_region_building_info d on d.ID = c.building_id
+		LEFT JOIN t_hm_housing_district_region_info e on e.ID = d.REGION_ID
+		LEFT JOIN t_hm_housing_district_info f on f.ID = e.HOUSING_DISTRICT_ID
+		WHERE 1=1
+	<if test="roomNo != null" >
+		and b.CODE = #{roomNo,jdbcType=VARCHAR}
+	</if>
+	<if test="unitNo != null" >
+		and c.CODE = #{unitNo,jdbcType=VARCHAR}
+	</if>
+	<if test="buildingNo != null" >
+		and d.CODE = #{buildingNo,jdbcType=VARCHAR}
+	</if>
+	<if test="reginNo != null" >
+		and e.CODE = #{reginNo,jdbcType=VARCHAR}
+	</if>
+	<if test="districtNo != null" >
+		and f.CODE = #{districtNo,jdbcType=VARCHAR}
+	</if>
+	order by created_time desc
+  </select>
+</mapper>

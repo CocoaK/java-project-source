@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.biencloud.smarthome.service.rest.mapper.AlarmInfoMapper" >
+  <resultMap id="baseResult" type="com.biencloud.smarthome.service.rest.model.AlarmInfo" >
+    <id column="alarm_id" property="alarmId" jdbcType="BIGINT" />
+    <result column="device_code" property="deviceCode" jdbcType="VARCHAR" />
+    <result column="alarm_type" property="alarmType" jdbcType="CHAR" />
+    <result column="alarm_name" property="alarmName" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="CHAR" />
+    <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="house_no" property="houseNo" jdbcType="VARCHAR" />
+    <result column="owner_id" property="ownerId" jdbcType="BIGINT" />
+    <result column="pauser_id" property="pauserId" jdbcType="BIGINT" />
+    <result column="hanlder_time" property="hanlderTime" jdbcType="TIMESTAMP" />
+    <result column="comId" property="comid" jdbcType="BIGINT" />
+  </resultMap>
+  
+  <resultMap id="mapResult" type="map" >
+    <id column="alarm_id" property="alarmId" jdbcType="BIGINT" />
+    <result column="alarm_type" property="alarmType" jdbcType="CHAR" />
+    <result column="device_name" property="deviceName" jdbcType="VARCHAR" />
+    <result column="alarm_name" property="alarmName" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="CHAR" />
+    <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="hanlder_time" property="hanlderTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <sql id="baseColumns" >
+    alarm_id, device_code, alarm_type, status, created_time, content, house_no, owner_id, 
+    pauser_id, hanlder_time, comId
+  </sql>
+  <select id="getForList" resultMap="baseResult" >
+    select 
+    	<include refid="baseColumns" />
+    from t_alarm_info
+  </select>
+  
+  <select id="getForPage" resultMap="mapResult" >
+    select user_id,alarm_id, c.name device_name, a.alarm_type, a.status, created_time, content, hanlder_time, b.alarm_name
+    from t_alarm_info a 
+    	left join t_alarm_type b on a.alarm_type=b.alarm_type
+		left join t_device_accessories c on a.device_code=c.id
+		left join t_user_device d on c.device_id=d.device_id
+    where 1=1
+      <if test="po.alarmType != null" >
+        and alarm_type = #{po.alarmType,jdbcType=CHAR}
+      </if>
+      <if test="po.status != null" >
+        and a.status = #{po.status,jdbcType=CHAR}
+      </if>
+      <if test="po.userId != null" >
+        and user_id = #{po.userId}
+      </if>
+      <if test="po.time != null and po.time=='d'.toString()" >
+        and date(created_time) = curdate() 
+      </if>
+      <if test="po.time != null and po.time=='w'.toString()" >
+        and date_sub(curdate(), INTERVAL 7 DAY) &lt;= date(created_time) 
+      </if>
+      <if test="po.time != null and po.time=='m'.toString()" >
+        and date_sub(curdate(), INTERVAL 30 DAY) &lt;= date(created_time) 
+      </if>
+      order by status,created_time desc
+  </select>
+  
+  <select id="getForOne" resultMap="baseResult" parameterType="java.lang.Long" >
+    select 
+    <include refid="baseColumns" />
+    from t_alarm_info
+    where alarm_id = #{alarmId,jdbcType=BIGINT}
+  </select>
+  <delete id="delete" parameterType="java.lang.Long" >
+    delete from t_alarm_info
+    where alarm_id = #{alarmId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.biencloud.smarthome.service.rest.model.AlarmInfo" >
+    insert into t_alarm_info (alarm_id, device_code, alarm_type, 
+      status, created_time, content, 
+      house_no, owner_id, pauser_id, 
+      hanlder_time, comId)
+    values (#{alarmId,jdbcType=BIGINT}, #{deviceCode,jdbcType=VARCHAR}, #{alarmType,jdbcType=CHAR}, 
+      #{status,jdbcType=CHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{content,jdbcType=VARCHAR}, 
+      #{houseNo,jdbcType=VARCHAR}, #{ownerId,jdbcType=BIGINT}, #{pauserId,jdbcType=BIGINT}, 
+      #{hanlderTime,jdbcType=TIMESTAMP}, #{comid,jdbcType=BIGINT})
+  </insert>
+  <update id="updateOnActive" parameterType="com.biencloud.smarthome.service.rest.model.AlarmInfo" >
+    update t_alarm_info
+    <set >
+      <if test="deviceCode != null" >
+        device_code = #{deviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="alarmType != null" >
+        alarm_type = #{alarmType,jdbcType=CHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=CHAR},
+      </if>
+      <if test="createdTime != null" >
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="houseNo != null" >
+        house_no = #{houseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerId != null" >
+        owner_id = #{ownerId,jdbcType=BIGINT},
+      </if>
+      <if test="pauserId != null" >
+        pauser_id = #{pauserId,jdbcType=BIGINT},
+      </if>
+      <if test="hanlderTime != null" >
+        hanlder_time = #{hanlderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="comid != null" >
+        comId = #{comid,jdbcType=BIGINT},
+      </if>
+    </set>
+    where alarm_id = #{alarmId,jdbcType=BIGINT}
+  </update>
+  <update id="update" parameterType="com.biencloud.smarthome.service.rest.model.AlarmInfo" >
+    update t_alarm_info
+    set device_code = #{deviceCode,jdbcType=VARCHAR},
+      alarm_type = #{alarmType,jdbcType=CHAR},
+      status = #{status,jdbcType=CHAR},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=VARCHAR},
+      house_no = #{houseNo,jdbcType=VARCHAR},
+      owner_id = #{ownerId,jdbcType=BIGINT},
+      pauser_id = #{pauserId,jdbcType=BIGINT},
+      hanlder_time = #{hanlderTime,jdbcType=TIMESTAMP},
+      comId = #{comid,jdbcType=BIGINT}
+    where alarm_id = #{alarmId,jdbcType=BIGINT}
+  </update>
+  
+  <select id="getCount" resultType="java.lang.Integer" parameterType="com.biencloud.smarthome.service.rest.model.AlarmInfo" >
+    select 
+    count(1)
+    from t_alarm_info
+    where 1=1
+    <if test="deviceCode != null" >
+       and device_code = #{deviceCode,jdbcType=VARCHAR}
+    </if>
+    <if test="alarmType != null" >
+       and alarm_type = #{alarmType,jdbcType=CHAR}
+   	</if>
+    <if test="status != null" >
+       and status = #{status,jdbcType=CHAR}
+    </if>
+  </select>
+</mapper>

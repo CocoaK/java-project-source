@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="Login" extends="default" namespace="/login">       
+        <action name="updatePassInput" class="com.biencloud.smarthome.web.login.action.LoginAction" method="updatePassInput">
+            <param name="menuCode">M000000</param>
+            <param name="operationCode">18</param>
+            <result>/WEB-INF/views/user/update_password_input.jsp</result>
+        </action>
+        
+        <action name="updatePass" class="com.biencloud.smarthome.web.login.action.LoginAction" method="updatePass">
+            <param name="menuCode">M000000</param>
+            <param name="operationCode">19</param>
+            <result name="error">/WEB-INF/views/user/update_password_input.jsp</result>
+            <result>/WEB-INF/views/user/update_password_input.jsp</result>
+        </action>
+        
+        <action name="index" class="com.biencloud.smarthome.web.login.action.LoginAction" method="index">
+            <param name="ignoreLog">true</param>
+            <result>/index.jsp</result>
+        </action>
+        
+        <action name="head" class="com.biencloud.smarthome.web.login.action.LoginAction" method="forwardHeadJsp">
+            <param name="ignoreLog">true</param>
+            <result>/head.jsp</result>
+        </action>
+        
+        <action name="main" class="com.biencloud.smarthome.web.login.action.LoginAction" method="forwardMainJsp">
+            <param name="ignoreLog">true</param>
+            <result>/main.jsp</result>
+            <result name="main_sa">/WEB-INF/views/main/main_sa.jsp</result>
+            <result name="main_pa">/WEB-INF/views/main/main_pa.jsp</result>
+            <result name="main_owner">/WEB-INF/views/main/main_owner.jsp</result>
+        </action>
+        
+        <action name="go" class="com.biencloud.smarthome.web.login.action.LoginAction" method="login">
+            <param name="menuCode">M000000</param>
+            <param name="operationCode">13</param>
+            <result name='error'>/login.jsp</result>
+            <result type="redirectAction">
+                <param name="actionName">index</param>
+            </result>
+        </action>
+        
+        <action name="logout" class="com.biencloud.smarthome.web.login.action.LoginAction" method="exit">
+            <param name="menuCode">M000000</param>
+            <param name="operationCode">15</param>
+            <result>/login.jsp</result>            
+        </action>
+        
+        <action name="changeLocale" class="com.biencloud.smarthome.web.login.action.LoginAction" method="changeLocale">
+            <param name="ignoreLog">true</param>
+            <result>/login.jsp</result>
+        </action>
+        
+        <action name="getValidCode" class="com.biencloud.smarthome.web.login.action.LoginAction" method="getValidCode">
+            <param name="ignoreLog">true</param>
+        </action>
+    </package>
+    <package name="JsonLogin" extends="json" namespace="/json/login">
+        <action name="resetPass" class="com.biencloud.smarthome.web.login.action.LoginAction" method="resetPass">
+            <param name="menuCode">M000000</param>
+            <param name="operationCode">16</param>
+            <result type="json">
+                <param name="includeProperties">
+                    promptFlag
+                </param>
+            </result>
+        </action>
+        <action name="enableOrDisable" class="com.biencloud.smarthome.web.login.action.LoginAction" method="enableOrDisable">
+            <param name="menuCode">M000000</param>
+            <param name="operationCode">8</param>
+            <result type="json">
+                <param name="includeProperties">
+                    promptFlag
+                </param>
+            </result>
+        </action>
+        <action name="existLoginName" class="com.biencloud.smarthome.web.login.action.LoginAction" method="existLoginName">
+            <param name="ignoreLog">true</param>
+            <result type="json">
+                <param name="includeProperties">
+                    existLoginName
+                </param>
+            </result>
+        </action>
+        <action name="getValidationCode" class="com.biencloud.smarthome.web.login.action.LoginAction" method="getValidationCode">
+            <param name="ignoreLog">true</param>
+            <result type="json">
+                <param name="includeProperties">validCodeOpenFlag,verificationCode</param>
+            </result>
+        </action>
+        <action name="getVersionCode" class="com.biencloud.smarthome.web.login.action.LoginAction" method="getVersionCode">
+            <param name="ignoreLog">true</param>
+            <result type="json">
+                <param name="includeProperties">version</param>
+            </result>
+        </action>
+        <action name="getMainTab" class="com.biencloud.smarthome.web.login.action.LoginAction" method="getMainTab">
+        	<param name="ignoreLog">true</param>
+            <result type="json">
+            	<param name="includeProperties">tabTops.*,tabBottoms.*</param>
+            </result>
+        </action>
+        <action name="getLeftPageValue" class="com.biencloud.smarthome.web.login.action.LoginAction" method="getLeftPageValue">
+        	<param name="ignoreLog">true</param>
+            <result name="sa_page" type="json">
+            	<param name="root">saMainPageVO</param>
+            </result>
+            <result name="pa_page" type="json">
+            	<param name="root">paMainPageVO</param>
+            </result>
+            <result name="owner_page" type="json">
+            	<param name="root">ownerMainPageVO</param>
+            </result>
+        </action>
+        <action name="getItemTabValue" class="com.biencloud.smarthome.web.login.action.LoginAction" method="getItemTabValue">
+        	<param name="ignoreLog">true</param>
+            <result type="json">
+            	<param name="root">itemTab</param>
+            	<param name="excludeProperties">
+               		.*\.gatePermissions,
+               		.*\.complaintLogin,
+               		.*\.deviceType,
+               		.*\.THmRegionBuildingInfo,
+               		.*\.housingDistrictInfo,
+               		.*\.housingDistrictRegionInfo,
+               		.*\.regionBuildingInfo,
+               		.*\.cellHouseholdInfo,
+               		.*\.buildingCellInfo,
+               		.*\.login,
+               		.*\.paUser
+               	</param>
+            </result>
+        </action>
+        <action name="queryAdList" class="com.biencloud.smarthome.web.ad.action.AdAction" method="queryList">
+			<param name="ignoreLog">true</param>
+            <result type="json">
+            	<param name="root">
+					 page.results
+               	</param>
+               	<param name="excludeProperties">
+               		.*\.adSys,
+               		.*\.adType,
+               		.*\.adLocation,
+               		.*\.adTargets,
+               		.*\.adBeginTime,
+               		.*\.adEndTime,
+               		.*\.applyedTime,
+               		.*\.locationCode,
+               		.*\.adSize,
+               		.*\.publishedTime,
+               		.*\.publishedUser,
+               		.*\.status,
+               		.*\.applyedUser,
+               		.*\.adDesc
+               	</param>
+            </result>
+        </action>
+        <action name="getValidCodeFlag" class="com.biencloud.smarthome.web.login.action.LoginAction" method="getValidCodeFlag">
+            <param name="ignoreLog">true</param>
+            <result type="json">
+                <param name="includeProperties">validCodeOpenFlag</param>
+            </result>
+        </action>
+    </package>
+</struts>    

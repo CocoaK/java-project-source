@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" default-autowire="byName"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:aop="http://www.springframework.org/schema/aop"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:tx="http://www.springframework.org/schema/tx"
+        xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+    
+    <!-- 房产管理模块 小区信息DAO -->
+    <bean id="housingDistrictInfoDao" class="com.biencloud.smarthome.service.housemgr.dao.impl.HousingDistrictInfoJpaDao">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    <!-- 房产管理模块 小区区域DAO -->
+    <bean id="housingDistrictRegionInfoDao" class="com.biencloud.smarthome.service.housemgr.dao.impl.HousingDistrictRegionInfoJpaDao">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    <!-- 房产管理模块 楼宇DAO -->
+    <bean id="regionBuildingInfoDao" class="com.biencloud.smarthome.service.housemgr.dao.impl.RegionBuildingInfoJpaDao">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    <!-- 房产管理模块 单元DAO -->
+    <bean id="buildingCellInfoDao" class="com.biencloud.smarthome.service.housemgr.dao.impl.BuildingCellInfoJpaDao">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    <!-- 房产管理模块 户型DAO -->
+    <bean id="cellSizeInfoDao" class="com.biencloud.smarthome.service.housemgr.dao.impl.CellSizeInfoJpaDao">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    <!-- 房产管理模块 物业公司DAO -->
+    <bean id="propertyCompanyInfoDao" class="com.biencloud.smarthome.service.housemgr.dao.impl.PropertyCompanyInfoJpaDao">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    <!-- 房产管理模块房号(户)DAO -->
+    <bean id="cellHouseholdInfoDao" class="com.biencloud.smarthome.service.housemgr.dao.impl.CellHouseholdInfoJpaDao">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    
+    <!-- 系统参数DAO -->
+    <bean id="sysParamDao" class="com.biencloud.smarthome.service.sysparam.dao.impl.SysParamDaoJpa">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    
+    <!-- 菜单管理DAO -->
+    <bean id="menuDao" class="com.biencloud.smarthome.service.menu.dao.impl.MenuDaoJpa">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    
+    <!-- 权限管理DAO -->
+    <bean id="permissionsDao" class="com.biencloud.smarthome.service.permissions.dao.impl.PermissionsDaoJpa">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    
+    <!-- 软件升级DAO -->
+    <bean id="softwareUpgradeDao" class="com.biencloud.smarthome.service.softwareupgrade.dao.impl.SoftwareUpgradeDaoJpa">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    
+    <!-- 设备类型DAO -->
+    <bean id="deviceTypeDao" class="com.biencloud.smarthome.service.device.dao.impl.DeviceTypeDaoJpa">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    
+    <!-- 设备管理DAO -->
+    <bean id="deviceDao" class="com.biencloud.smarthome.service.device.dao.impl.DeviceDaoJpa">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    
+    <!-- 门禁管理DAO -->
+    <bean id="gateCardDao" class="com.biencloud.smarthome.service.gate.dao.impl.GateCardDaoJpa">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    
+    <!-- 门卡刷卡管理DAO -->
+    <bean id="gateCardVisitDao" class="com.biencloud.smarthome.service.gate.dao.impl.GateCardVisitDaoJpa">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    
+    <!-- 访客身份证刷卡管理DAO -->
+    <bean id="idCardVisitDao" class="com.biencloud.smarthome.service.gate.dao.impl.IdCardVisitDaoJpa">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    
+    <!-- HDFS DAO -->
+    <bean id="hdfsFileDao" class="com.biencloud.smarthome.service.hdfs.dao.impl.HDFSFileDaoImpl">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    <!-- HDFS task DAO -->
+    <bean id="hdfsTaskDao" class="com.biencloud.smarthome.service.hdfstask.dao.impl.HDFSTaskDaoImpl">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    <!-- 日志管理-系统日志DAO -->
+    <bean id="systemLogDao" class="com.biencloud.smarthome.service.log.dao.impl.SystemLogDaoJpa">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+   <!-- 日志管理-操作日志DAO -->
+    <bean id="operationLogDao" class="com.biencloud.smarthome.service.log.dao.impl.OperationLogDaoJpa">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    <!-- 推送-DAO -->
+    <bean id="pushDao" class="com.biencloud.smarthome.service.push.dao.impl.PushDaoJpa">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+     <!-- 推送完成-DAO -->
+    <bean id="pushFinishDao" class="com.biencloud.smarthome.service.push.dao.impl.PushFinishDaoJpa">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    
+    <!-- 登录DAO -->
+    <bean id="loginDao" class="com.biencloud.smarthome.service.login.dao.impl.LoginDaoJpa">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    
+    <!-- 系统管理用户DAO -->
+    <bean id="saUserDao" class="com.biencloud.smarthome.service.user.dao.impl.SaUserDaoJpa">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    
+    <!-- 物业管理用户DAO -->
+    <bean id="paUserDao" class="com.biencloud.smarthome.service.user.dao.impl.PaUserDaoJpa">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    
+    <!-- 住户用户管理DAO -->
+    <bean id="ownerUserDao" class="com.biencloud.smarthome.service.user.dao.impl.OwnerUserDaoJpa">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    
+    <!-- 组织管理-操作组织DAO -->
+    <bean id="systemGroupDao" class="com.biencloud.smarthome.service.sysgroup.dao.impl.SystemGroupDaoImpl">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    <!-- 设备编号管理DAO -->
+    <bean id="deviceNoDaoImpl" class="com.biencloud.smarthome.service.deivceno.dao.impl.DeviceNoDaoImpl">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    
+    <!-- 收费计算单位管理DAO -->
+    <bean id="chargeCalUnitDaoImpl" class="com.biencloud.smarthome.service.charge.dao.impl.ChargeCalUnitDaoImpl">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    
+    <!-- 收费计算方式管理DAO -->
+    <bean id="chargeCalModeDaoImpl" class="com.biencloud.smarthome.service.charge.dao.impl.ChargeCalModeDaoImpl">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    
+    <!--  收费数据管理DAO -->
+    <bean id="chargeDataDaoImpl" class="com.biencloud.smarthome.service.charge.dao.impl.ChargeDataDaoImpl">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    
+    <!-- 收费清单管理DAO -->
+    <bean id="chargeDetailDaoImpl" class="com.biencloud.smarthome.service.charge.dao.impl.ChargeDetailDaoImpl">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    
+    <!-- 收费货币单位管理DAO -->
+    <bean id="chargeMonetaryUnitDaoImpl" class="com.biencloud.smarthome.service.charge.dao.impl.ChargeMonetaryUnitDaoImpl">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    
+    <!-- 收费项目管理DAO -->
+    <bean id="chargeTypeDaoImpl" class="com.biencloud.smarthome.service.charge.dao.impl.ChargeTypeDaoImpl">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    
+    <!-- 收费项目结果管理DAO -->
+    <bean id="chargeTypeResultDaoImpl" class="com.biencloud.smarthome.service.charge.dao.impl.ChargeTypeResultDaoImpl">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+	<!-- 设备Ip DAO -->
+    <bean id="deviceIpDao" class="com.biencloud.smarthome.service.device.dao.impl.DeviceIpDaoJpa">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+     <!-- 设备留言DAO -->
+    <bean id="callRecordDao" class="com.biencloud.smarthome.service.device.dao.impl.CallRecordDaoJpa">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+     <!-- 信息接收DAO -->
+    <bean id="infoReceiverDao" class="com.biencloud.smarthome.service.info.dao.impl.InfoReceiverDaoImpl">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    <!-- 信息接收设备DAO -->
+    <bean id="infoReceiverDeviceDao" class="com.biencloud.smarthome.service.info.dao.impl.InfoReceiverDeviceDaoImpl">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    <!-- 信息发布DAO -->
+    <bean id="infoSendDao" class="com.biencloud.smarthome.service.info.dao.impl.InfoSendDaoImpl">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    <bean id="alarmDao" class="com.biencloud.smarthome.service.alarm.dao.impl.AlarmDaoJpa">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    <!-- 报警类型DAO -->
+    <bean id="alarmTypeDao" class="com.biencloud.smarthome.service.alarm.dao.impl.AlarmTypeDaoJpa">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    <!-- 广告投放管理DAO -->
+    <bean id="adDao" class="com.biencloud.smarthome.service.ad.dao.impl.AdDaoJpa">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    <!-- 广告投放目标DAO -->
+    <bean id="adTargetDao" class="com.biencloud.smarthome.service.ad.dao.impl.AdTargetDaoJpa">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    <!-- 广告类型DAO -->
+    <bean id="adTypeDao" class="com.biencloud.smarthome.service.ad.dao.impl.AdTypeDaoJpa">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    <!-- 广告投放目标系统DAO -->
+    <bean id="adSysDao" class="com.biencloud.smarthome.service.ad.dao.impl.AdSysDaoJpa">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    <!-- 广告投放位置DAO -->
+    <bean id="adLocationDao" class="com.biencloud.smarthome.service.ad.dao.impl.AdLocationDaoJpa">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    <!-- 客服管理模块DAO -->
+    <bean id="complaintDao" class="com.biencloud.smarthome.service.customercomplaint.dao.impl.ComplaintJpaDao">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    <!-- 地址薄DAO -->
+    <bean id="addressBookDao" class="com.biencloud.smarthome.service.addressbook.dao.impl.AddressBookDaoJpa">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    <!-- 监控DAO -->
+    <bean id="sceneDao" class="com.biencloud.smarthome.service.monitor.dao.impl.SceneDaoJpa">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    <!-- 监控DAO -->
+    <bean id="sceneDeviceDao" class="com.biencloud.smarthome.service.monitor.dao.impl.SceneDeviceDaoJpa">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    <!-- Rss服务信息DAO -->
+    <bean id="rssServerDao" class="com.biencloud.smarthome.service.rss.dao.impl.RssServerDaoJpa">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+<!-- Rss服务天气信息DAO -->
+    <bean id="weatherDao" class="com.biencloud.smarthome.service.rss.dao.impl.WeatherDaoJpa">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+     <!-- 报修DAO -->
+    <bean id="requestRepairDao" class="com.biencloud.smarthome.service.requestrepair.dao.impl.RequestRepairDaoImpl">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    <!-- 终端日志DAO -->
+    <bean id="clientLogDao" class="com.biencloud.smarthome.service.log.dao.impl.ClientLogDaoJpa">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    <!-- 设备开锁密码DAO -->
+    <bean id="devicePasswordDao" class="com.biencloud.smarthome.service.device.dao.impl.DevicePasswordDaoJpa">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    <!-- 文件上传日志DAO -->
+    <bean id="fileUploadLogDao" class="com.biencloud.smarthome.service.log.dao.impl.FileUploadLogDaoImpl">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    <!-- 设备注册日志DAO -->
+    <bean id="diviceRegeditLogDao" class="com.biencloud.smarthome.service.log.dao.impl.DiviceRegeditLogDaoImpl">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    <!-- App请求日志DAO -->
+    <bean id="appDataLogDao" class="com.biencloud.smarthome.service.log.dao.impl.AppDataLogDaoJpa">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    <!-- 终端电商页面DAO -->
+    <bean id="pageDao" class="com.biencloud.smarthome.service.page.dao.impl.PageDaoJpa">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    <bean id="componentDao" class="com.biencloud.smarthome.service.page.dao.impl.ComponentDaoJpa">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    <bean id="pageContentDao" class="com.biencloud.smarthome.service.page.dao.impl.PageContentDaoJpa">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+</beans>
+

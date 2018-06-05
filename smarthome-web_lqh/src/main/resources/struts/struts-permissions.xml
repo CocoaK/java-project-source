@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="Permissions" extends="default" namespace="/permissions">
+        <action name="viewDetail" class="com.biencloud.smarthome.web.permissions.action.PermissionsAction" method="viewDetail">
+            <param name="menuCode">M001006</param>
+            <param name="operationCode">2</param>
+            <result>/WEB-INF/views/permissions/view_detail.jsp</result>
+        </action>
+
+        <action name="queryList" class="com.biencloud.smarthome.web.permissions.action.PermissionsAction" method="queryList">
+            <param name="menuCode">M001006</param>
+            <param name="operationCode">1</param>
+            <result>/WEB-INF/views/permissions/query_list.jsp</result>
+        </action>
+
+        <action name="updateInput" class="com.biencloud.smarthome.web.permissions.action.PermissionsAction" method="updateInput">
+            <param name="menuCode">M001006</param>
+            <param name="operationCode">5</param>
+            <result>/WEB-INF/views/permissions/update_input.jsp</result>
+        </action>
+
+        <action name="update" class="com.biencloud.smarthome.web.permissions.action.PermissionsAction" method="update">
+            <param name="menuCode">M001006</param>
+            <param name="operationCode">6</param>
+            <result>/WEB-INF/views/permissions/update_input.jsp</result>
+        </action>
+        
+        <action name="addInput" class="com.biencloud.smarthome.web.permissions.action.PermissionsAction" method="addInput">
+            <param name="menuCode">M001006</param>
+            <param name="operationCode">3</param>
+            <result>/WEB-INF/views/permissions/add_input.jsp</result>
+        </action>
+        
+        <action name="save" class="com.biencloud.smarthome.web.permissions.action.PermissionsAction" method="save">
+            <param name="menuCode">M001006</param>
+            <param name="operationCode">4</param>
+            <result>/WEB-INF/views/permissions/add_input.jsp</result>
+        </action>
+    </package>
+    
+    <package name="JsonPermissions" extends="json" namespace="/json/permissions">
+        <action name="existRoleName" class="com.biencloud.smarthome.web.permissions.action.PermissionsAction" method="existRoleName">
+            <param name="ignoreLog">true</param>
+            <result type="json">
+                <param name="includeProperties">
+                    existRoleName
+                </param>
+            </result>
+        </action>
+    </package>
+</struts>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="GateCardVisit" extends="default" namespace="/gateCardVisit">
+        <action name="viewDetail" class="com.biencloud.smarthome.web.gate.action.GateCardVisitAction" method="viewDetail">
+            <param name="menuCode">M002008</param>
+            <param name="operationCode">2</param>
+            <result>/WEB-INF/views/gate_card_visit/view_detail.jsp</result>
+        </action>
+
+        <action name="queryList" class="com.biencloud.smarthome.web.gate.action.GateCardVisitAction" method="queryList">
+            <param name="menuCode">M002008</param>
+            <param name="operationCode">1</param>
+            <result>/WEB-INF/views/gate_card_visit/query_list.jsp</result>
+        </action> 
+            
+    </package>
+</struts>
+

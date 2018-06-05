@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config charset="utf-8">
+	<http method="get" url="http://www.nmc.gov.cn">
+		
+	</http>
+	<var-def name="start">
+
+		<html-to-xml>
+
+			<http url="http://www.nmc.gov.cn/publish/forecast/AGD/shenzhen.html" charset="gb2312" />
+
+		</html-to-xml>
+
+	</var-def>
+
+	<var-def name="ulList">
+
+		<xpath expression="//div[@id='city_body']/div[@class='weather_div' and position()=1]/div">
+
+			<var name="start" />
+
+		</xpath>
+
+	</var-def>
+
+	<file action="write" path="weather-info.xml" charset="utf-8">
+
+               <![CDATA[ <data> ]]>
+
+		<loop item="item" index="i">
+
+			<list>
+				<var name="ulList" />
+			</list>
+
+			<body>
+
+				<xquery>
+
+					<xq-param name="item">
+
+						<var name="item" />
+
+					</xq-param>
+
+					<xq-expression><![CDATA[
+
+                                   declare variable $item as node() external; 
+
+                                   <list type="{normalize-space(data($item/div[position()=1]/@class))}" 
+                                   date="{normalize-space(data($item/div[@class='name' and position()=1]/text()[1]))}" 
+                                   week="{normalize-space(data($item/div[@class='name' and position()=1]/text()[2]))}" > 
+                                                              
+                                   {                              
+                                        for $row in $item/div[@class='weather' ]/ul 
+                                         return 
+                                             <item type="{normalize-space(data($row/@class))}" temp="{normalize-space(data($row/li[@class='temp font_high' or @class='temp' or @class='tbtemp' or @class='temp low_temp']/text()))}" weather_desc="{normalize-space(data($row/li[@class='weather_desc' or @class='tbweather_desc']/text()))}"/>
+                                   }
+                                  </list>
+
+                           ]]></xq-expression>
+
+				</xquery>
+
+			</body>
+
+		</loop>
+
+               <![CDATA[ </data> ]]>
+
+	</file>
+
+</config>

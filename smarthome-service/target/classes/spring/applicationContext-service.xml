@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" default-autowire="byName"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:aop="http://www.springframework.org/schema/aop"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:tx="http://www.springframework.org/schema/tx"
+        xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">    
+    
+    <!-- 房产管理模块 小区信息服务 -->
+    <bean id="housingDistrictInfoService" class="com.biencloud.smarthome.service.housemgr.service.impl.HousingDistrictInfoServiceImpl">
+        <property name="dao" ref="housingDistrictInfoDao"/>
+    </bean>
+    <!-- 房产管理模块 小区区域信息服务 -->
+    <bean id="housingDistrictRegionInfoService" class="com.biencloud.smarthome.service.housemgr.service.impl.HousingDistrictRegionInfoServiceImpl">
+        <property name="dao" ref="housingDistrictRegionInfoDao"/>
+    </bean>
+    <!-- 房产管理模块 楼宇信息服务 -->
+    <bean id="regionBuildingInfoService" class="com.biencloud.smarthome.service.housemgr.service.impl.RegionBuildingInfoServiceImpl">
+        <property name="dao" ref="regionBuildingInfoDao"/>
+    </bean>
+    <!-- 房产管理模块 单元信息服务 -->
+    <bean id="buildingCellInfoService" class="com.biencloud.smarthome.service.housemgr.service.impl.BuildingCellInfoServiceImpl">
+        <property name="dao" ref="buildingCellInfoDao"/>
+    </bean>
+    <!-- 房产管理模块 户型信息服务 -->
+    <bean id="cellSizeInfoService" class="com.biencloud.smarthome.service.housemgr.service.impl.CellSizeInfoServiceImpl">
+        <property name="dao" ref="cellSizeInfoDao"/>
+    </bean>
+    <!-- 房产管理模块 物业公司服务 -->
+    <bean id="propertyCompanyInfoService" class="com.biencloud.smarthome.service.housemgr.service.impl.PropertyCompanyInfoServiceImpl">
+        <property name="dao" ref="propertyCompanyInfoDao"/>
+        <property name="deviceService" ref="deviceService"/>
+    </bean>
+    <!-- 房产管理模块 房号(户)服务 -->
+    <bean id="cellHouseholdInfoService" class="com.biencloud.smarthome.service.housemgr.service.impl.CellHouseholdInfoServiceImpl">
+        <property name="dao" ref="cellHouseholdInfoDao"/>
+        <property name="deviceDao" ref="deviceDao"/>
+        <property name="sysParamService" ref="sysParamService"/>
+    </bean>
+    
+    <!-- 系统参数模块领域服务 -->
+    <bean id="sysParamService" class="com.biencloud.smarthome.service.sysparam.service.impl.SysParamServiceImpl">
+        <property name="dao" ref="sysParamDao"/>
+        <property name="pushDao" ref="pushDao"/>
+        <property name="deviceDao" ref="deviceDao"/>
+    </bean>
+    
+    <!-- 菜单模块领域服务 -->
+    <bean id="menuService" class="com.biencloud.smarthome.service.menu.service.impl.MenuServiceImpl">
+        <property name="dao" ref="menuDao"/>
+    </bean>
+    
+    <!-- 权限模块领域服务 -->
+    <bean id="permissionsService" class="com.biencloud.smarthome.service.permissions.service.impl.PermissionsServiceImpl">
+        <property name="dao" ref="permissionsDao"/>
+    </bean>
+    
+    <!-- 软件升级模块领域服务 -->
+    <bean id="softwareUpgradeService" class="com.biencloud.smarthome.service.softwareupgrade.service.impl.SoftwareUpgradeServiceImpl">
+        <property name="dao" ref="softwareUpgradeDao"/>
+    </bean>
+    
+    <!-- 设备类型模块领域服务 -->
+    <bean id="deviceTypeService" class="com.biencloud.smarthome.service.device.service.impl.DeviceTypeServiceImpl">
+        <property name="dao" ref="deviceTypeDao"/>
+    </bean>
+    
+    <!-- 设备模块领域服务 -->
+    <bean id="deviceService" class="com.biencloud.smarthome.service.device.service.impl.DeviceServiceImpl" scope="prototype">
+        <property name="dao" ref="deviceDao"/>
+    </bean>
+    
+    <!-- 门禁管理领域服务 -->
+    <bean id="gateCardService" class="com.biencloud.smarthome.service.gate.service.impl.GateCardServiceImpl">
+        <property name="dao" ref="gateCardDao"/>
+    </bean>
+    
+    <!-- 门卡刷卡管理领域服务 -->
+    <bean id="gateCardVisitService" class="com.biencloud.smarthome.service.gate.service.impl.GateCardVisitServiceImpl">
+        <property name="dao" ref="gateCardVisitDao"/>
+    </bean>
+    
+    <!-- 访客身份证刷卡管理领域服务 -->
+    <bean id="idCardVisitService" class="com.biencloud.smarthome.service.gate.service.impl.IdCardVisitServiceImpl">
+        <property name="dao" ref="idCardVisitDao"/>
+    </bean>
+           
+    <!-- HDFS file 服务 -->
+    <bean id="hdfsFileService" class="com.biencloud.smarthome.service.hdfs.service.impl.HDFSFileServiceImpl">
+        <property name="dao" ref="hdfsFileDao"/>
+    </bean>  
+    <!-- HDFS task服务 -->
+    <bean id="hdfsTaskService" class="com.biencloud.smarthome.service.hdfstask.service.impl.HDFSTaskServiceImpl">
+        <property name="dao" ref="hdfsTaskDao"/>
+    </bean>  
+    <!-- 登陆用户服务 -->
+    <bean id="loginService" class="com.biencloud.smarthome.service.login.service.impl.LoginServiceImpl">
+        <property name="dao" ref="loginDao"/>
+        <property name="sysParamDao" ref="sysParamDao"/>
+        <property name="permissionsService" ref="permissionsService"/>
+        
+    </bean>
+    <!-- 日志管理模块领域服务 系统日志-->
+    <bean id="systemLogService" class="com.biencloud.smarthome.service.log.service.impl.SystemLogServiceImpl">
+        <property name="dao" ref="systemLogDao"/>
+    </bean>
+    <!-- 操作日志模块领域服务 管理日志-->
+    <bean id="operationLogService" class="com.biencloud.smarthome.service.log.service.impl.OperationLogServiceImpl">
+        <property name="dao" ref="operationLogDao"/>
+
+    </bean> 
+    <!-- 推送服务-->
+    <bean id="pushService" class="com.biencloud.smarthome.service.push.service.impl.PushServiceImpl" >
+        <property name="dao" ref="pushDao"/>
+        <property name="deviceDao" ref="deviceDao"/>
+        <property name="sysParamService" ref="sysParamService"/>
+    </bean>  
+    <!-- 推送完成服务-->
+    <bean id="pushFinishService" class="com.biencloud.smarthome.service.push.service.impl.PushFinishServiceImpl" scope="prototype">
+        <property name="dao" ref="pushFinishDao"/>
+        <property name="pushDao" ref="pushDao"/>
+    </bean>            
+
+    
+    <!-- 系统管理用户领域服务 -->
+    <bean id="saUserService" class="com.biencloud.smarthome.service.user.service.impl.SaUserServiceImpl">
+        <property name="dao" ref="saUserDao"/>
+        <property name="loginDao" ref="loginDao"/>
+        <property name="sysParamDao" ref="sysParamDao"/>
+        <property name="loginService" ref="loginService"/>
+    </bean>
+    
+    <!-- 物业管理用户领域服务 -->
+    <bean id="paUserService" class="com.biencloud.smarthome.service.user.service.impl.PaUserServiceImpl">
+        <property name="dao" ref="paUserDao"/>
+        <property name="loginDao" ref="loginDao"/>
+        <property name="sysParamDao" ref="sysParamDao"/>
+        <property name="housingDistrictInfoDao" ref="housingDistrictInfoDao"/>
+        <property name="loginService" ref="loginService"/>
+    </bean>   
+    
+    <!-- 住户用户管理领域服务 -->
+    <bean id="ownerUserService" class="com.biencloud.smarthome.service.user.service.impl.OwnerUserServiceImpl">
+        <property name="dao" ref="ownerUserDao"/>
+        <property name="loginDao" ref="loginDao"/>
+        <property name="sysParamDao" ref="sysParamDao"/>
+        <property name="cellHouseholdInfoService" ref="cellHouseholdInfoService"/>
+        <property name="loginService" ref="loginService"/>
+    </bean>
+    
+    <!-- 组织管理服务-->
+    <bean id="systemGroupService" class="com.biencloud.smarthome.service.sysgroup.service.impl.SystemGroupServiceImpl">
+
+        <property name="dao" ref="systemGroupDao"/>
+
+    </bean> 
+     <!-- 设备编号管理服务-->
+    <bean id="deviceNoService" class="com.biencloud.smarthome.service.deivceno.service.impl.DeviceServiceNoImpl">
+        <property name="dao" ref="deviceNoDaoImpl"/>
+    </bean>  
+    
+    <!-- 收费计算方式管理服务-->
+    <bean id="chargeCalUnitService" class="com.biencloud.smarthome.service.charge.service.impl.ChargeCalUnitServiceImpl">
+        <property name="dao" ref="chargeCalUnitDaoImpl"/>
+    </bean>  
+    
+     <!-- 收费计算方式管理服务-->
+    <bean id="chargeCalModeService" class="com.biencloud.smarthome.service.charge.service.impl.ChargeCalModeServiceImpl">
+        <property name="dao" ref="chargeCalModeDaoImpl"/>
+    </bean>  
+    
+     <!-- 收费数据管理服务-->
+    <bean id="chargeDataService" class="com.biencloud.smarthome.service.charge.service.impl.ChargeDataServiceImpl">
+        <property name="dao" ref="chargeDataDaoImpl"/>
+    </bean> 
+    
+     <!-- 收费清单管理服务-->
+    <bean id="chargeDetailService" class="com.biencloud.smarthome.service.charge.service.impl.ChargeDetailServiceImpl">
+        <property name="dao" ref="chargeDetailDaoImpl"/>
+    </bean> 
+    
+     <!-- 收费货币单位管理服务-->
+    <bean id="chargeMonetaryUnitService" class="com.biencloud.smarthome.service.charge.service.impl.ChargeMonetaryUnitServiceImpl">
+        <property name="dao" ref="chargeMonetaryUnitDaoImpl"/>
+    </bean> 
+    
+     <!-- 收费项目结果管理服务-->
+    <bean id="chargeTypeResultService" class="com.biencloud.smarthome.service.charge.service.impl.ChargeTypeResultServiceImpl">
+        <property name="dao" ref="chargeTypeResultDaoImpl"/>
+    </bean> 
+    
+     <!-- 收费项目管理服务-->
+    <bean id="chargeTypeService" class="com.biencloud.smarthome.service.charge.service.impl.ChargeTypeServiceImpl">
+        <property name="dao" ref="chargeTypeDaoImpl"/>
+    </bean> 
+     <!-- rss服务-->
+    <bean id="rssService" class="com.biencloud.smarthome.service.rss.service.impl.RSSServiceImpl">
+        <property name="pushDao" ref="pushDao"/>
+        <property name="sysParamDao" ref="sysParamDao"/>
+    </bean>           
+    <!-- 设备ip模块领域服务 -->
+    <bean id="deviceIpService" class="com.biencloud.smarthome.service.device.service.impl.DeviceIpServiceImpl">
+        <property name="dao" ref="deviceIpDao"/>
+    </bean>
+    <!-- 设备留言模块领域服务 -->
+    <bean id="callRecordService" class="com.biencloud.smarthome.service.device.service.impl.CallRecordServiceImpl">
+        <property name="dao" ref="callRecordDao"/>
+    </bean>  
+    <!-- 收费接收模块领域服务 -->
+    <bean id="infoReceiverService" class="com.biencloud.smarthome.service.info.service.impl.InfoReceiverServiceImpl">
+        <property name="dao" ref="infoReceiverDao"/>
+    </bean>  
+    <!-- 收费接收设备模块领域服务 -->
+    <bean id="infoReceiverDeviceService" class="com.biencloud.smarthome.service.info.service.impl.InfoReceiverDeviceServiceImpl">
+        <property name="dao" ref="infoReceiverDeviceDao"/>
+    </bean>  
+    <!-- 收费发布模块领域服务 -->
+    <bean id="infoSendService" class="com.biencloud.smarthome.service.info.service.impl.InfoSendServiceImpl">
+        <property name="dao" ref="infoSendDao"/>
+    </bean>  
+    <!-- 报警管理服务 -->
+    <bean id="alarmService" class="com.biencloud.smarthome.service.alarm.service.impl.AlarmServiceImpl">
+        <property name="dao" ref="alarmDao"/>
+    </bean> 
+    <!-- 报警类型服务 -->
+    <bean id="alarmTypeService" class="com.biencloud.smarthome.service.alarm.service.impl.AlarmTypeServiceImpl">
+        <property name="dao" ref="alarmTypeDao"/>
+    </bean>
+    <!-- 广告投放管理服务 -->
+    <bean id="adService" class="com.biencloud.smarthome.service.ad.service.impl.AdServiceImpl">
+        <property name="dao" ref="adDao"/>
+        <property name="adTargetService" ref="adTargetService"/>
+    </bean>
+    <!-- 广告投放目标服务 -->
+    <bean id="adTargetService" class="com.biencloud.smarthome.service.ad.service.impl.AdTargetServiceImpl">
+        <property name="dao" ref="adTargetDao"/>
+    </bean>
+    <!-- 广告类型服务 -->
+    <bean id="adTypeService" class="com.biencloud.smarthome.service.ad.service.impl.AdTypeServiceImpl">
+        <property name="dao" ref="adTypeDao"/>
+    </bean>
+    <!-- 广告投放目标系统服务 -->
+    <bean id="adSysService" class="com.biencloud.smarthome.service.ad.service.impl.AdSysServiceImpl">
+        <property name="dao" ref="adSysDao"/>
+    </bean>
+    <!-- 广告投放位置服务 -->
+    <bean id="adLocationService" class="com.biencloud.smarthome.service.ad.service.impl.AdLocationServiceImpl">
+        <property name="dao" ref="adLocationDao"/>
+    </bean>
+    <!-- 客服管理模块Service -->
+    <bean id="complaintService" class="com.biencloud.smarthome.service.customercomplaint.service.impl.ComplaintServiceImpl">
+        <property name="dao" ref="complaintDao"/>
+        <property name="loginService" ref="loginService" />
+        <property name="ownerUserService" ref="ownerUserService" />
+        <property name="paUserService" ref="paUserService" />
+        <property name="saUserService" ref="saUserService" />
+    </bean>
+    <!-- 地址薄Service -->
+    <bean id="addressBookService" class="com.biencloud.smarthome.service.addressbook.service.impl.AddressBookServiceImpl">
+        <property name="dao" ref="addressBookDao"/>
+    </bean>
+
+    <!-- app Service -->
+    <bean id="appService" class="com.biencloud.smarthome.service.app.service.impl.AppServiceImpl" scope="prototype">
+        <property name="regionBuildingInfoService" ref="regionBuildingInfoService"/>
+        <property name="housingDistrictRegionInfoService" ref="housingDistrictRegionInfoService"/>
+        <property name="housingDistrictInfoService" ref="housingDistrictInfoService"/>
+        <property name="buildingCellInfoService" ref="buildingCellInfoService"/>
+        <property name="cellHouseholdInfoService" ref="cellHouseholdInfoService"/>
+        <property name="deviceService" ref="deviceService"/>
+        <property name="deviceNoService" ref="deviceNoService"/>
+        <property name="pushService" ref="pushService"/>
+        <property name="sysParamService" ref="sysParamService"/>
+        <property name="appRegistLogService" ref="diviceRegeditLogService"/>
+    </bean>
+    <!-- 监控Service -->
+    <bean id="sceneMonitorService" class="com.biencloud.smarthome.service.monitor.service.impl.SceneMonitorServiceImpl">
+        <property name="dao" ref="sceneDao"/>
+        <property name="pushDao" ref="pushDao"/>
+        <property name="deviceDao" ref="deviceDao"/>
+    </bean>
+
+    <!-- Rss服务信息Service -->
+    <bean id="rssServerService" class="com.biencloud.smarthome.service.rss.service.impl.RssServerServiceImpl">
+        <property name="dao" ref="rssServerDao"/>
+    </bean>
+    <!-- Rss服务天气信息Service -->
+    <bean id="weatherService" class="com.biencloud.smarthome.service.rss.service.impl.WeatherServiceImpl">
+        <property name="dao" ref="weatherDao"/>
+    </bean>
+    <!-- 远程监控管理模块Service -->
+    <bean id="monitorService" class="com.biencloud.smarthome.service.monitor.service.impl.MonitorServiceImpl">
+        <property name="pushService" ref="pushService" />
+        <property name="deviceService" ref="deviceService" />
+    </bean>
+    
+     <!-- 收费清单管理服务-->
+    <bean id="requestRepairService" class="com.biencloud.smarthome.service.requestrepair.service.impl.RequestRepairServiceImpl">
+        <property name="dao" ref="requestRepairDao"/>
+    </bean> 
+    <!-- 终端日志服务-->
+    <bean id="clientLogService" class="com.biencloud.smarthome.service.log.service.impl.ClientLogServiceImpl" scope="prototype">
+        <property name="dao" ref="clientLogDao"/>
+        <property name="areaDao" ref="housingDistrictInfoDao"/>
+        <property name="deviceDao" ref="deviceDao"/>
+    </bean>
+    <!-- 设备开锁密码服务-->
+    <bean id="devicePasswordService" class="com.biencloud.smarthome.service.device.service.impl.DevicePasswordServiceImpl">
+        <property name="dao" ref="devicePasswordDao"/>
+    </bean> 
+    <!-- 文件上专日志服务-->
+    <bean id="fileUploadLogService" class="com.biencloud.smarthome.service.log.service.impl.FileUploadLogServiceImpl">
+        <property name="dao" ref="fileUploadLogDao"/>
+    </bean> 
+     <!-- 设备注册日志服务-->
+    <bean id="diviceRegeditLogService" class="com.biencloud.smarthome.service.log.service.impl.DiviceRegeditLogServiceImpl">
+        <property name="dao" ref="diviceRegeditLogDao"/>
+    </bean> 
+    <!-- APP请求数据日志服务-->
+    <bean id="appDataLogService" class="com.biencloud.smarthome.service.log.service.impl.AppDataLogServiceImpl">
+        <property name="dao" ref="appDataLogDao"/>
+    </bean> 
+    <!-- 终端电商页面服务-->
+    <bean id="pageService" class="com.biencloud.smarthome.service.page.service.impl.PageServiceImpl">
+        <property name="dao" ref="pageDao"/>
+    </bean> 
+    <bean id="componentService" class="com.biencloud.smarthome.service.page.service.impl.ComponentServiceImpl">
+        <property name="dao" ref="componentDao"/>
+    </bean> 
+    <bean id="pageContentService" class="com.biencloud.smarthome.service.page.service.impl.PageContentServiceImpl">
+        <property name="dao" ref="pageContentDao"/>
+    </bean> 
+    
+    <bean id="noticeService" class="com.biencloud.smarthome.service.info.service.impl.NoticeServiceImpl">
+        
+    </bean>
+</beans>
+

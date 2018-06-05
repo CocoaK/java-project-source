@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.biencloud.smarthome.service.rest.mapper.AuthSessionMapper" >
+  <resultMap id="baseResult" type="com.biencloud.smarthome.service.rest.model.AuthSession" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="session_key" property="sessionKey" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="active_time" property="activeTime" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="baseColumns" >
+    id, session_key, user_id, create_time, active_time
+  </sql>
+  <select id="getForList" resultMap="baseResult" >
+    select id, session_key, user_id, create_time, active_time
+    from t_auth_session
+  </select>
+  <select id="getForOne" resultMap="baseResult" parameterType="java.lang.Long" >
+    select 
+    <include refid="baseColumns" />
+    from t_auth_session
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="delete" parameterType="java.lang.Long" >
+    delete from t_auth_session
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.biencloud.smarthome.service.rest.model.AuthSession" >
+    insert into t_auth_session (id, session_key, user_id, 
+      create_time)
+    values (#{id,jdbcType=BIGINT}, #{sessionKey,jdbcType=VARCHAR}, #{userId,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateOnActive" parameterType="com.biencloud.smarthome.service.rest.model.AuthSession" >
+    update t_auth_session
+    <set >
+      <if test="sessionKey != null" >
+        session_key = #{sessionKey,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="activeTime != null" >
+        active_time = #{activeTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="update" parameterType="com.biencloud.smarthome.service.rest.model.AuthSession" >
+    update t_auth_session
+    set session_key = #{sessionKey,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      active_time = #{activeTime,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="getList" resultMap="baseResult" parameterType="com.biencloud.smarthome.service.rest.model.AuthSession">
+    select id, session_key, user_id, create_time, active_time
+    from t_auth_session
+    where 1=1
+    <if test="sessionKey != null" >
+        and session_key = #{sessionKey,jdbcType=VARCHAR}
+      </if>
+      <if test="userId != null" >
+        and user_id = #{userId,jdbcType=BIGINT}
+      </if>
+  </select>
+  
+  <select id="getBySessionKey" resultMap="baseResult" parameterType="java.lang.Long">
+    select id, session_key, user_id, create_time, active_time
+    from t_auth_session
+    where session_key = #{sessionKey,jdbcType=VARCHAR}
+  </select>
+</mapper>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.biencloud.smarthome.service.rest.mapper.AccessoriesTypeMapper" >
+  <resultMap id="baseResult" type="com.biencloud.smarthome.service.rest.model.AccessoriesType" >
+    <id column="type" property="type" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="baseColumns" >
+    type, name
+  </sql>
+  <select id="getForList" resultMap="baseResult" parameterType="com.biencloud.smarthome.service.rest.model.AccessoriesType">
+    select type, name
+    from t_accessories_type
+    where 1=1
+    <if test="type != null" >
+        and type = #{type,jdbcType=VARCHAR}
+    </if>
+    <if test="name != null" >
+        and name = #{name,jdbcType=VARCHAR}
+    </if>
+  </select>
+  <select id="getForOne" resultMap="baseResult" parameterType="java.lang.String" >
+    select 
+    <include refid="baseColumns" />
+    from t_accessories_type
+    where type = #{type,jdbcType=VARCHAR}
+  </select>
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from t_accessories_type
+    where type = #{type,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.biencloud.smarthome.service.rest.model.AccessoriesType" >
+    insert into t_accessories_type (type, name)
+    values (#{type,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateOnActive" parameterType="com.biencloud.smarthome.service.rest.model.AccessoriesType" >
+    update t_accessories_type
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where type = #{type,jdbcType=VARCHAR}
+  </update>
+  <update id="update" parameterType="com.biencloud.smarthome.service.rest.model.AccessoriesType" >
+    update t_accessories_type
+    set name = #{name,jdbcType=VARCHAR}
+    where type = #{type,jdbcType=VARCHAR}
+  </update>
+</mapper>

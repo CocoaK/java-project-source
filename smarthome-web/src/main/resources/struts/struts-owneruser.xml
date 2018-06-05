@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="OwnerUser" extends="default" namespace="/ownerUser">
+        <action name="viewDetail" class="com.biencloud.smarthome.web.user.action.OwnerUserAction" method="viewDetail">
+            <param name="menuCode">M002002</param>
+            <param name="operationCode">2</param>
+            <result>/WEB-INF/views/user/owner_admin/view_detail.jsp</result>
+        </action>
+        
+        <action name="viewPersonalInfo" class="com.biencloud.smarthome.web.user.action.OwnerUserAction" method="viewPersonalInfo">
+            <param name="menuCode">M003001</param>
+            <param name="operationCode">2</param>
+            <result>/WEB-INF/views/user/owner_admin/view_personal_info.jsp</result>
+        </action>
+        
+        <action name="queryList" class="com.biencloud.smarthome.web.user.action.OwnerUserAction" method="queryList">
+            <param name="menuCode">M002002</param>
+            <param name="operationCode">1</param>
+            <result>/WEB-INF/views/user/owner_admin/query_list.jsp</result>
+        </action>
+
+        <action name="addInput" class="com.biencloud.smarthome.web.user.action.OwnerUserAction" method="addInput">
+            <param name="menuCode">M002002</param>
+            <param name="operationCode">3</param>
+            <result>/WEB-INF/views/user/owner_admin/add_input.jsp</result>
+        </action>
+
+        <action name="save" class="com.biencloud.smarthome.web.user.action.OwnerUserAction" method="save">
+            <param name="menuCode">M002002</param>
+            <param name="operationCode">4</param>
+            <result>/WEB-INF/views/user/owner_admin/add_input.jsp</result>
+        </action>
+        
+        <action name="updateInput" class="com.biencloud.smarthome.web.user.action.OwnerUserAction" method="updateInput">
+            <param name="menuCode">M002002</param>
+            <param name="operationCode">5</param>
+            <result>/WEB-INF/views/user/owner_admin/update_input.jsp</result>
+        </action>
+
+        <action name="update" class="com.biencloud.smarthome.web.user.action.OwnerUserAction" method="update">
+            <param name="menuCode">M002002</param>
+            <param name="operationCode">6</param>
+            <result>/WEB-INF/views/user/owner_admin/update_input.jsp</result>
+        </action>
+        
+        <action name="updatePersonalInfoInput" class="com.biencloud.smarthome.web.user.action.OwnerUserAction" method="updatePersonalInfoInput">
+            <param name="menuCode">M003001</param>
+            <param name="operationCode">5</param>
+            <result>/WEB-INF/views/user/owner_admin/update_personal_info_input.jsp</result>
+        </action>
+
+        <action name="updatePersonalInfo" class="com.biencloud.smarthome.web.user.action.OwnerUserAction" method="updatePersonalInfo">
+            <param name="menuCode">M003001</param>
+            <param name="operationCode">6</param>
+            <result>/WEB-INF/views/user/owner_admin/update_personal_info_input.jsp</result>
+        </action>
+    </package>
+    
+    <package name="JsonOwnerUser" extends="json" namespace="/json/ownerUser">
+        <action name="existHouseId" class="com.biencloud.smarthome.web.user.action.OwnerUserAction" method="existHouseId">
+            <param name="ignoreLog">true</param>
+            <result type="json">
+                <param name="includeProperties">
+                    existHouseId
+                </param>
+            </result>
+        </action>
+    </package>
+</struts>
+

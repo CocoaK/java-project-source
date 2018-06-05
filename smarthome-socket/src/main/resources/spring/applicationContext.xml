@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans   
+                http://www.springframework.org/schema/beans/spring-beans.xsd   
+                http://www.springframework.org/schema/context    
+                http://www.springframework.org/schema/context/spring-context.xsd   
+                http://www.springframework.org/schema/tx    
+                http://www.springframework.org/schema/tx/spring-tx.xsd   
+                http://www.springframework.org/schema/aop   
+                http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+
+	<import resource="applicationContext-service.xml" />
+	<import resource="applicationContext-netty.xml" />
+	<import resource="rest-servlet.xml"/>
+	<context:property-placeholder location="classpath:webservices.properties"/> 
+	
+	<!-- 启动对@AspectJ注解的支持 -->
+	<!-- <aop:aspectj-autoproxy /> -->
+	<!-- 启用@AspectJ 支持 -->
+	
+	<!--<bean
+		class="org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator" />
+    -->
+    <bean id="autoProxyCreator" class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" />
+    
+    <!--<bean id="logInterceptor" class="com.smarthome.socket.common.interceptor.LogInterceptor" />
+    
+    <bean id="logAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+        <property name="advice">
+            <ref local="logInterceptor"/>
+        </property>
+        <property name="patterns">
+            <value>com\.biencloud\.smarthome\.socket\.business\.service\..*\..*</value>
+        </property>
+    </bean>
+    -->
+</beans>

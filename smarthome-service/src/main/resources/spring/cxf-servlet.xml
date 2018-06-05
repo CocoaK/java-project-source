@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xmlns:soap="http://cxf.apache.org/bindings/soap"
+	xsi:schemaLocation="     
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd      
+http://cxf.apache.org/bindings/soap http://cxf.apache.org/schemas/configuration/soap.xsd      
+http://cxf.apache.org/jaxws      
+http://cxf.apache.org/schemas/jaxws.xsd">
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />	
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" /> 
+
+	<!-- <jaxws:server id="HelloWorld" serviceClass="com.biencloud.smarthome.cxfservice.cxf.server.HelloWorld"> 
+		<jaxws:serviceBean> <bean class="com.biencloud.smarthome.cxfservice.cxf.server.HelloWorldImpl" 
+		/> </jaxws:serviceBean> </jaxws:server> -->
+
+	<jaxws:server id="SmartHomePubService" address="/smartHomeService"
+		serviceClass="com.biencloud.smarthome.cxfservice.service.SmartHomePubService">
+		<jaxws:serviceBean>
+			<bean
+				class="com.biencloud.smarthome.cxfservice.service.impl.SmartHomePubServiceImpl">
+				<property name="menuService" ref="menuService" />
+				<property name="permissionsService" ref="permissionsService" />
+				<property name="sysParamService" ref="sysParamService" />
+				<property name="softwareUpgradeService" ref="softwareUpgradeService" />
+				<property name="deviceTypeService" ref="deviceTypeService" />
+				<property name="loginService" ref="loginService" />
+				<property name="systemLogService" ref="systemLogService" />
+				<property name="operationLogService" ref="operationLogService" />
+				<property name="deviceService" ref="deviceService" />
+				<property name="gateCardService" ref="gateCardService" />
+				<property name="gateCardVisitService" ref="gateCardVisitService" />
+				<property name="idCardVisitService" ref="idCardVisitService" />
+				<property name="housingDistrictInfoService" ref="housingDistrictInfoService" />
+				<property name="housingDistrictRegionInfoService" ref="housingDistrictRegionInfoService" />
+				<property name="regionBuildingInfoService" ref="regionBuildingInfoService" />
+				<property name="buildingCellInfoService" ref="buildingCellInfoService" />
+				<property name="cellHouseholdInfoService" ref="cellHouseholdInfoService" />
+				<property name="propertyCompanyInfoService" ref="propertyCompanyInfoService" />
+				<property name="cellSizeInfoService" ref="cellSizeInfoService" />
+				<property name="saUserService" ref="saUserService" />
+				<property name="paUserService" ref="paUserService" />
+				<property name="ownerUserService" ref="ownerUserService" />
+				<property name="pushService" ref="pushService" />
+				<property name="pushFinishService" ref="pushFinishService" />
+				<property name="systemGroupService" ref="systemGroupService" />
+				<property name="deviceNoService" ref="deviceNoService" />
+				<property name="chargeCalModeService" ref="chargeCalModeService" />
+				<property name="chargeDataService" ref="chargeDataService" />
+				<property name="chargeDetailService" ref="chargeDetailService" />
+				<property name="chargeMonetaryUnitService" ref="chargeMonetaryUnitService" />
+				<property name="chargeTypeResultService" ref="chargeTypeResultService" />
+				<property name="chargeTypeService" ref="chargeTypeService" />
+				<property name="deviceIpService" ref="deviceIpService" />
+				<property name="callRecordService" ref="callRecordService" />
+				<property name="infoReceiverService" ref="infoReceiverService" />
+				<property name="infoSendService" ref="infoSendService" />
+				<property name="alarmService" ref="alarmService" />
+				<property name="alarmTypeService" ref="alarmTypeService" />
+				<property name="complaintService" ref="complaintService" />
+				<property name="addressBookService" ref="addressBookService" />
+				<property name="adService" ref="adService" />
+				<property name="adTypeService" ref="adTypeService" />
+				<property name="adSysService" ref="adSysService" />
+				<property name="adLocationService" ref="adLocationService" />
+				<property name="adTargetService" ref="adTargetService" />
+				<property name="sceneMonitorService" ref="sceneMonitorService" />
+				<property name="rssServerService" ref="rssServerService" />
+				<property name="monitorService" ref="monitorService" />
+				<property name="weatherService" ref="weatherService" />
+				<property name="hdfsFileService" ref="hdfsFileService" />
+				<property name="hdfsTaskService" ref="hdfsTaskService" />
+                <property name="requestRepairService" ref="requestRepairService"/>
+                <property name="clientLogService" ref="clientLogService"/>
+                <property name="devicePasswordService" ref="devicePasswordService"/>
+                <property name="chargeCalUnitService" ref="chargeCalUnitService"/>
+                <property name="fileUploadLogService" ref="fileUploadLogService"/>
+                <property name="diviceRegeditLogService" ref="diviceRegeditLogService"/>
+                <property name="infoReceiverDeviceService" ref="infoReceiverDeviceService"/>
+                <property name="appDataLogService" ref="appDataLogService"/>
+                <property name="pageService" ref="pageService"/>
+                <property name="componentService" ref="componentService"/>
+			</bean>
+		</jaxws:serviceBean>
+	</jaxws:server>
+	<jaxws:server id="SmartHomeFileService"
+		serviceClass="com.biencloud.smarthome.cxfservice.service.SmartHomeFileService"
+		address="/fileService">
+		<jaxws:serviceBean>
+			<bean
+				class="com.biencloud.smarthome.cxfservice.service.impl.SmartHomeFileServiceImpl">
+				<property name="hdfsFileService" ref="hdfsFileService" />
+				<property name="hdfsTaskService" ref="hdfsTaskService" />
+				<property name="fileUploadLogService" ref="fileUploadLogService"/>
+				<property name="sysParamService" ref="sysParamService" />
+			</bean>
+		</jaxws:serviceBean>
+	</jaxws:server>
+	<jaxws:server id="SmartHomeTcpService"
+		serviceClass="com.biencloud.smarthome.cxfservice.service.SmartHomeTcpService"
+		address="/pushService">
+		<jaxws:serviceBean>
+			<bean
+				class="com.biencloud.smarthome.cxfservice.service.impl.SmartHomeTcpServiceImpl">
+				<property name="pushService" ref="pushService" />
+				<property name="pushFinishService" ref="pushFinishService" />
+				<property name="deviceNoService" ref="deviceNoService" />
+				<property name="deviceService" ref="deviceService" />
+				<property name="appService" ref="appService" />
+				<property name="sceneMonitorService" ref="sceneMonitorService" />
+				<property name="clientLogService" ref="clientLogService"/>
+			</bean>
+		</jaxws:serviceBean>
+	</jaxws:server>
+
+</beans>  

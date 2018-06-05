@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="SoftwareUpgrade" extends="default" namespace="/softwareUpgrade">
+        <action name="viewDetail" class="com.biencloud.smarthome.web.softwareupgrade.action.SoftwareUpgradeAction" method="viewDetail">
+            <param name="menuCode">M001010</param>
+            <param name="operationCode">2</param>
+            <result>/WEB-INF/views/software_upgrade/view_detail.jsp</result>
+        </action>
+
+        <action name="queryList" class="com.biencloud.smarthome.web.softwareupgrade.action.SoftwareUpgradeAction" method="queryList">
+            <param name="menuCode">M001010</param>
+            <param name="operationCode">1</param>
+            <result>/WEB-INF/views/software_upgrade/query_list.jsp</result>
+        </action>
+
+        <action name="addInput" class="com.biencloud.smarthome.web.softwareupgrade.action.SoftwareUpgradeAction" method="addInput">
+            <param name="menuCode">M001010</param>
+            <param name="operationCode">3</param>
+            <result>/WEB-INF/views/software_upgrade/add_input.jsp</result>
+        </action>
+        
+        <action name="save" class="com.biencloud.smarthome.web.softwareupgrade.action.SoftwareUpgradeAction" method="save">
+            <param name="menuCode">M001010</param>
+            <param name="operationCode">4</param>
+            <result>/WEB-INF/views/software_upgrade/add_input.jsp</result>
+            <result name="input" type="redirectAction">
+                <param name="actionName">addInput</param>
+                <param name="softwareUpgrade.softwareName">${softwareUpgrade.softwareName}</param>
+                <param name="softwareUpgrade.versionName">${softwareUpgrade.versionName}</param>
+                <param name="softwareUpgrade.softwareDesc">${softwareUpgrade.softwareDesc}</param>
+                <param name="suTarget.deviceType.deviceType">${suTarget.deviceType.deviceType}</param>
+                <param name="errorFlag">true</param>
+                <param name="softwareFileErrorMsg">${fieldErrors.softwareFile}</param>
+            </result>
+            <interceptor-ref name="fileUpload">
+                <param name="maximumSize">104857600</param>    
+            </interceptor-ref>
+            <interceptor-ref name="myStack"/>
+        </action>
+        
+        <action name="upgradeInput" class="com.biencloud.smarthome.web.softwareupgrade.action.SoftwareUpgradeAction" method="upgradeInput">
+            <param name="menuCode">M001010</param>
+            <param name="operationCode">22</param>
+            <result>/WEB-INF/views/software_upgrade/upgrade_input.jsp</result>
+        </action>
+        
+        <action name="upgrade" class="com.biencloud.smarthome.web.softwareupgrade.action.SoftwareUpgradeAction" method="upgrade">
+            <param name="menuCode">M001010</param>
+            <param name="operationCode">23</param>
+            <result>/WEB-INF/views/software_upgrade/upgrade_input.jsp</result>
+            <result name="input" type="redirectAction">
+                <param name="actionName">upgradeInput</param>
+                <param name="softwareId">${softwareUpgrade.softwareId}</param>
+                <param name="softwareUpgrade.versionName">${softwareUpgrade.versionName}</param>
+                <param name="errorFlag">true</param>
+                <param name="softwareFileErrorMsg">${fieldErrors.softwareFile}</param>
+            </result>
+            <interceptor-ref name="fileUpload">
+                <param name="maximumSize">104857600</param>    
+            </interceptor-ref>
+            <interceptor-ref name="myStack"/>
+        </action>
+        
+        <action name="remove" class="com.biencloud.smarthome.web.softwareupgrade.action.SoftwareUpgradeAction" method="remove">
+            <param name="menuCode">M001010</param>
+            <param name="operationCode">7</param>
+            <result>/WEB-INF/views/software_upgrade/query_list.jsp</result>
+        </action>
+        
+        <action name="approve" class="com.biencloud.smarthome.web.softwareupgrade.action.SoftwareUpgradeAction" method="approve">
+            <param name="menuCode">M001010</param>
+            <param name="operationCode">11</param>
+            <result>/WEB-INF/views/software_upgrade/query_list.jsp</result>
+        </action>
+        
+        <action name="publish" class="com.biencloud.smarthome.web.softwareupgrade.action.SoftwareUpgradeAction" method="publish">
+            <param name="menuCode">M001010</param>
+            <param name="operationCode">9</param>
+            <result>/WEB-INF/views/software_upgrade/query_list.jsp</result>
+        </action>
+        
+        <action name="notifyUpgrade" class="com.biencloud.smarthome.web.softwareupgrade.action.SoftwareUpgradeAction" method="notifyUpgrade">
+            <param name="menuCode">M001010</param>
+            <param name="operationCode">24</param>
+            <result>/WEB-INF/views/software_upgrade/query_list.jsp</result>
+        </action>
+    </package>
+</struts>
+

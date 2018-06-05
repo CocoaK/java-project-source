@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.biencloud.smarthome.service.rest.mapper.QrcodeCountMapper" >
+  <resultMap id="baseResult" type="com.biencloud.smarthome.service.rest.model.QrcodeCount" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="CHAR" />
+    <result column="sip_count" property="sipCount" jdbcType="INTEGER" />
+    <result column="lock_count" property="lockCount" jdbcType="INTEGER" />
+    <result column="house_id" property="houseId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="baseColumns" >
+    id, type, sip_count, lock_count, house_id
+  </sql>
+  <select id="getForList" resultMap="baseResult" >
+    select id, type, sip_count, lock_count, house_id
+    from t_qrcode_count
+  </select>
+  <select id="getForOne" resultMap="baseResult" parameterType="java.lang.Long" >
+    select 
+    <include refid="baseColumns" />
+    from t_qrcode_count
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <select id="getByHouseId" resultMap="baseResult" parameterType="java.lang.String" >
+    select 
+    <include refid="baseColumns" />
+    from t_qrcode_count
+    where house_id = #{houseId,jdbcType=BIGINT}
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.Long" >
+    delete from t_qrcode_count
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.biencloud.smarthome.service.rest.model.QrcodeCount" >
+    insert into t_qrcode_count (id, type, sip_count, 
+      lock_count, house_id)
+    values (#{id,jdbcType=BIGINT}, #{type,jdbcType=CHAR}, #{sipCount,jdbcType=INTEGER}, 
+      #{lockCount,jdbcType=INTEGER}, #{houseId,jdbcType=INTEGER})
+  </insert>
+  <update id="updateOnActive" parameterType="com.biencloud.smarthome.service.rest.model.QrcodeCount" >
+    update t_qrcode_count
+    <set >
+      <if test="type != null" >
+        type = #{type,jdbcType=CHAR},
+      </if>
+      <if test="sipCount != null" >
+        sip_count = #{sipCount,jdbcType=INTEGER},
+      </if>
+      <if test="lockCount != null" >
+        lock_count = #{lockCount,jdbcType=INTEGER},
+      </if>
+      <if test="houseId != null" >
+        house_id = #{houseId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="update" parameterType="com.biencloud.smarthome.service.rest.model.QrcodeCount" >
+    update t_qrcode_count
+    set type = #{type,jdbcType=CHAR},
+      sip_count = #{sipCount,jdbcType=INTEGER},
+      lock_count = #{lockCount,jdbcType=INTEGER},
+      house_id = #{houseId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

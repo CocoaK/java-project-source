@@ -1,0 +1,51 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>html5 video</title>
+	<script type="text/javascript">
+	//setTimeout(document.getElementById("video").src="../js/video-js/video.js",3000);
+		function getparastr(strname) 
+		{ 
+			//alert("strname:"+strname);
+			var hrefstr,pos,parastr,para,tempstr; 
+			hrefstr = window.location.href; 
+			pos = hrefstr.indexOf("?");
+			parastr = hrefstr.substring(pos+1); 
+			para = parastr.split("&"); 
+			tempstr=""; 
+			for(i=0;i<para.length;i++) 
+			{ 
+				tempstr = para[i]; 
+				pos = tempstr.indexOf("="); 
+				if(tempstr.substring(0,pos) == strname){ 
+					return tempstr.substring(pos+1); 
+				} 
+			} 
+			return null; 
+		} 
+
+		function changeSource() {
+		//alert("strname");
+			document.getElementById("video").src = "../js/video-js/video.js";
+			var src = getparastr("callRecordVO.videoNetPath");
+			document.getElementById('sc').src=src;
+		}
+	</script>
+	<script type="text/javascript" id="video"></script>
+	<link href="../js/video-js/video-js.css" rel="stylesheet">
+	  <script>
+		//options.flash.swf = "../js/video-js/video-js.swf";
+    	
+  </script>
+  
+</head>
+	<body onload="changeSource()">
+     	<div align="center">       
+     	
+	        <video id="videoplay" src="" class="video-js vjs-default-skin" controls
+			  preload="auto" width="640" height="264" poster=""
+			  data-setup="{}">
+			  <source id="sc" src="" type='video/mp4'></source>
+			</video>
+    	</div> 
+</body>
+</html>

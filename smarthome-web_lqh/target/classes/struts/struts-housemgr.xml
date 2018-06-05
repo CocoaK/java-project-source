@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="housemgrJson" extends="json" namespace="/housemgr/json">
+        <action name="queryPropertyCompanyList" class="com.biencloud.smarthome.web.housemgr.action.PropertyCompanyInfoAction"
+                method="findList">
+            <param name="ignoreLog">true</param>
+            <result type="json">
+                <param name="includeProperties">results.*</param>
+            </result>
+        </action>
+        <action name="getDistricts" class="com.biencloud.smarthome.web.housemgr.action.HousingDistrictInfoAction"
+                method="getDistricts">
+            <param name="ignoreLog">true</param>
+            <result type="json">
+                <param name="includeProperties">
+                    ^districtVos\[\d+\]\.id, ^districtVos\[\d+\]\.name
+                </param>
+            </result>
+        </action>
+        <action name="getDistrictsByName" class="com.biencloud.smarthome.web.housemgr.action.HousingDistrictInfoAction"
+                method="getDistrictsByName">
+            <param name="ignoreLog">true</param>
+            <result type="json">
+                <param name="includeProperties">
+                    ^districtVos\[\d+\]\.id, ^districtVos\[\d+\]\.name
+                </param>
+            </result>
+        </action>
+        <action name="getRegions" class="com.biencloud.smarthome.web.housemgr.action.HousingDistrictRegionInfoAction"
+                method="getRegions">
+            <param name="ignoreLog">true</param>
+            <result type="json">
+                <param name="includeProperties">
+                    ^regionVos\[\d+\]\.id, ^regionVos\[\d+\]\.name
+                </param>
+            </result>
+        </action>
+        <action name="newRegionCodeNotRepeat" class="com.biencloud.smarthome.web.housemgr.action.HousingDistrictRegionInfoAction"
+                method="newCodeNotRepeat">
+            <param name="ignoreLog">true</param>
+            <result type="json">
+                <param name="includeProperties">newRegionCodeNotRepeat</param>
+            </result>
+        </action>
+        <action name="updateRegionCodeNotRepeat" class="com.biencloud.smarthome.web.housemgr.action.HousingDistrictRegionInfoAction"
+                method="updateCodeNotRepeat">
+            <param name="ignoreLog">true</param>
+            <result type="json">
+                <param name="includeProperties">updateRegionCodeNotRepeat</param>
+            </result>
+        </action>
+        <action name="getBuildings" class="com.biencloud.smarthome.web.housemgr.action.RegionBuildingInfoAction"
+                method="getBuildings">
+            <param name="ignoreLog">true</param>
+            <result type="json">
+                <param name="includeProperties">
+                    ^buildingVos\[\d+\]\.id, ^buildingVos\[\d+\]\.name
+                </param>
+            </result>
+        </action>
+        <action name="newBuildingCodeNotRepeat" class="com.biencloud.smarthome.web.housemgr.action.RegionBuildingInfoAction"
+                method="newCodeNotRepeat">
+            <param name="ignoreLog">true</param>
+            <result type="json">
+                <param name="includeProperties">notRepeat</param>
+            </result>
+        </action>
+        <action name="updateBuildingCodeNotRepeat" class="com.biencloud.smarthome.web.housemgr.action.RegionBuildingInfoAction"
+                method="updateCodeNotRepeat">
+            <param name="ignoreLog">true</param>
+            <result type="json">
+                <param name="includeProperties">notRepeat</param>
+            </result>
+        </action>       
+        <action name="newCellCodeNotRepeat" class="com.biencloud.smarthome.web.housemgr.action.BuildingCellInfoAction"
+                method="newCodeNotRepeat">
+            <param name="ignoreLog">true</param>
+            <result type="json">
+                <param name="includeProperties">notRepeat</param>
+            </result>
+        </action>
+        <action name="updateCellCodeNotRepeat" class="com.biencloud.smarthome.web.housemgr.action.BuildingCellInfoAction"
+                method="updateCodeNotRepeat">
+            <param name="ignoreLog">true</param>
+            <result type="json">
+                <param name="includeProperties">notRepeat</param>
+            </result>
+        </action>
+        <action name="getHouses" class="com.biencloud.smarthome.web.housemgr.action.CellHouseholdInfoAction"
+                method="find">
+            <param name="ignoreLog">true</param>
+            <result type="json">
+                <param name="includeProperties">
+                    pageNum, totalPages,
+                    ^foundHouses\[\d+\]\.id, ^foundHouses\[\d+\]\.name,
+                    ^foundHouses\[\d+\]\.owner\.userName, ^foundHouses\[\d+\]\.owner\.userId,
+                    ^foundHouses\[\d+\]\.THmBuildingCellInfo\.id, ^foundHouses\[\d+\]\.THmBuildingCellInfo\.name,
+                    ^foundHouses\[\d+\]\.THmBuildingCellInfo\.THmRegionBuildingInfo\.id, ^foundHouses\[\d+\]\.THmBuildingCellInfo\.THmRegionBuildingInfo\.name,
+                    ^foundHouses\[\d+\]\.THmBuildingCellInfo\.THmRegionBuildingInfo\.THmHousingDistrictRegionInfo\.id, ^foundHouses\[\d+\]\.THmBuildingCellInfo\.THmRegionBuildingInfo\.THmHousingDistrictRegionInfo\.name
+                </param>
+            </result>
+        </action>
+        <action name="newHouseCodeNotRepeat" class="com.biencloud.smarthome.web.housemgr.action.CellHouseholdInfoAction"
+                method="newCodeNotRepeat">
+            <param name="ignoreLog">true</param>
+            <result type="json">
+                <param name="includeProperties">notRepeat</param>
+            </result>
+        </action>
+        <action name="updateHouseCodeNotRepeat" class="com.biencloud.smarthome.web.housemgr.action.CellHouseholdInfoAction"
+                method="updateCodeNotRepeat">
+            <param name="ignoreLog">true</param>
+            <result type="json">
+                <param name="includeProperties">notRepeat</param>
+            </result>
+        </action>
+        <action name="existRegionName" class="com.biencloud.smarthome.web.housemgr.action.HousingDistrictRegionInfoAction" method="existRegionName">
+            <param name="ignoreLog">true</param>
+            <result type="json">
+                <param name="includeProperties">existRegionName</param>
+            </result>
+        </action>
+        <action name="existBuildingName" class="com.biencloud.smarthome.web.housemgr.action.RegionBuildingInfoAction" method="existBuildingName">
+            <param name="ignoreLog">true</param>
+            <result type="json">
+                <param name="includeProperties">existBuildingName</param>
+            </result>
+        </action>
+        <action name="existCellName" class="com.biencloud.smarthome.web.housemgr.action.BuildingCellInfoAction" method="existCellName">
+            <param name="ignoreLog">true</param>
+            <result type="json">
+                <param name="includeProperties">existCellName</param>
+            </result>
+        </action>
+        
+        <action name="queryPosition" class="com.biencloud.smarthome.web.housemgr.action.HousingDistrictInfoAction" method="queryPosition">
+            <param name="ignoreLog">true</param>
+            <result type="json">
+            <param name="root">housingDistrictInfo.position</param>
+            </result>
+        </action>
+    </package>
+    <package name="housemgr" extends="default" namespace="/housemgr">
+        <action name="queryList" class="com.biencloud.smarthome.web.housemgr.action.HousingDistrictInfoAction"
+                method="queryList">
+            <param name="menuCode">M002012</param>
+            <param name="operationCode">1</param>
+            <result>/WEB-INF/views/housemgr/query_list.jsp</result>
+        </action>
+        <action name="viewDetail" class="com.biencloud.smarthome.web.housemgr.action.HousingDistrictInfoAction"
+                method="viewDetail">
+            <param name="menuCode">M002012</param>
+            <param name="operationCode">2</param>
+            <result>/WEB-INF/views/housemgr/view_detail.jsp</result>
+        </action>
+        <action name="updateInput" class="com.biencloud.smarthome.web.housemgr.action.HousingDistrictInfoAction"
+                method="updateInput">
+            <param name="menuCode">M002012</param>
+            <param name="operationCode">5</param>
+            <result>/WEB-INF/views/housemgr/update_input.jsp</result>
+        </action>
+        <action name="update" class="com.biencloud.smarthome.web.housemgr.action.HousingDistrictInfoAction"
+                method="update">
+            <param name="menuCode">M002012</param>
+            <param name="operationCode">6</param>
+            <result>/WEB-INF/views/housemgr/update_input.jsp</result>
+            <result name="input" type="redirectAction">
+                <param name="actionName">updateInput</param>
+                <param name="housingDistrictInfoId">${housingDistrictInfo.id}</param>
+                <param name="housingDistrictInfo.propertyCompanyAddress">${housingDistrictInfo.propertyCompanyAddress}</param>
+                <param name="housingDistrictInfo.district">${housingDistrictInfo.district}</param>
+                <param name="housingDistrictInfo.constructionArea">${housingDistrictInfo.constructionArea}</param>
+                <param name="housingDistrictInfo.developer">${housingDistrictInfo.developer}</param>
+                <param name="exceedFileSizeFlag">true</param>
+            </result>
+            <interceptor-ref name="fileUpload">
+                <param name="maximumSize">10485760</param>    
+            </interceptor-ref>
+            <interceptor-ref name="myStack"/>
+        </action>
+        <action name="queryRegionList" class="com.biencloud.smarthome.web.housemgr.action.HousingDistrictRegionInfoAction"
+                method="queryList">
+            <param name="menuCode">M002004</param>
+            <param name="operationCode">1</param>
+            <result>/WEB-INF/views/housemgr/query_region_list.jsp</result>
+            <result name="print">/WEB-INF/views/housemgr/print_region_number_list.jsp</result>
+        </action>
+        <action name="updateRegionInput" class="com.biencloud.smarthome.web.housemgr.action.HousingDistrictRegionInfoAction"
+                method="updateInput">
+            <param name="menuCode">M002004</param>
+            <param name="operationCode">5</param>
+            <result>/WEB-INF/views/housemgr/update_region_input.jsp</result>
+        </action>
+        <action name="updateRegion" class="com.biencloud.smarthome.web.housemgr.action.HousingDistrictRegionInfoAction"
+                method="update">
+            <param name="menuCode">M002004</param>
+            <param name="operationCode">6</param>
+            <result>/WEB-INF/views/housemgr/update_region_input.jsp</result>
+        </action>
+        <action name="generateRegionsInput" class="com.biencloud.smarthome.web.housemgr.action.HousingDistrictRegionInfoAction"
+                method="generateRegionsInput">
+            <param name="menuCode">M002004</param>
+            <param name="operationCode">3</param>
+            <result>/WEB-INF/views/housemgr/generate_region_input.jsp</result>
+        </action>
+        <action name="generateRegions" class="com.biencloud.smarthome.web.housemgr.action.HousingDistrictRegionInfoAction"
+                method="generateRegions">
+            <param name="menuCode">M002004</param>
+            <param name="operationCode">4</param>
+            <result>/WEB-INF/views/housemgr/generate_region_input.jsp</result>
+        </action>
+        <action name="removeRegion" class="com.biencloud.smarthome.web.housemgr.action.HousingDistrictRegionInfoAction"
+                method="remove">
+            <param name="menuCode">M002004</param>
+            <param name="operationCode">7</param>
+            <result>/WEB-INF/views/housemgr/query_region_list.jsp</result>
+        </action>
+        <action name="queryBuildingList" class="com.biencloud.smarthome.web.housemgr.action.RegionBuildingInfoAction"
+                method="queryList">
+            <param name="menuCode">M002004</param>
+            <param name="operationCode">1</param>
+            <result>/WEB-INF/views/housemgr/query_building_list.jsp</result>
+            <result name="print">/WEB-INF/views/housemgr/print_building_number_list.jsp</result>
+        </action>
+        <action name="generateBuildingsInput" class="com.biencloud.smarthome.web.housemgr.action.RegionBuildingInfoAction"
+                method="generateBuildingsInput">
+            <param name="menuCode">M002004</param>
+            <param name="operationCode">3</param>
+            <result>/WEB-INF/views/housemgr/generate_building_input.jsp</result>
+        </action>
+        <action name="generateBuildings" class="com.biencloud.smarthome.web.housemgr.action.RegionBuildingInfoAction"
+                method="generateBuildings">
+            <param name="menuCode">M002004</param>
+            <param name="operationCode">4</param>
+            <result>/WEB-INF/views/housemgr/generate_building_input.jsp</result>
+        </action>
+        <action name="updateBuildingInput" class="com.biencloud.smarthome.web.housemgr.action.RegionBuildingInfoAction"
+                method="updateInput">
+            <param name="menuCode">M002004</param>
+            <param name="operationCode">5</param>
+            <result>/WEB-INF/views/housemgr/update_building_input.jsp</result>
+        </action>
+        <action name="updateBuilding" class="com.biencloud.smarthome.web.housemgr.action.RegionBuildingInfoAction"
+                method="update">
+            <param name="menuCode">M002004</param>
+            <param name="operationCode">6</param>
+            <result>/WEB-INF/views/housemgr/update_building_input.jsp</result>
+        </action>
+        <action name="removeBuilding" class="com.biencloud.smarthome.web.housemgr.action.RegionBuildingInfoAction"
+                method="remove">
+            <param name="menuCode">M002004</param>
+            <param name="operationCode">7</param>
+            <result>/WEB-INF/views/housemgr/query_building_list.jsp</result>
+        </action>
+        <action name="queryCellList" class="com.biencloud.smarthome.web.housemgr.action.BuildingCellInfoAction"
+                method="queryList">
+            <param name="menuCode">M002004</param>
+            <param name="operationCode">1</param>
+            <result>/WEB-INF/views/housemgr/query_cell_list.jsp</result>
+            <result name="print">/WEB-INF/views/housemgr/print_cell_number_list.jsp</result>
+        </action>
+        <action name="updateCellInput" class="com.biencloud.smarthome.web.housemgr.action.BuildingCellInfoAction"
+                method="updateInput">
+            <param name="menuCode">M002004</param>
+            <param name="operationCode">5</param>
+            <result>/WEB-INF/views/housemgr/update_cell_input.jsp</result>
+        </action>
+        <action name="updateCell" class="com.biencloud.smarthome.web.housemgr.action.BuildingCellInfoAction"
+                method="update">
+            <param name="menuCode">M002004</param>
+            <param name="operationCode">6</param>
+            <result>/WEB-INF/views/housemgr/update_cell_input.jsp</result>
+        </action>
+        <action name="removeCell" class="com.biencloud.smarthome.web.housemgr.action.BuildingCellInfoAction"
+                method="remove">
+            <param name="menuCode">M002004</param>
+            <param name="operationCode">7</param>
+            <result>/WEB-INF/views/housemgr/query_cell_list.jsp</result>
+        </action>
+        <action name="generateCellsInput" class="com.biencloud.smarthome.web.housemgr.action.BuildingCellInfoAction"
+                method="generateCellsInput">
+            <param name="menuCode">M002004</param>
+            <param name="operationCode">3</param>
+            <result>/WEB-INF/views/housemgr/generate_cell_input.jsp</result>
+        </action>
+        <action name="generateCells" class="com.biencloud.smarthome.web.housemgr.action.BuildingCellInfoAction"
+                method="generateCells">
+            <param name="menuCode">M002004</param>
+            <param name="operationCode">4</param>
+            <result>/WEB-INF/views/housemgr/generate_cell_input.jsp</result>
+        </action>
+        <action name="queryHouseholdList" class="com.biencloud.smarthome.web.housemgr.action.CellHouseholdInfoAction"
+                method="queryList">
+            <param name="menuCode">M002004</param>
+            <param name="operationCode">1</param>
+            <result>/WEB-INF/views/housemgr/query_household_list.jsp</result>
+            <result name="print">/WEB-INF/views/housemgr/print_site_number_list.jsp</result>
+        </action>
+        <action name="viewHouseholdDetail" class="com.biencloud.smarthome.web.housemgr.action.CellHouseholdInfoAction"
+                method="viewDetail">
+            <param name="menuCode">M002004</param>
+            <param name="operationCode">2</param>
+            <result>/WEB-INF/views/housemgr/view_household_detail.jsp</result>
+        </action>
+        <action name="updateHouseholdInput" class="com.biencloud.smarthome.web.housemgr.action.CellHouseholdInfoAction"
+                method="updateInput">
+            <param name="menuCode">M002004</param>
+            <param name="operationCode">5</param>
+            <result>/WEB-INF/views/housemgr/update_household_input.jsp</result>
+        </action>
+        <action name="updateHousehold" class="com.biencloud.smarthome.web.housemgr.action.CellHouseholdInfoAction"
+                method="update">
+            <param name="menuCode">M002004</param>
+            <param name="operationCode">6</param>
+            <result>/WEB-INF/views/housemgr/update_household_input.jsp</result>
+        </action>
+        <action name="removeHousehold" class="com.biencloud.smarthome.web.housemgr.action.CellHouseholdInfoAction"
+                method="remove">
+            <param name="menuCode">M002004</param>
+            <param name="operationCode">7</param>
+            <result>/WEB-INF/views/housemgr/query_household_list.jsp</result>
+        </action>
+        <action name="generateHouseholdsInput" class="com.biencloud.smarthome.web.housemgr.action.CellHouseholdInfoAction"
+                method="generateHouseholdsInput">
+            <param name="menuCode">M002004</param>
+            <param name="operationCode">3</param>
+            <result>/WEB-INF/views/housemgr/generate_household_input.jsp</result>
+        </action>
+        <action name="generateHouseholds" class="com.biencloud.smarthome.web.housemgr.action.CellHouseholdInfoAction"
+                method="generateHouseholds">
+            <param name="menuCode">M002004</param>
+            <param name="operationCode">4</param>
+            <result>/WEB-INF/views/housemgr/generate_household_input.jsp</result>
+        </action>
+        <action name="generateSizeInput" class="com.biencloud.smarthome.web.housemgr.action.CellSizeInfoAction"
+                method="generateSizeInput">
+            <param name="menuCode">M002004</param>
+            <param name="operationCode">3</param>
+            <result>/WEB-INF/views/housemgr/generate_size_input.jsp</result>
+        </action>
+        <action name="generateSize" class="com.biencloud.smarthome.web.housemgr.action.CellSizeInfoAction"
+                method="generateSize">
+            <param name="menuCode">M002004</param>
+            <param name="operationCode">4</param>
+            <result>/WEB-INF/views/housemgr/generate_size_input.jsp</result>
+            <result name="input" type="redirectAction">
+                <param name="actionName">generateSizeInput</param>
+                <param name="cellId">${cell.id}</param>                
+                <param name="exceedFileSizeFlag">true</param>
+            </result>
+            <interceptor-ref name="fileUpload">
+                <param name="maximumSize">10485760</param>    
+            </interceptor-ref>
+            <interceptor-ref name="myStack"/>
+        </action>
+        <action name="customSizeInput" class="com.biencloud.smarthome.web.housemgr.action.CellSizeInfoAction"
+                method="customSizeInput">
+            <param name="menuCode">M002004</param>
+            <param name="operationCode">4</param>
+            <result>/WEB-INF/views/housemgr/custom_size_input.jsp</result>
+        </action>
+        <action name="customSize" class="com.biencloud.smarthome.web.housemgr.action.CellSizeInfoAction"
+                method="customSize">
+            <param name="menuCode">M002004</param>
+            <param name="operationCode">4</param>
+            <result>/WEB-INF/views/housemgr/custom_size_input.jsp</result>
+            <result name="input" type="redirectAction">
+                <param name="actionName">customSizeInput</param>              
+                <param name="exceedFileSizeFlag">true</param>
+            </result>
+            <interceptor-ref name="fileUpload">
+                <param name="maximumSize">10485760</param>    
+            </interceptor-ref>
+            <interceptor-ref name="myStack"/>
+        </action>
+        <action name="viewCellSize" class="com.biencloud.smarthome.web.housemgr.action.CellSizeInfoAction"
+                method="viewCellSize">
+            <param name="menuCode">M002004</param>
+            <param name="operationCode">12</param>
+            <result>/WEB-INF/views/housemgr/view_cell_size.jsp</result>
+        </action>
+        <action name="removeCellSize" class="com.biencloud.smarthome.web.housemgr.action.CellSizeInfoAction"
+                method="removeCellSize">
+            <param name="menuCode">M002004</param>
+            <param name="operationCode">7</param>
+            <result>/WEB-INF/views/housemgr/view_cell_size.jsp</result>
+        </action>
+        <action name="viewPropertyCompanyDetail" class="com.biencloud.smarthome.web.housemgr.action.PropertyCompanyInfoAction"
+                method="viewDetail">
+            <param name="menuCode">M002010</param>
+            <param name="operationCode">2</param>
+            <result>/WEB-INF/views/housemgr/view_property_company_detail.jsp</result>
+        </action>
+        <action name="updatePropertyCompanyInput" class="com.biencloud.smarthome.web.housemgr.action.PropertyCompanyInfoAction"
+                method="updateInput">
+            <param name="menuCode">M002010</param>
+            <param name="operationCode">5</param>
+            <result>/WEB-INF/views/housemgr/update_property_company_input.jsp</result>
+        </action>
+        <action name="updatePropertyCompany" class="com.biencloud.smarthome.web.housemgr.action.PropertyCompanyInfoAction"
+                method="update">
+            <param name="menuCode">M002010</param>
+            <param name="operationCode">6</param>
+            <result>/WEB-INF/views/housemgr/update_property_company_input.jsp</result>
+        </action>
+        <action name="queryPosition" class="com.biencloud.smarthome.web.housemgr.action.HousingDistrictInfoAction"
+                method="queryPosition">
+            <param name="menuCode">M002010</param>
+            <param name="operationCode">12</param>
+            <result>/WEB-INF/views/housemgr/map.jsp</result>
+        </action>
+        
+        <action name="queryPropertyCompanyList" class="com.biencloud.smarthome.web.housemgr.action.PropertyCompanyInfoAction"
+                method="queryList">
+            <param name="menuCode">M001019</param>
+            <param name="operationCode">12</param>
+            <result>/WEB-INF/views/housemgr/query_property_company_list.jsp</result>
+        </action>
+        
+        <action name="deletePropertyCompany" class="com.biencloud.smarthome.web.housemgr.action.PropertyCompanyInfoAction"
+                method="delete">
+            <param name="menuCode">M001019</param>
+            <param name="operationCode">7</param>
+            <result>/WEB-INF/views/housemgr/query_property_company_list.jsp</result>
+        </action>
+        
+        <action name="detail" class="com.biencloud.smarthome.web.housemgr.action.PropertyCompanyInfoAction"
+                method="detail">
+            <param name="menuCode">M001019</param>
+            <param name="operationCode">2</param>
+            <result>/WEB-INF/views/housemgr/property_company_detail.jsp</result>
+        </action>
+        
+        <action name="updatePropertyCompanyInfoInput" class="com.biencloud.smarthome.web.housemgr.action.PropertyCompanyInfoAction"
+                method="updatePropertyCompanyInput">
+            <param name="menuCode">M001019</param>
+            <param name="operationCode">5</param>
+            <result>/WEB-INF/views/housemgr/update_property_company_info_input.jsp</result>
+        </action>
+        <action name="updatePropertyCompanyInfo" class="com.biencloud.smarthome.web.housemgr.action.PropertyCompanyInfoAction"
+                method="updatePropertyCompany">
+            <param name="menuCode">M001019</param>
+            <param name="operationCode">6</param>
+            <result>/WEB-INF/views/housemgr/update_property_company_info_input.jsp</result>
+        </action>
+        <action name="addPropertyCompanyInput" class="com.biencloud.smarthome.web.housemgr.action.PropertyCompanyInfoAction"
+                method="addInput">
+            <param name="menuCode">M001019</param>
+            <param name="operationCode">12</param>
+            <result>/WEB-INF/views/housemgr/add_property_company_info_input.jsp</result>
+        </action>
+        <action name="addPropertyCompany" class="com.biencloud.smarthome.web.housemgr.action.PropertyCompanyInfoAction"
+                method="add">
+            <param name="menuCode">M001019</param>
+            <param name="operationCode">1</param>
+            <result>/WEB-INF/views/housemgr/query_property_company_list.jsp</result>
+        </action>
+    </package>
+</struts>
+

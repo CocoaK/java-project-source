@@ -1,0 +1,4 @@
+#Wed Apr 22 18:31:25 CST 2015
+eclipse.preferences.version=1
+validator.Checked=src/main/webapp/WEB-INF/views/info/infoSend_list.jsp,src/main/webapp/js/jquery-1.7.2.min.js,src/main/webapp/WEB-INF/views/charge/chargeType_add.jsp,src/main/webapp/WEB-INF/views/charge/chargeCalMode_add.jsp,src/main/webapp/WEB-INF/views/charge/chargeMonetaryUnit_add.jsp,.myeclipse/wsgeneration,src/main/webapp/js/tm.js,src/main/webapp/js/jquery.min.js,src/main/resources/struts/struts-idcardvisit.xml,src/main/webapp/WEB-INF/views/charge/chargeCalUnit_add.jsp
+validator.Unchecked=

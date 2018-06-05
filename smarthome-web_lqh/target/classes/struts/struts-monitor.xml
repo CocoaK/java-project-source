@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="monitorJson" extends="json" namespace="/monitor/json">
+        <action name="getSceneByDeviceNo" class="com.biencloud.smarthome.web.monitor.action.MonitorAction"
+                method="getSceneByDeviceNo">
+            <param name="menuCode">M003003</param>
+            <param name="operationCode">12</param>
+            <result type="json">
+                <param name="includeProperties">sceneList.*</param>
+            </result>
+        </action>
+        <action name="querySceneDeviceByDeviceNo" class="com.biencloud.smarthome.web.monitor.action.MonitorAction"
+                method="querySceneDeviceByDeviceNo">
+            <param name="menuCode">M003003</param>
+            <param name="operationCode">12</param>
+            <result type="json">
+                <param name="includeProperties">sceneDeviceList.*</param>
+            </result>
+        </action>
+        <action name="sendSceneMonitorCommand" class="com.biencloud.smarthome.web.monitor.action.MonitorAction"
+                method="sendSceneMonitorCommand">
+            <param name="menuCode">M003003</param>
+            <param name="operationCode">9</param>
+            <result type="json">
+                <param name="includeProperties">successFlag</param>
+            </result>
+        </action>
+        <action name="sendProtectionAndRemovalMonitorCommand" class="com.biencloud.smarthome.web.monitor.action.MonitorAction"
+                method="sendProtectionAndRemovalMonitorCommand">
+            <param name="menuCode">M003003</param>
+            <param name="operationCode">9</param>
+            <result type="json">
+                <param name="includeProperties">successFlag</param>
+            </result>
+        </action>
+        <action name="sendSceneCommand" class="com.biencloud.smarthome.web.monitor.action.MonitorAction"
+                method="sendSceneCommand">
+            <param name="menuCode">M003003</param>
+            <param name="operationCode">9</param>
+            <result type="json">
+                <param name="includeProperties">successFlag</param>
+            </result>
+        </action>
+    </package>
+
+    <package name="monitor" extends="default" namespace="/monitor">
+        <!-- 远程开锁 -->
+        <action name="remoteUnlockInput" class="com.biencloud.smarthome.web.monitor.action.MonitorAction"
+                method="remoteUnlockInput">
+            <param name="menuCode">M003003</param>
+            <param name="operationCode">3</param>
+            <result>/WEB-INF/views/monitor/remote_unlock.jsp</result>
+        </action>
+        <action name="remoteUnlock" class="com.biencloud.smarthome.web.monitor.action.MonitorAction"
+                method="remoteUnlock">
+            <param name="menuCode">M003003</param>
+            <param name="operationCode">4</param>
+            <result>/WEB-INF/views/monitor/remote_unlock.jsp</result>
+        </action>
+        <!-- 远程家电控制 -->
+        <action name="remoteApplianceControl" class="com.biencloud.smarthome.web.monitor.action.MonitorAction"
+                method="remoteApplianceControl">
+            <param name="menuCode">M003003</param>
+            <param name="operationCode">12</param>
+            <result>/WEB-INF/views/monitor/remote_appliance_control.jsp</result>
+        </action>
+        <action name="deployment" class="com.biencloud.smarthome.web.monitor.action.MonitorAction"
+                method="remoteSceneControl">
+            <param name="menuCode">M003003</param>
+            <param name="operationCode">12</param>
+            <result>/WEB-INF/views/monitor/deployment.jsp</result>
+        </action>
+        <!-- 远程家电场景控制 -->
+        <action name="remoteApplianceSceneControl" class="com.biencloud.smarthome.web.monitor.action.MonitorAction"
+                method="remoteApplianceSceneControl">
+            <param name="menuCode">M003003</param>
+            <param name="operationCode">12</param>
+            <result>/WEB-INF/views/monitor/remote_appliance_scene_control.jsp</result>
+        </action>
+    </package>
+</struts>
+

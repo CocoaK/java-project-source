@@ -1,0 +1,133 @@
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<div class="easyui-layout" data-options="fit:true" style="overflow-y:scroll">
+	<div style="width:950px;height:24px;margin:30px auto;">
+		<label>地区选择：</label><!-- <input id="area" class="easyui-combobox" data-options="editable:false,panelHeight:'auto'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+		<select id="area_deviceM" style="width:115px">
+		
+		</select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	    <label>产品选择：</label><!-- <input id="product" class="easyui-combobox" data-options="valueField: 'deviceType',textField: 'deviceName',editable:false,panelHeight:'auto'"> -->
+	    <select id="product_deviceM" style="width:115px">   
+		   
+		</select>
+	</div>
+	<div id="device">
+		<div class="usercount">
+			<div class="square">
+				<span class="circle"></span>
+				<b>设备总数</b>
+			</div>
+			<div class="number">
+				<b id="devicecount_deviceM">999999</b>
+			</div>
+		</div>
+		<div class="todayuseractive">
+			<div class="square">
+				<span class="circle"></span>
+				<b>今日新增设备数</b>
+			</div>
+			<div class="number">
+				<b id="today_newAdd_deviceM">999999</b>
+			</div>
+		</div>
+		<div class="devicecount">
+			<div class="square">
+				<span class="circle"></span>
+				<b>7日新增设备</b>
+			</div>
+			<div class="number">
+				<b id="sevendays_newAdd_deviceM">999999</b>
+			</div>
+		</div>
+		<div class="todaydeviceactive">
+			<div class="square">
+				<span class="circle"></span>
+				<b>30日新增设备</b>
+			</div>
+			<div class="number">
+				<b id="thirtydays_newAdd_deviceM">999999</b>
+			</div>
+		</div>
+	</div>
+	<div style="width:950px;margin: 0 auto;height:500px;border:1px solid #ccc">
+		<div id="tabbar_deviceM">
+			<table cellpadding="3" cellspacing="0">
+				<tr>
+					<!-- <td id="person/getPersons">用户总数</td>
+					<td class="hover_deviceM" id="person/getChartsData">用户增长</td> -->
+					<td class="hover_deviceM" id="device/getDevices">设备总数</td>
+					<td id="device/getChartsData">设备增长</td>
+				</tr>
+			</table>
+			<select id="cc_deviceM" name="dept_deviceM" style="width:80px;height:22px;">
+			    <option value="7" selected>近7天</option>
+			    <option value="30">近30天</option>
+			</select>
+		</div>
+		<div id="container_deviceM" style="width: 850px; height: 400px; margin: 30px auto">
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript">
+	$(function(){
+		loadCombobox('area_deviceM','product_deviceM');
+		var op=$("#cc_deviceM option:selected");
+		var ex_url=$(".hover_deviceM").attr("id");
+		getChartsData(ex_url,op.val(),'container_deviceM');
+		commonAjax('device/deviceNum', 'devicecount_deviceM');
+		commonAjax('device/getTodayData', 'today_newAdd_deviceM');
+		commonAjax('device/getSevendaysData', 'sevendays_newAdd_deviceM');
+		commonAjax('device/getThirtydaysData', 'thirtydays_newAdd_deviceM');
+		$("#cc_deviceM").change(function(){
+			var options=$("#cc_deviceM option:selected");
+			var countryCode=$("#area_deviceM option:selected");
+			var type=$("#product_deviceM option:selected");
+			var ex_url=$(".hover_deviceM").attr("id");
+			getChartsData(ex_url,options.val(),'container_deviceM',countryCode.val(),type.val());
+		});
+		$("#tabbar_deviceM table td").each(function(){
+	        $(this).click(function(){
+	            $("#tabbar_deviceM table .hover_deviceM").removeClass("hover_deviceM");  
+	            $(this).addClass("hover_deviceM");    
+       		});
+   		});
+		$("#area_deviceM").change(function(){
+	   		device_changeValue();
+		});	
+		$("#product_deviceM").change(function(){
+			/* var countryCode=$("#area_deviceM option:selected");
+	   		var type=$("#product_deviceM option:selected");
+			var intervals=$("#cc_deviceM option:selected");
+			var ex_url=$(".hover_deviceM").attr("id");
+			getChartsData(ex_url, intervals.val(),'container_deviceM', countryCode.val(), type.val());
+			commonAjax('device/deviceNum', 'devicecount_deviceM', countryCode.val(), type.val());
+			commonAjax('device/getTodayData', 'today_newAdd_deviceM', countryCode.val(), type.val());
+			commonAjax('device/getSevendaysData', 'sevendays_newAdd_deviceM', countryCode.val(), type.val());
+			commonAjax('device/getThirtydaysData', 'thirtydays_newAdd_deviceM', countryCode.val(), type.val()); */
+			device_changeValue();
+		});
+		$("#tabbar_deviceM table td").click(function(){
+			/* var countryCode=$("#area_deviceM option:selected");
+	   		var type=$("#product_deviceM option:selected");
+			var intervals=$("#cc_deviceM option:selected");
+			var ex_url=$(".hover_deviceM").attr("id");
+			getChartsData(ex_url, intervals.val(),'container_deviceM', countryCode.val(), type.val());
+			commonAjax('device/deviceNum', 'devicecount_deviceM', countryCode.val(), type.val());
+			commonAjax('device/getTodayData', 'today_newAdd_deviceM', countryCode.val(), type.val());
+			commonAjax('device/getSevendaysData', 'sevendays_newAdd_deviceM', countryCode.val(), type.val());
+			commonAjax('device/getThirtydaysData', 'thirtydays_newAdd_deviceM', countryCode.val(), type.val()); */
+			device_changeValue();
+		});
+	});
+	function device_changeValue(){
+		var countryCode=$("#area_deviceM option:selected");
+   		var type=$("#product_deviceM option:selected");
+		var intervals=$("#cc_deviceM option:selected");
+		var ex_url=$(".hover_deviceM").attr("id");
+		getChartsData(ex_url, intervals.val(),'container_deviceM', countryCode.val(), type.val());
+		commonAjax('device/deviceNum', 'devicecount_deviceM', countryCode.val(), type.val());
+		commonAjax('device/getTodayData', 'today_newAdd_deviceM', countryCode.val(), type.val());
+		commonAjax('device/getSevendaysData', 'sevendays_newAdd_deviceM', countryCode.val(), type.val());
+		commonAjax('device/getThirtydaysData', 'thirtydays_newAdd_deviceM', countryCode.val(), type.val());
+	}
+</script>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE configuration  
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"  
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- value="mssql58|mssql12|oracle|mysql|db2" -->
+	<properties>
+		<property name="dialect" value="mysql" />
+	</properties>
+	
+	<settings>
+      <setting name="callSettersOnNulls" value="true"/>
+  	</settings>
+  	
+	<plugins>
+		<plugin interceptor="com.biencloud.smarthome.service.common.page.ResultSetInterceptor" />
+		<plugin interceptor="com.biencloud.smarthome.service.common.page.PageInterceptor">
+			<property name="dialect" value="mysql" />
+		</plugin>
+	</plugins>
+</configuration>  

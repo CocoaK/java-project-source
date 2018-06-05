@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.quhwa.scalehouse.service.scale.mapper.PersonMapper">
+  <resultMap id="BaseResultMap" type="com.quhwa.scalehouse.service.scale.model.Person">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="account" jdbcType="VARCHAR" property="account" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="birthday" jdbcType="TIMESTAMP" property="birthday" />
+    <result column="gender" jdbcType="VARCHAR" property="gender" />
+    <result column="height_unit" jdbcType="VARCHAR" property="heightUnit" />
+    <result column="height" jdbcType="VARCHAR" property="height" />
+    <result column="weight_unit" jdbcType="VARCHAR" property="weightUnit" />
+    <result column="target_weight" jdbcType="DECIMAL" property="targetWeight" />
+    <result column="country_code" jdbcType="VARCHAR" property="countryCode" />
+    <result column="record_time" jdbcType="TIMESTAMP" property="recordTime" />
+  </resultMap>
+  <resultMap id="CountryResultMap" type="com.quhwa.scalehouse.service.scale.model.Country">
+    <result column="country_code" jdbcType="VARCHAR" property="countryCode" />
+    <result column="country_name" jdbcType="VARCHAR" property="countryName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, account, password, username, birthday, gender, height_unit, height, weight_unit, target_weight, record_time, country_code
+  </sql>
+  <select id="getTotal" resultType="java.lang.Long">
+	select
+	count(*)
+	from t_person
+	where 1=1
+      <if test="account != null">
+        and account = #{account,jdbcType=VARCHAR}
+      </if>
+      <if test="username != null">
+        and username = #{username,jdbcType=VARCHAR}
+      </if>
+      <if test="password != null">
+        and password = #{password,jdbcType=VARCHAR}
+      </if>
+      <if test="birthday != null">
+        and birthday = #{birthday,jdbcType=TIMESTAMP}
+      </if>
+      <if test="gender != null">
+        and gender = #{gender,jdbcType=VARCHAR}
+      </if>
+      <if test="heightUnit != null">
+        and height_unit = #{heightUnit,jdbcType=VARCHAR}
+      </if>
+      <if test="height != null">
+        and height = #{height,jdbcType=VARCHAR}
+      </if>
+      <if test="weightUnit != null">
+        and weight_unit = #{weightUnit,jdbcType=VARCHAR}
+      </if>
+      <if test="targetWeight != null">
+        and target_weight = #{targetWeight,jdbcType=DECIMAL}
+      </if>
+      <if test="recordTime != null">
+        and record_time = #{recordTime,jdbcType=TIMESTAMP}
+      </if>
+  </select>
+  <select id="getNewTotal" parameterType="java.lang.String" resultType="java.lang.Long">
+	select
+	count(*)
+	from
+	(select
+	count(*)
+	from t_person p
+	left join t_country d on p.country_code = d.country_code
+	left join t_device e on p.id = e.person_id
+	where 1=1
+      <if test="countryCode != null and countryCode != ''">
+        and p.country_code = #{countryCode}
+      </if>
+      <if test="type != null and type != ''">
+        and e.type = #{type}
+      </if>
+    group by account)
+    t_person
+  </select>
+  <select id="todayActivePerN" parameterType="java.lang.String" resultType="java.lang.Long">
+	select
+	count(*)
+	from
+	(select
+	count(*)
+	from t_person p
+	left join t_login l on l.person_id=p.id
+	left join t_country d on p.country_code = d.country_code
+	left join t_device e on p.id = e.person_id
+	where 1=1 and l.person_id is not null and date(l.login_time) = curdate()
+      <if test="countryCode != null and countryCode != ''">
+        and p.country_code = #{countryCode}
+      </if>
+      <if test="type != null and type != ''">
+        and e.type = #{type}
+      </if>
+    group by account)
+    t_person
+  </select>
+  <select id="getSum" resultType="java.lang.Long">
+  	select
+	count(*)
+	from
+	(select
+	count(*)
+	from t_person p
+	left join t_country d on p.country_code = d.country_code
+	left join t_device e on p.id = e.person_id
+	where 1=1 and record_time like CONCAT(CONCAT('%',DATE_FORMAT(#{time}, '%Y-%m-%d')), '%')
+	  <if test="countryCode != null and countryCode != ''">
+        and p.country_code = #{countryCode}
+      </if>
+      <if test="type != null and type != ''">
+        and e.type = #{type}
+      </if>
+    group by p.id)
+    t_person
+  </select>
+  <select id="getPersons" resultType="java.lang.Long">
+  	select
+	count(*)
+	from
+	(select
+	count(*)
+	from t_person p
+	left join t_country d on p.country_code = d.country_code
+	left join t_device e on p.id = e.person_id
+	where 1=1 and record_time <![CDATA[ <= ]]> #{time}
+	   <if test="countryCode != null and countryCode != ''">
+	   		and p.country_code = #{countryCode}
+	   </if>
+	   <if test="type != null and type != ''">
+	   		and e.type = #{type}
+	   </if>
+	group by p.id)
+	t_person
+  </select>
+  <select id="getAll" parameterType="java.lang.String" resultMap="BaseResultMap">
+	select
+	p.id,p.account,p.password,p.username,p.birthday,c.name gender,a.name height_unit,p.height,b.name weight_unit,p.target_weight,p.record_time,d.area area,e.type type, p.country_code countryCode, d.country_name countryName
+	from
+		t_person p
+	left join t_unit a on p.height_unit = a.value and a.type=3
+	left join t_unit b on p.weight_unit = b.value and b.type=1
+	left join t_unit c on p.gender = c.value and c.type=4
+	left join t_country d on p.country_code = d.country_code
+	left join t_device e on p.id = e.person_id
+	where 1=1
+		<if test="countryCode != null and countryCode != ''">
+        and p.country_code = #{countryCode}
+      </if>
+      <if test="type != null and type != ''">
+        and e.type = #{type}
+      </if>
+    group by account
+    ORDER BY p.id
+  </select>
+  <select id="getCountry" resultMap="CountryResultMap">
+	select
+		d.country_code countryCode,d.country_name countryName
+	from
+		t_person p
+	left join t_country d on p.country_code = d.country_code
+	group by p.country_code
+  </select>
+  <select id="getOne" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+	p.id,p.account,p.password,p.username,p.birthday,c.name gender,a.name height_unit,p.height,b.name weight_unit,p.target_weight,p.record_time
+	from
+		t_person p
+	left join t_unit a on p.height_unit = a.value and a.type=3
+	left join t_unit b on p.weight_unit = b.value and b.type=1
+	left join t_unit c on p.gender = c.value and c.type=4
+	where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="queryByAccount" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+	p.id,p.account,p.password,p.username,p.birthday,c.name gender,a.name height_unit,p.height,b.name weight_unit,p.target_weight,p.record_time
+	from
+		t_person p
+	left join t_unit a on p.height_unit = a.value and a.type=3
+	left join t_unit b on p.weight_unit = b.value and b.type=1
+	left join t_unit c on p.gender = c.value and c.type=4
+	where account = #{account,jdbcType=VARCHAR}
+  </select>
+  <select id="getForList" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+	p.id,p.account,p.password,p.username,p.birthday,c.name gender,a.name height_unit,p.height,b.name weight_unit,p.target_weight,p.record_time
+	from
+		t_person p
+	left join t_unit a on p.height_unit = a.value and a.type=3
+	left join t_unit b on p.weight_unit = b.value and b.type=1
+	left join t_unit c on p.gender = c.value and c.type=4
+	where account = #{account,jdbcType=VARCHAR}
+  </select>
+  <select id="queryByAccountAndPassword" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+	p.id,p.account,p.password,p.username,p.birthday,gender,height_unit,p.height,weight_unit,p.target_weight,p.record_time,p.country_code
+	from
+		t_person p
+	where account = #{account,jdbcType=VARCHAR} and password = #{password,jdbcType=VARCHAR}
+  </select>
+  <delete id="delete" parameterType="java.lang.Integer">
+    delete from t_person
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.quhwa.scalehouse.service.scale.model.Person">
+    insert into t_person (id, account, password, username 
+      birthday, gender, height_unit, 
+      height, weight_unit, target_weight, record_time, country_code)
+    values (#{id,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{birthday,jdbcType=TIMESTAMP}, #{gender,jdbcType=VARCHAR}, #{heightUnit,jdbcType=VARCHAR}, 
+      #{height,jdbcType=INTEGER}, #{weightUnit,jdbcType=VARCHAR}, #{targetWeight,jdbcType=DECIMAL}, #{recordTime,jdbcType=TIMESTAMP, #{countryCode,jdbcType=VARCHAR}}
+  </insert>
+  <insert id="insertActive" parameterType="com.quhwa.scalehouse.service.scale.model.Person">
+    insert into t_person
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="account != null">
+        account,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+       <if test="username != null">
+        username,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="heightUnit != null">
+        height_unit,
+      </if>
+      <if test="height != null">
+        height,
+      </if>
+      <if test="weightUnit != null">
+        weight_unit,
+      </if>
+      <if test="targetWeight != null">
+        target_weight,
+      </if>
+      <if test="countryCode != null">
+        country_code,
+      </if>
+      <if test="recordTime != null">
+        record_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="account != null">
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="heightUnit != null">
+        #{heightUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="height != null">
+        #{height,jdbcType=VARCHAR},
+      </if>
+      <if test="weightUnit != null">
+        #{weightUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="targetWeight != null">
+        #{targetWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="countryCode != null">
+        #{countryCode,jdbcType=VARCHAR},
+      </if>
+      <if test="recordTime != null">
+        #{recordTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateActive" parameterType="com.quhwa.scalehouse.service.scale.model.Person">
+    update t_person
+    <set>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="heightUnit != null">
+        height_unit = #{heightUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="height != null">
+        height = #{height,jdbcType=VARCHAR},
+      </if>
+      <if test="weightUnit != null">
+        weight_unit = #{weightUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="targetWeight != null">
+        target_weight = #{targetWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="recordTime != null">
+        record_time = #{recordTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="countryCode!= null">
+        country_code = #{countryCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where account = #{account,jdbcType=VARCHAR} and password = #{password,jdbcType=VARCHAR}
+  </update>
+  <update id="updateForPerson" parameterType="java.lang.Integer">
+    update t_person
+    <set>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="heightUnit != null">
+        height_unit = #{heightUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="height != null">
+        height = #{height,jdbcType=VARCHAR},
+      </if>
+      <if test="weightUnit != null">
+        weight_unit = #{weightUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="targetWeight != null">
+        target_weight = #{targetWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="recordTime != null">
+        record_time = #{recordTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="update" parameterType="com.quhwa.scalehouse.service.scale.model.Person">
+    update t_person
+    set username = #{username,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=TIMESTAMP},
+      gender = #{gender,jdbcType=VARCHAR},
+      height_unit = #{heightUnit,jdbcType=VARCHAR},
+      height = #{height,jdbcType=VARCHAR},
+      weight_unit = #{weightUnit,jdbcType=VARCHAR},
+      target_weight = #{targetWeight,jdbcType=DECIMAL},
+      record_time = #{recordTime,jdbcType=TIMESTAMP}
+    where account = #{account,jdbcType=VARCHAR} and password = #{password,jdbcType=VARCHAR}
+  </update>
+  <select id="queryForList" resultMap="BaseResultMap" >
+    select 
+    	<include refid="Base_Column_List" />
+    from t_person
+    where 1=1
+      <if test="account != null">
+        and account = #{account,jdbcType=VARCHAR}
+      </if>
+      <if test="username != null">
+        and username = #{username,jdbcType=VARCHAR}
+      </if>
+      <if test="password != null">
+        and password = #{password,jdbcType=VARCHAR}
+      </if>
+      <if test="birthday != null">
+        and birthday = #{birthday,jdbcType=TIMESTAMP}
+      </if>
+      <if test="gender != null">
+        and gender = #{gender,jdbcType=VARCHAR}
+      </if>
+      <if test="heightUnit != null">
+        and height_unit = #{heightUnit,jdbcType=VARCHAR}
+      </if>
+      <if test="height != null">
+        and height = #{height,jdbcType=VARCHAR}
+      </if>
+      <if test="weightUnit != null">
+        and weight_unit = #{weightUnit,jdbcType=VARCHAR}
+      </if>
+      <if test="targetWeight != null">
+        and target_weight = #{targetWeight,jdbcType=DECIMAL}
+      </if>
+      <if test="recordTime != null">
+        and record_time = #{recordTime,jdbcType=TIMESTAMP}
+      </if>
+  </select>
+</mapper>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="SystemParam" extends="default" namespace="/systemParam">
+        <action name="viewDetail" class="com.biencloud.smarthome.web.sysparam.action.SystemParamAction" method="viewDetail">
+            <param name="menuCode">M001007</param>
+            <param name="operationCode">2</param>
+            <result>/WEB-INF/views/system_param/view_detail.jsp</result>
+        </action>
+
+        <action name="queryList" class="com.biencloud.smarthome.web.sysparam.action.SystemParamAction" method="queryList">
+            <param name="menuCode">M001007</param>
+            <param name="operationCode">1</param>
+            <result>/WEB-INF/views/system_param/query_list.jsp</result>
+        </action>
+
+        <action name="updateInput" class="com.biencloud.smarthome.web.sysparam.action.SystemParamAction" method="updateInput">
+            <param name="menuCode">M001007</param>
+            <param name="operationCode">5</param>
+            <result>/WEB-INF/views/system_param/update_input.jsp</result>
+        </action>
+
+        <action name="update" class="com.biencloud.smarthome.web.sysparam.action.SystemParamAction" method="update">
+            <param name="menuCode">M001007</param>
+            <param name="operationCode">6</param>
+            <result>/WEB-INF/views/system_param/update_input.jsp</result>
+        </action>
+    </package>
+</struts>
+

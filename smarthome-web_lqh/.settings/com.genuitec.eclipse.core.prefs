@@ -1,0 +1,4 @@
+#Mon Mar 26 20:00:47 CST 2018
+eclipse.preferences.version=1
+validator.Checked=src/main/webapp/js/jquery-1.7.2.min.js,src/main/webapp/WEB-INF,.myeclipse/wsgeneration,src/main/webapp/js/tm.js,src/main/webapp/idCardTest.jsp,src/main/webapp/js/jquery.min.js,src/main/resources/struts/struts-idcardvisit.xml
+validator.Unchecked=

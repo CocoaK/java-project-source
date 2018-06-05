@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.biencloud.smarthome.service.rest.mapper.DeviceMapper" >
+  <resultMap id="baseResult" type="com.biencloud.smarthome.service.rest.model.Device" >
+    <id column="device_id" property="deviceId" jdbcType="BIGINT" />
+    <result column="device_code" property="deviceCode" jdbcType="VARCHAR" />
+    <result column="device_name" property="deviceName" jdbcType="VARCHAR" />
+    <result column="device_alias" property="deviceAlias" jdbcType="VARCHAR" />
+    <result column="device_pwd" property="devicePwd" jdbcType="VARCHAR" />
+    <result column="device_type" property="deviceType" jdbcType="CHAR" />
+    <result column="device_status" property="deviceStatus" jdbcType="CHAR" />
+    <result column="district_id" property="districtId" jdbcType="BIGINT" />
+    <result column="area_id" property="areaId" jdbcType="BIGINT" />
+    <result column="building_id" property="buildingId" jdbcType="BIGINT" />
+    <result column="unit_id" property="unitId" jdbcType="BIGINT" />
+    <result column="room_id" property="roomId" jdbcType="BIGINT" />
+    <result column="position" property="position" jdbcType="VARCHAR" />
+    <result column="coordinate" property="coordinate" jdbcType="VARCHAR" />
+    <result column="district_gate_flag" property="districtGateFlag" jdbcType="CHAR" />
+    <result column="created_user" property="createdUser" jdbcType="VARCHAR" />
+    <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="updated_user" property="updatedUser" jdbcType="VARCHAR" />
+    <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP" />
+    <result column="device_ip" property="deviceIp" jdbcType="VARCHAR" />
+    <result column="device_mac" property="deviceMac" jdbcType="VARCHAR" />
+    <result column="sipid" property="sipid" jdbcType="VARCHAR" />
+    <result column="version" property="version" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="baseColumns" >
+    device_id, device_code, device_name, device_alias, device_pwd, device_type, device_status, 
+    district_id, area_id, building_id, unit_id, room_id, position, coordinate, district_gate_flag, 
+    created_user, created_time, updated_user, updated_time, device_ip, version, sipid, device_mac
+  </sql>
+  <select id="getForList" resultMap="baseResult" >
+    select 
+    	<include refid="baseColumns" />
+    from t_device
+    where 1=1
+      <if test="deviceCode != null" >
+        and device_code = #{deviceCode,jdbcType=VARCHAR}
+      </if>
+      <if test="deviceName != null" >
+        and device_name = #{deviceName,jdbcType=VARCHAR}
+      </if>
+      <if test="deviceType != null" >
+        and device_type = #{deviceType,jdbcType=CHAR}
+      </if>
+      <if test="deviceStatus != null" >
+        and device_status = #{deviceStatus,jdbcType=CHAR}
+      </if>
+      <if test="districtId != null" >
+        and district_id = #{districtId,jdbcType=BIGINT}
+      </if>
+      <if test="areaId != null" >
+        and area_id = #{areaId,jdbcType=BIGINT}
+      </if>
+      <if test="buildingId != null" >
+        and building_id = #{buildingId,jdbcType=BIGINT}
+      </if>
+      <if test="unitId != null" >
+        and unit_id = #{unitId,jdbcType=BIGINT}
+      </if>
+      <if test="roomId != null" >
+        and room_id = #{roomId,jdbcType=BIGINT}
+      </if>
+      <if test="deviceMac != null" >
+        and device_mac = #{deviceMac,jdbcType=VARCHAR}
+      </if>
+      <if test="version != null" >
+        and version = #{version,jdbcType=VARCHAR}
+      </if>
+      <if test="sipid != null" >
+        and sipid = #{sipid,jdbcType=VARCHAR}
+      </if>
+ 
+  </select>
+  
+  <select id="getForPage" resultMap="baseResult" >
+    select 
+    	<include refid="baseColumns" />
+    from t_device
+    where 1=1
+      <if test="po.deviceCode != null" >
+        and device_code = #{po.deviceCode,jdbcType=VARCHAR}
+      </if>
+      <if test="po.deviceName != null" >
+        and device_name = #{po.deviceName,jdbcType=VARCHAR}
+      </if>
+      <if test="po.deviceType != null" >
+        and device_type = #{po.deviceType,jdbcType=CHAR}
+      </if>
+      <if test="po.deviceStatus != null" >
+        and device_status = #{po.deviceStatus,jdbcType=CHAR}
+      </if>
+      <if test="po.districtId != null" >
+        and district_id = #{po.districtId,jdbcType=BIGINT}
+      </if>
+      <if test="po.areaId != null" >
+        and area_id = #{po.areaId,jdbcType=BIGINT}
+      </if>
+      <if test="po.buildingId != null" >
+        and building_id = #{po.buildingId,jdbcType=BIGINT}
+      </if>
+      <if test="po.unitId != null" >
+        and unit_id = #{po.unitId,jdbcType=BIGINT}
+      </if>
+      <if test="po.roomId != null" >
+        and room_id = #{po.roomId,jdbcType=BIGINT}
+      </if>
+      <if test="po.deviceMac != null" >
+        and device_mac = #{po.deviceMac,jdbcType=VARCHAR}
+      </if>
+      <if test="version != null" >
+        and version = #{version,jdbcType=VARCHAR}
+      </if>
+      <if test="sipid != null" >
+        and sipid = #{sipid,jdbcType=VARCHAR}
+      </if>
+ 
+  </select>
+  
+  <select id="getForOne" resultMap="baseResult" parameterType="java.lang.Long" >
+    select 
+    <include refid="baseColumns" />
+    from t_device
+    where device_id = #{deviceId,jdbcType=BIGINT}
+  </select>
+  <delete id="delete" parameterType="java.lang.Long" >
+    delete from t_device
+    where device_id = #{deviceId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.biencloud.smarthome.service.rest.model.Device" >
+    insert into t_device (device_id, device_code, device_name, 
+      device_alias, device_pwd, device_type, 
+      device_status, district_id, area_id, 
+      building_id, unit_id, room_id, 
+      position, coordinate, district_gate_flag, 
+      created_user, created_time, updated_user, 
+      updated_time, device_ip, device_mac, sipid, version)
+    values (#{deviceId,jdbcType=BIGINT}, #{deviceCode,jdbcType=VARCHAR}, #{deviceName,jdbcType=VARCHAR}, 
+      #{deviceAlias,jdbcType=VARCHAR}, #{devicePwd,jdbcType=VARCHAR}, #{deviceType,jdbcType=CHAR}, 
+      #{deviceStatus,jdbcType=CHAR}, #{districtId,jdbcType=BIGINT}, #{areaId,jdbcType=BIGINT}, 
+      #{buildingId,jdbcType=BIGINT}, #{unitId,jdbcType=BIGINT}, #{roomId,jdbcType=BIGINT}, 
+      #{position,jdbcType=VARCHAR}, #{coordinate,jdbcType=VARCHAR}, #{districtGateFlag,jdbcType=CHAR}, 
+      #{createdUser,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{updatedUser,jdbcType=VARCHAR}, 
+      #{updatedTime,jdbcType=TIMESTAMP}, #{deviceIp,jdbcType=VARCHAR}, #{deviceMac,jdbcType=VARCHAR}, #{sipid,jdbcType=VARCHAR}, #{version,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateOnActive" parameterType="com.biencloud.smarthome.service.rest.model.Device" >
+    update t_device
+    <set >
+      <if test="deviceCode != null" >
+        device_code = #{deviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceName != null" >
+        device_name = #{deviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceAlias != null" >
+        device_alias = #{deviceAlias,jdbcType=VARCHAR},
+      </if>
+      <if test="devicePwd != null" >
+        device_pwd = #{devicePwd,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceType != null" >
+        device_type = #{deviceType,jdbcType=CHAR},
+      </if>
+      <if test="deviceStatus != null" >
+        device_status = #{deviceStatus,jdbcType=CHAR},
+      </if>
+      <if test="districtId != null" >
+        district_id = #{districtId,jdbcType=BIGINT},
+      </if>
+      <if test="areaId != null" >
+        area_id = #{areaId,jdbcType=BIGINT},
+      </if>
+      <if test="buildingId != null" >
+        building_id = #{buildingId,jdbcType=BIGINT},
+      </if>
+      <if test="unitId != null" >
+        unit_id = #{unitId,jdbcType=BIGINT},
+      </if>
+      <if test="roomId != null" >
+        room_id = #{roomId,jdbcType=BIGINT},
+      </if>
+      <if test="position != null" >
+        position = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="coordinate != null" >
+        coordinate = #{coordinate,jdbcType=VARCHAR},
+      </if>
+      <if test="districtGateFlag != null" >
+        district_gate_flag = #{districtGateFlag,jdbcType=CHAR},
+      </if>
+      <if test="createdUser != null" >
+        created_user = #{createdUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null" >
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedUser != null" >
+        updated_user = #{updatedUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedTime != null" >
+        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deviceIp != null" >
+        device_ip = #{deviceIp,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceMac != null" >
+        device_mac = #{deviceMac,jdbcType=VARCHAR},
+      </if>
+      <if test="sipid != null" >
+        sipid = #{sipid,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        version = #{deviceMac,jdbcType=VARCHAR}
+      </if>
+    </set>
+    where device_id = #{deviceId,jdbcType=BIGINT}
+  </update>
+  <update id="update" parameterType="com.biencloud.smarthome.service.rest.model.Device" >
+    update t_device
+    set device_code = #{deviceCode,jdbcType=VARCHAR},
+      device_name = #{deviceName,jdbcType=VARCHAR},
+      device_alias = #{deviceAlias,jdbcType=VARCHAR},
+      device_pwd = #{devicePwd,jdbcType=VARCHAR},
+      device_type = #{deviceType,jdbcType=CHAR},
+      device_status = #{deviceStatus,jdbcType=CHAR},
+      district_id = #{districtId,jdbcType=BIGINT},
+      area_id = #{areaId,jdbcType=BIGINT},
+      building_id = #{buildingId,jdbcType=BIGINT},
+      unit_id = #{unitId,jdbcType=BIGINT},
+      room_id = #{roomId,jdbcType=BIGINT},
+      position = #{position,jdbcType=VARCHAR},
+      coordinate = #{coordinate,jdbcType=VARCHAR},
+      district_gate_flag = #{districtGateFlag,jdbcType=CHAR},
+      created_user = #{createdUser,jdbcType=VARCHAR},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_user = #{updatedUser,jdbcType=VARCHAR},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      device_ip = #{deviceIp,jdbcType=VARCHAR},
+      device_mac = #{deviceMac,jdbcType=VARCHAR},
+      sipid = #{sipid,jdbcType=VARCHAR},
+      version = #{version,jdbcType=VARCHAR}
+    where device_id = #{deviceId,jdbcType=BIGINT}
+  </update>
+  
+  <select id="getDeviceByDeviceNo" resultMap="baseResult" parameterType="java.lang.String">
+    select 
+    	<include refid="baseColumns" />
+    from t_device 
+    where device_code=#{deviceCode,jdbcType=VARCHAR}
+  </select>
+</mapper>

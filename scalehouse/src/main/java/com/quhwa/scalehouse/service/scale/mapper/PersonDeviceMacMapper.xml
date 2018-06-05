@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.quhwa.scalehouse.service.scale.mapper.PersonDeviceMacMapper">
+  <resultMap id="BaseResultMap" type="com.quhwa.scalehouse.service.scale.model.PersonDeviceMac">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="person_id" jdbcType="INTEGER" property="personId" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="mac" jdbcType="VARCHAR" property="mac" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, person_id, type, mac
+  </sql>
+  <select id="getOne" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_person_device_mac
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="getForList" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_person_device_mac
+    where 1=1
+    	<if test="personId != null and personId !=''">
+    	and person_id = #{personId,jdbcType=INTEGER}
+    	</if>
+    	<if test="type != null and type !=''">
+    	and type = #{type,jdbcType=VARCHAR}
+    	</if>
+    	<if test="mac != null and mac !=''">
+    	and mac = #{mac,jdbcType=VARCHAR}
+    	</if>
+  </select>
+  <delete id="delete" parameterType="java.lang.Integer">
+    delete from t_person_device_mac
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteForList" parameterType="java.lang.Integer">
+    delete from t_person_device_mac
+    where 1=1
+    	<if test="id != null and id !=''">
+    	and id = #{id,jdbcType=INTEGER}
+    	</if>
+    	<if test="personId != null and personId !=''">
+    	and person_id = #{personId,jdbcType=INTEGER}
+    	</if>
+    	<if test="type != null and type !=''">
+    	and type = #{type,jdbcType=VARCHAR}
+    	</if>
+    	<if test="mac != null and mac !=''">
+    	and mac = #{mac,jdbcType=VARCHAR}
+    	</if>
+  </delete>
+  <insert id="insert" parameterType="com.quhwa.scalehouse.service.scale.model.PersonDeviceMac">
+    insert into t_person_device_mac (id, person_id, type, 
+      mac)
+    values (#{id,jdbcType=INTEGER}, #{personId,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, 
+      #{mac,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertActive" parameterType="com.quhwa.scalehouse.service.scale.model.PersonDeviceMac">
+    insert into t_person_device_mac
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="personId != null">
+        person_id,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="mac != null">
+        mac,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="personId != null">
+        #{personId,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="mac != null">
+        #{mac,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateActive" parameterType="com.quhwa.scalehouse.service.scale.model.PersonDeviceMac">
+    update t_person_device_mac
+    <set>
+      <if test="personId != null">
+        person_id = #{personId,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="mac != null">
+        mac = #{mac,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="update" parameterType="com.quhwa.scalehouse.service.scale.model.PersonDeviceMac">
+    update t_person_device_mac
+    set person_id = #{personId,jdbcType=INTEGER},
+      type = #{type,jdbcType=VARCHAR},
+      mac = #{mac,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

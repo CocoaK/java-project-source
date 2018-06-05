@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="customercomplaint" extends="default" namespace="/customercomplaint">
+        <!-- 系统查看 物业投诉系统的信息 -->
+        <action name="queryComplaintList" class="com.biencloud.smarthome.web.customercomplaint.action.ComplaintAction"
+                method="queryPropertysComplaintList">
+            <param name="menuCode">M001005</param>
+            <param name="operationCode">1</param>
+            <result>/WEB-INF/views/customercomplaint/query_complaint_list.jsp</result>
+        </action>
+        <action name="viewComplaintDetail" class="com.biencloud.smarthome.web.customercomplaint.action.ComplaintAction"
+                method="viewComplaintDetail">
+            <param name="menuCode">M001005</param>
+            <param name="operationCode">2</param>
+            <result>/WEB-INF/views/customercomplaint/view_complaint_detail.jsp</result>
+        </action>
+        <action name="replyPropertyComplaintSuggestion" class="com.biencloud.smarthome.web.customercomplaint.action.ComplaintAction"
+                method="replySuggestion">
+            <param name="menuCode">M001005</param>
+            <param name="operationCode">6</param>
+            <result type="redirectAction">queryComplaintList</result>
+        </action>
+
+        <!-- 物业查看 物业投诉系统的信息 -->
+        <action name="queryPropertyComplaintList" class="com.biencloud.smarthome.web.customercomplaint.action.ComplaintAction"
+                method="queryPropertyComplaintList">
+            <param name="menuCode">M002007</param>
+            <param name="operationCode">1</param>
+            <result>/WEB-INF/views/customercomplaint/query_property_complaint_list.jsp</result>
+        </action>
+        <action name="viewPropertyComplaintDetail" class="com.biencloud.smarthome.web.customercomplaint.action.ComplaintAction"
+                method="viewComplaintDetail">
+            <param name="menuCode">M002007</param>
+            <param name="operationCode">2</param>
+            <result>/WEB-INF/views/customercomplaint/view_property_complaint_detail.jsp</result>
+        </action>
+        <!-- 新增物业投诉系统的信息 -->
+        <action name="addPropertyComplaintInput" class="com.biencloud.smarthome.web.customercomplaint.action.ComplaintAction"
+                method="addComplaintInput">
+            <param name="menuCode">M002007</param>
+            <param name="operationCode">3</param>
+            <result>/WEB-INF/views/customercomplaint/add_property_complaint_input.jsp</result>
+        </action>
+        <!-- 新增时提交/保存 -->
+        <action name="addPropertyComplaint" class="com.biencloud.smarthome.web.customercomplaint.action.ComplaintAction"
+                method="addPropertyComplaint">
+            <param name="menuCode">M002007</param>
+            <param name="operationCode">4</param>
+            <result type="redirectAction">queryPropertyComplaintList</result>
+        </action>
+        <!-- 更新物业投诉系统的信息 -->
+        <action name="updatePropertyComplaintInput" class="com.biencloud.smarthome.web.customercomplaint.action.ComplaintAction"
+                method="viewComplaintDetail">
+            <param name="menuCode">M002007</param>
+            <param name="operationCode">5</param>
+            <result>/WEB-INF/views/customercomplaint/update_property_complaint_input.jsp</result>
+        </action>
+        <!-- 更新时提交/保存 -->
+        <action name="updatePropertyComplaint" class="com.biencloud.smarthome.web.customercomplaint.action.ComplaintAction"
+                method="updateComplaint">
+            <param name="menuCode">M002007</param>
+            <param name="operationCode">6</param>
+            <result name="save">/WEB-INF/views/customercomplaint/update_property_complaint_input.jsp</result>
+            <result>/WEB-INF/views/customercomplaint/query_property_complaint_list.jsp</result>
+        </action>
+        <!-- 物业删除物业投诉系统的信息 -->
+        <action name="removePropertyComplaint" class="com.biencloud.smarthome.web.customercomplaint.action.ComplaintAction"
+                method="removeComplaint">
+            <param name="menuCode">M002007</param>
+            <param name="operationCode">7</param>
+            <result>/WEB-INF/views/customercomplaint/query_property_complaint_list.jsp</result>
+        </action>
+
+        <!-- 物业查看 业主投诉物业的信息 -->
+        <action name="queryOwnerComplaintList" class="com.biencloud.smarthome.web.customercomplaint.action.ComplaintAction"
+                method="queryOwnerComplaintList">
+            <param name="menuCode">M002007</param>
+            <param name="operationCode">1</param>
+            <result>/WEB-INF/views/customercomplaint/query_owner_complaint_list.jsp</result>
+        </action>
+        <action name="viewOwnerComplaintDetail" class="com.biencloud.smarthome.web.customercomplaint.action.ComplaintAction"
+                method="viewComplaintDetail">
+            <param name="menuCode">M002007</param>
+            <param name="operationCode">2</param>
+            <result>/WEB-INF/views/customercomplaint/view_owner_complaint_detail.jsp</result>
+        </action>
+        <action name="replyOwnerComplaintSuggestion" class="com.biencloud.smarthome.web.customercomplaint.action.ComplaintAction"
+                method="replySuggestion">
+            <param name="menuCode">M002007</param>
+            <param name="operationCode">6</param>
+            <result type="redirectAction">queryOwnerComplaintList</result>
+        </action>
+
+        <!-- 业主查看 业主投诉物业的信息 -->
+        <action name="queryOwnersComplaintList" class="com.biencloud.smarthome.web.customercomplaint.action.ComplaintAction"
+                method="queryOwnersComplaintList">
+            <param name="menuCode">M003006</param>
+            <param name="operationCode">1</param>
+            <result>/WEB-INF/views/customercomplaint/query_owners_complaint_list.jsp</result>
+        </action>
+        <action name="viewOwnersComplaintDetail" class="com.biencloud.smarthome.web.customercomplaint.action.ComplaintAction"
+                method="viewComplaintDetail">
+            <param name="menuCode">M003006</param>
+            <param name="operationCode">2</param>
+            <result>/WEB-INF/views/customercomplaint/view_owners_complaint_detail.jsp</result>
+        </action>
+        <!-- 新增业主投诉物业的信息 -->
+        <action name="addOwnerComplaintInput" class="com.biencloud.smarthome.web.customercomplaint.action.ComplaintAction"
+                method="addComplaintInput">
+            <param name="menuCode">M003006</param>
+            <param name="operationCode">3</param>
+            <result>/WEB-INF/views/customercomplaint/add_owner_complaint_input.jsp</result>
+        </action>
+        <!-- 新增时提交/保存 -->
+        <action name="addOwnerComplaint" class="com.biencloud.smarthome.web.customercomplaint.action.ComplaintAction"
+                method="addOwnerComplaint">
+            <param name="menuCode">M003006</param>
+            <param name="operationCode">4</param>
+            <result type="redirectAction">queryOwnersComplaintList</result>
+        </action>
+        <!-- 更新物业投诉系统的信息 -->
+        <action name="updateOwnerComplaintInput" class="com.biencloud.smarthome.web.customercomplaint.action.ComplaintAction"
+                method="viewComplaintDetail">
+            <param name="menuCode">M003006</param>
+            <param name="operationCode">5</param>
+            <result>/WEB-INF/views/customercomplaint/update_owner_complaint_input.jsp</result>
+        </action>
+        <!-- 更新时提交/保存 -->
+        <action name="updateOwnerComplaint" class="com.biencloud.smarthome.web.customercomplaint.action.ComplaintAction"
+                method="updateComplaint">
+            <param name="menuCode">M003006</param>
+            <param name="operationCode">6</param>
+            <result>/WEB-INF/views/customercomplaint/query_owners_complaint_list.jsp</result>
+        </action>
+        <!-- 业主删除业主投诉物业的信息 -->
+        <action name="removeOwnerComplaint" class="com.biencloud.smarthome.web.customercomplaint.action.ComplaintAction"
+                method="removeComplaint">
+            <param name="menuCode">M003006</param>
+            <param name="operationCode">7</param>
+            <result>/WEB-INF/views/customercomplaint/query_owners_complaint_list.jsp</result>
+        </action>
+    </package>
+</struts>
+
